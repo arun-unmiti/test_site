@@ -1,0 +1,9 @@
+<!-- <div class="project-toggle">
+  <select [(ngModel)]="selectedProject" (change)="switchContext(selectedProject)">
+    <option *ngFor="let project of projects" [value]="project">{{ project | titlecase }}</option>
+  </select>
+</div> -->
+<p-toast position="bottom-right" [baseZIndex]="5000"></p-toast>
+<div [ngClass]="selectedProject">
+  <router-outlet></router-outlet>
+</div>

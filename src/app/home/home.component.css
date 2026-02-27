@@ -1,0 +1,25 @@
+.main-title{
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+.sub-title {
+    font-size: 17px;
+    font-weight: bold;
+    color: #000;
+}
+.home-list li {
+    margin-bottom: 5px;
+}
+
+:host-context(.munichre) .home-list li a {
+    color: #175788;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+:host-context(.saksham) .home-list li a {
+    color: #ef898d;
+    font-size: 16px;
+    font-weight: 600;
+}

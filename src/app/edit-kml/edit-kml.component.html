@@ -1,0 +1,27 @@
+<div class="row">
+    <ng-container *ngif="loader">
+        <div class="text-center">
+            <div class="loader">
+                <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+            </div>
+        </div>
+    </ng-container>
+    <div class="col-sm-12 col-md-12 co-lg-12" *ngIf="!['8', '9', '10', '11'].includes(survey_id.toString())">
+        <div class="card tab_top">
+            <div class="card-body p-10px">
+             <ng-container *ngIf="showMap">
+                <app-leafletmap #leafletMap [locationData]="geoJsonData" [lat]="lat" [lng]="lng" [zoomView]="19" mapType="geoJson" [editableMap]="editableMap" [topoJsonName]="topoJsonName" [areaIds]="areaIds"></app-leafletmap>
+                </ng-container>
+
+              <!--  <ng-container *ngIf="!geoJsonData">
+                    <h5 class="text-center text-danger" *ngIf="loader">loading...</h5>
+                    <h5 class="text-center text-danger" *ngIf="!loader">No Data Found</h5>
+                </ng-container> -->
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 co-lg-12 mt-2 text-right" *ngIf="editableMap || ['8', '9', '10', '11'].includes(survey_id.toString())">
+        <button class="btn btn-sm btn-success mr-1" (click)="onAction('update-kml')">Update</button>
+        <button class="btn btn-sm btn-danger mr-1" (click)="onAction('cancel')">Cancel</button>
+    </div>
+</div>

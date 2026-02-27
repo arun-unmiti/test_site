@@ -1,0 +1,433 @@
+<ng-container *ngIf="loading && !isFileData">
+    <div class="text-center">
+        <div class="loader">
+            <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+        </div>
+    </div>
+</ng-container>
+
+<div class="row stricky">
+    <div class="col-sm-12 col-lg-12 col-md-12">
+        <div class="card p-2">
+            <div class="filter-card-title" (click)="isFilterCollapsed = !isFilterCollapsed" [class.close-toggle]="isFilterCollapsed">
+                <div>
+                    Apply Filters
+                </div>
+                <div class="toggle-img-area">
+                    <img src="{{assetsFolder}}/images/Nav_bar_close.svg" alt="toggle" class="toggle-img">
+                </div>
+            </div>
+            <div class="card-body p-2" [ngbCollapse]="isFilterCollapsed">
+                <div class="row align-items-end justify-content-start">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Year <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="singleYear" (ngModelChange)="onYearSelect($event)">
+                                <option value="">Select Year</option>
+                                <option *ngFor="let data of yearOptions" [value]="data.id">{{data.year}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Season <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="singleseason" (ngModelChange)="onSeasonSelect($event)">
+                                <option value="">Select Season</option>
+                                <option *ngFor="let data of seasonOptions" [value]="data.id">{{data.season_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div *ngIf="projectContext === 'munichre' && ['1','2'].includes(user?.user_role)" class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Client <sup class="text-danger">*</sup></label>
+                            <p-multiSelect [options]="clientData"  [(ngModel)]="selectedClient" (ngModelChange)="onClientSelect($event)"
+                            defaultLabel="Select Client" optionLabel="UNIT_NAME" title="Select client" optionValue="UNIT_ID">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="['1','2','3','4','5','6'].includes(user?.user_role)">
+                        <div class="p-fluid p-grid">
+                            <label for="" class="text-left">Agency <sup class="text-danger">*</sup></label>
+                            <p-multiSelect [options]="agencyData"  [(ngModel)]="selectedAgency" (ngModelChange)="onAgencyChange($event)"
+                            defaultLabel="Select Agency" optionLabel="agency_name" title="Select Agency" optionValue="agency_id">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="!isStateLoading">
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">State</label>
+                                <span class="p-float-label">
+                                    <p-multiSelect [baseZIndex]="500" defaultLabel="All States"
+                                        [options]="states" [(ngModel)]="selectedState" optionLabel="state_name"
+                                        (ngModelChange)="onStateChange($event)" [disabled]="!deactiveField">
+                                    </p-multiSelect>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">District</label>
+                                <p-multiSelect [baseZIndex]="500" defaultLabel="All Districts" [showHeader]="true"
+                                    [group]="true" [options]="districtOptions" [(ngModel)]="selectedDistrict"
+                                    optionLabel="district_name" (ngModelChange)="onDistrictChange($event)"
+                                    [disabled]="!districtOptions.length">
+                                    <ng-template let-group pTemplate="group">
+                                        <div class="p-d-flex p-ai-center">
+                                            <span>{{group.state_name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">Block</label>
+                                <p-multiSelect [baseZIndex]="500" defaultLabel="All Blocks" [showHeader]="true"
+                                    [group]="true" [options]="tehsilOptions" [(ngModel)]="selectedTehsil"
+                                    optionLabel="tehsil_name"
+                                    [disabled]="!tehsilOptions.length">
+                                    <ng-template let-group pTemplate="group">
+                                        <div class="p-d-flex p-ai-center">
+                                            <span>{{group.district_name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="isStateLoading">
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="pt-5 font-weight-bold">Locations are loading...</div>
+                        </div>
+                    </ng-container>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Crop</label>
+                            <p-multiSelect *ngIf="!croploading" [options]="cropOptions" [(ngModel)]="selectedCrop"
+                                        defaultLabel="Crop" optionLabel="crop" title="Select Crops" >
+                                    </p-multiSelect>
+                            <div class="mt-2" *ngIf="croploading">Crops are loading please wait...</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
+                        <div class="tab-content top-10px">
+                            <label for="">Date Range </label>
+                            <input #dateRangePicker type="text" name="daterange" class="form-control p-multiselect daterange mt-1"
+                                        [(ngModel)]="selectedDate" [locale]="localeValue"
+                                        [showCustomRangeLabel]="true" [alwaysShowCalendars]="true"
+                                        placeholder="Date" [showClearButton]="true" [showCancel]="true"
+                                        [linkedCalendars]="false" [ranges]="ranges" ngxDaterangepickerMd
+                                        title="Select Date"  [hidden]="!selectedAgency?.length"/>
+                            <input type="text" class="form-control daterange"  [value]="dateRangePicker.value" disabled [hidden]="selectedAgency?.length"/>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button class="btn btn_apply  text-white mt-2 ml-0" (click)="onSearch()">Search</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="row" *ngIf="allData?.length || surveyData?.length || isFileData">
+            <div class="col-sm-12 col-md-9 col-lg-12">
+                <div class="card" style="margin-top: -10px;box-shadow: none;">
+                    <div class="card-body p-1">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <h2 class="title mb-0" style="font-size: 15px;">Crop Health Monitoring Surveys </h2>
+                                <div class="d-flex justify-content-around text-center border p-2 flex-wrap">
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">No of CHM Planned</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{labels?.no_of_chm_planned}}</h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">No of CHM Achieved</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{labels?.no_of_chm_achieved}}</h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">Total Exposure</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{abbreviateNumber(labels?.total_sum_insured) || 0}}
+                                        </h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">Planned Exposure</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{abbreviateNumber(labels?.planned_sum_insured) || 0}}
+                                        </h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0"> Exposure Covered</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{abbreviateNumber(labels?.exposure_covred) || 0}}
+                                        </h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">Total State, District, Blocks Visited</h5>
+                                        <h5 class="tbl_title_text mb-0">State <span
+                                                class="tbl_num_text_700">{{labels?.states}}</span>, District -
+                                            <span class="tbl_num_text_700">{{labels?.districts}}</span>, Blocks - <span
+                                                class="tbl_num_text_700">{{labels?.tehsils}}</span>
+                                        </h5>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div *ngIf="allData?.length || surveyData?.length || isFileData" class="result-container">
+    <div class="alert-area" *ngIf="isFileData && timestamp">
+        <div class="alert alert-info" role="alert">
+            Displaying data for dates {{projectContext === 'munichre' ? '01/06/2024' : '01/11/2023'}} to {{timestamp}}
+          </div>
+    </div>
+    <ul [destroyOnHide]="false" ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>Data View</a>
+            <ng-template ngbNavContent>
+                <div class="row" *ngIf="allData?.length || surveyData?.length || isFileData">
+
+                    <div class="col-sm-12 col-lg-6 pr-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">CHM Exposure (Cr) </h4>
+                                        <p class="text-center mb-0"><b>(Planned / Achieved)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                        ngbTooltip="Displaying CHM planned survey's and achieved survey's exposure (Sum insured). Total planned and total achieved.">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="Exposure_covered_percentage" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-6 pl-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">CHM Survey samples </h4>
+                                        <p class="text-center mb-0"><b>(Planned / Achieved)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px" 
+                                        ngbTooltip="Displaying CHM planned survey's and achieved survey's count(number of samples). Total planned and total achieved." >
+                                    </div>
+                                </div>
+                                
+                                <div class="" [chart]="Captured_no_of_samples" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-6 pr-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center"><strong>CHM Crop Health</strong></h4>
+                                        <p class="text-center mb-0"><b>(Based on the exposure covered Samples)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px" 
+                                        ngbTooltip="Crop health based on the exposure (sum insured), divided into the categories of crop health." >
+                                    </div>
+                                </div>
+                                <div class="mt-5" [chart]="poor_good_moderate" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-6 pl-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center"><strong>CHM Crop Health</strong></h4>
+                                        <p class="text-center mb-0"><b>(Based on the surveyed CHM Samples)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px" 
+                                        ngbTooltip="Crop health based on the count(number of samples), divided into the categories of crop health." >
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-5" [chart]="poor_good_moderate_all" style="width: 100%;height: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-12 col-lg-6 col-md-6 pr-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">{{locationlbl}} wise Crop Health</h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px" 
+                                        ngbTooltip="Displaying the block level data of the crop health along with the total exposure covered." >
+                                    </div>
+                                </div>
+                                <div class="" [chart]="bar_one" style="width: 100%;height: 800px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-6 col-md-6 pl-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">Crop Wise Health </h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px" 
+                                        ngbTooltip="Displaying the block level data of the crop health along with the total exposure covered." >
+                                    </div>
+                                </div>
+                               
+                                <div class="" [chart]="bar_two" style="width: 100%;height: 800px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <h4 class="title">Crop Health Monitoring (CHM) -Revisit</h4>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-6 pr-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-11 col-lg-11">
+                                                <h4 class="title text-center">Resurvey Time</h4>
+                                            </div>
+                                            <div class="col-sm-12 col-md-1 col-lg-1">
+                                                <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px" 
+                                                ngbTooltip="The chart shows if the frequency of the revisit samples are being collected on-time, delayed or missed completely." >
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="" [chart]="Resurvey_time" style="width: 100%;height: 400px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 pl-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-11 col-lg-11">
+                                                <h4 class="title text-center">Change in Crop Health</h4>
+                                            </div>
+                                            <div class="col-sm-12 col-md-1 col-lg-1">
+                                                <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px" 
+                                                ngbTooltip="The chart shows the trend of a crop's health, if the crop health is deteriorating, improving or no change." >
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="" [chart]="Change_in_crop_health"
+                                            style="width: 100%;height: 400px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="py-4" *ngIf="isFileData && timestamp">
+                    <div class="alert alert-info" role="alert">
+                        CHM dashboard data last updated on : {{timestamp}}
+                      </div>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2" *ngIf="!isFileData">
+            <a ngbNavLink (click)="refreshDetail()">Map View</a>
+            <ng-template ngbNavContent>
+                <ng-container *ngIf="surveyData?.length">
+                    <app-farmer-details #mapDetail [surveyData]="surveyData" [surveyLocation]="surveyLocation"
+                        surveyId="1"></app-farmer-details>
+                </ng-container>
+            </ng-template>
+        </li>
+
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+</div>
+
+<div *ngIf="!allData?.length && !surveyData?.length && !isFileData" class="mt-4">
+    <h4 class="text-danger text-center">To View Data, Please search </h4>
+</div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="title text-center">Crop Wise Health </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <div class="" [chart]="Crop_wise_health" style="width: 100%;height: 600px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #location let-modal>
+    <div class="modal-header">
+        <h4 class="title text-center">{{locationlbl}} wise Crop Health</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <div class="" [chart]="location_wise_health" style="width: 100%;height: 600px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

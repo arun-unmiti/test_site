@@ -1,0 +1,298 @@
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  .form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 6px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+  .upload_btn {
+        border: none;
+        background-color: transparent;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        color: #272B2E;
+  }
+  
+  .upload_box{
+    background: #FBFBFB;
+    opacity: 0.8;
+    border: 1px dashed rgba(39, 43, 46, 0.3);
+    border-radius: 4px;
+  }
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+  .img_size{
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: #272B2E;
+    opacity: 0.4;
+    text-align: center;
+  }
+  .text-support{
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: #272B2E;
+    opacity: 0.4;
+  }
+  .form-control.input_type{
+    background: #f8f9fa;
+    border: 1px solid #272b2e4d;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-bottom: 35px;
+  }
+  
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    opacity: 1;
+    color: #272B2E!important;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #272B2E;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #272B2E;
+  }
+  .fixed-bottom1{
+        position: fixed;
+        right: 0;
+        bottom: -24px;
+        left: 0;
+        z-index: 1030;
+  }
+  .btn-cancel{
+    background: #FFFFFF;
+    border: 1px solid #42A2BB;
+    box-sizing: border-box;
+    border-radius: 6px; 
+    margin-right: 20px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    color: #42A2BB;
+  }
+  .btn-next{
+    font-family: Open Sans;
+    font-style: normal;
+    background: #42A2BB;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    color: #FFFFFF;
+  }
+
+  ::ng-deep.p-float-label .p-inputwrapper-filled~label, .p-float-label .p-inputwrapper-focus~label, .p-float-label input.p-filled~label, .p-float-label input:focus~label, .p-float-label textarea.p-filled~label, .p-float-label textarea:focus~label{
+    top: 0px!important;
+    left: 15px!important;
+    font-size: 12px!important;
+    background: aliceblue!important;
+} 
+::ng-deep.p-dropdown {
+    background: #f8f9fa;
+    border: 1px solid #ced4da;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 3px;
+    margin-bottom: 35px;
+}
+::ng-deep.p-float-label > label {
+  left: 0.5rem;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px!important;
+  color: #272B2E!important;
+  transition-duration: 0.2s;
+}
+
+::ng-deep.accordion>.card {
+  overflow: hidden;
+  background: rgb(23 87 136 / 5%);
+  margin-bottom: 10px;
+}
+::ng-deep.card-header {
+  padding: 5px;
+  background-color: rgba(0,0,0,.03);
+  border-bottom: 0px;
+}
+::ng-deep.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+  /* background-color: #fff; */
+}
+::ng-deep.btn-link {
+  text-decoration: none;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+  color: #272B2E;
+}
+::ng-deep.btn-link:hover {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+  color: #272B2E;
+  text-decoration: none;
+}
+::ng-deep.btn:focus {
+  outline: 0;
+  box-shadow: none!important;
+}
+::ng-deep.btn-link:focus {
+  text-decoration: none;
+}
+.form-check-label {
+  margin-bottom: 5px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #272B2E;
+  opacity: 0.8;
+  text-align: left;
+}
+.pl-30px{
+  padding-left: 30px;
+}
+
+.card-header {
+  padding: .75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0,0,0,.03);
+  border-bottom: 0px solid rgba(0,0,0,.125);
+}
+
+::ng-deep.owl-theme .owl-nav [class*=owl-] {
+  color: #000;
+  font-size: 40px;
+  margin: 5px;
+  padding: 11px 15px;
+  background: transparent;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+
+.mini-stat .mini-stat-img {
+  background: url(/assets/images/bg-1.7694411d.png);
+  background-size: cover;
+  height: 130px;
+}
+.bg-primary {
+  background-color: #7a6fbe!important;
+}
+.bg-client{
+  background-color: #00c49f!important;
+}
+
+
+.min_height_130px {
+  min-height: 122px!important;
+  background: #f5de80!important;
+}
+.p-2rem {
+  padding: 0.98rem;
+}
+.owl_text {
+  font-weight: 600;
+  font-size: 18px;
+  color: #000;
+}
+
+.num_text {
+  font-size: 20px;
+  color: #000;
+  font-family: sans-serif;
+  text-align: center;
+  font-weight: 600;
+}
+.title_text_owl {
+  opacity: 1; 
+  font-size: 15px;
+  font-weight: 600;
+  color: #000;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 16px;
+  color: #fff;
+  text-align: left;
+}
+
+.tbl_header_bg {
+  background: #175787;
+  /* color: #fff; */
+}
+
+::ng-deep.p-multiselect{
+display: block;
+width: 100%;
+height: calc(1.5em + .75rem + 2px);
+font-size: 1rem;
+font-weight: 400;
+line-height: 1.5;
+color: #495057;
+background-color: #fff;
+background-clip: padding-box;
+border: 1px solid #ced4da;
+border-radius: .25rem;
+transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

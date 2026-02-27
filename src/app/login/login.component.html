@@ -1,0 +1,164 @@
+<!-- <form (submit)="submit()"> -->
+<div class="bgx" [ngClass]="projectContext">
+  <section class="content-height">
+    <div class="container vertical-center">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 m-auto">
+          <div class="card login-card">
+            <div class="card-body" [ngClass]="{'py-0': projectContext !== 'munichre'}">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 mt-1 mb-2" [ngClass]="{'mt-4': projectContext === 'munichre'}">
+                  <h5 class="title-login mb-3" *ngIf="projectContext === 'munichre'">MR Capture</h5>
+                  <div class="m-0 p-0 d-flex align-items-center justify-content-center" [ngClass]="{'text-center mt-2': projectContext === 'munichre'}">
+                    <p class="mb-0">
+                      <img
+                        [src]="assetsFolder + '/images/' + (projectContext === 'saksham' ? 'saksham_logo.png' : projectContext === 'munichre' ? 'MunichRe.svg' : 'custom_logo.png')"
+                        [attr.height]="projectContext === 'munichre' ? '' : '100'"
+                      >
+                    </p>
+                  </div>
+                  <!-- <h5 class="title-login-text" *ngIf="projectContext === 'munichre'">Login</h5> -->
+
+                  <div class="p-fluid p-grid mt-3" *ngIf="!show2fa && !showEnable2fa">
+                    <div class="p-field p-col-12 p-md-4">
+                      <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText [(ngModel)]="userName" required (keyup.enter)="submit()">
+                        <label for="inputtext">Email Address / Mobile Number</label>
+                      </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                      <span class="p-float-label">
+                        <input type="password" id="inputpassword" pInputText [(ngModel)]="password" required (keyup.enter)="submit()">
+                        <label for="inputpassword">Password</label>
+                      </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                      <button class="btn btn-block btn-login btn-lg" [ngClass]="{'saksham-btn': projectContext === 'saksham', 'munichre-btn': projectContext === 'munichre'}" (click)="submit()" [disabled]="loading">
+                        {{ loading ? 'Loading...' : 'Login' }}
+                      </button>
+                      <div class="text-center" [ngClass]="{'mt-3': projectContext === 'munichre', 'mt-2 mb-2': projectContext !== 'munichre'}">
+                        <p class="mt-3"><a [routerLink]="['/forgot-password']">Forgot your password?</a></p>
+                      </div>
+                      <div class="d-flex justify-content-center align-items-center" *ngIf="projectContext === 'saksham'">
+                        <div class="text-center mt-1 d-flex">
+                          <div class="mt-2 font-weight-bold mr-2"></div>
+                          <img [src]="assetsFolder + '/images/hdfc-ergo.png'" height="60px">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="show2fa || showEnable2fa" class="mt-4">
+                    <div class="text-left mb-3">
+                      <button class="btn btn-link p-0" (click)="goBackToLogin()">
+                        ← Back to credentials
+                      </button>
+                    </div>
+                    <div class="text-center">
+                      <h5 class="mb-4">{{ showEnable2fa ? 'Enable Two-Factor Authentication' : 'Two-Factor Authentication' }}</h5>
+                      <p-accordion class="w-100">
+                        <p-accordionTab header="Mobile OTP (Recommended)" [selected]="true">
+                          <div class="text-center">
+                            <p class="mb-4">An OTP will be sent to {{phoneDisplay}}.</p>
+                            <div id="sign-in-button" style="display: none;"></div>
+
+                            <div *ngIf="!mobileOtpSent">
+                              <button class="btn btn-primary mb-4" (click)="sendMobileOtp()" [disabled]="otpLoading">
+                                {{ otpLoading ? 'Sending...' : 'Send OTP' }}
+                              </button>
+                            </div>
+
+                            <div *ngIf="mobileOtpSent">
+                              <button class="btn btn-primary mb-4" disabled>OTP Sent</button>
+
+                              <p *ngIf="resendTimer > 0" class="mb-2">Resend in {{ resendTimer }} seconds</p>
+                              <button *ngIf="showResendOTP" class="btn btn-link" (click)="resendMobileOtp()" [disabled]="otpLoading">
+                                Resend OTP
+                              </button>
+
+                              <h6 class="mb-3">Enter the 6-digit OTP</h6>
+                              <p class="mb-3">OTP has been sent to {{phoneDisplay}}.</p>
+                              <div class="d-flex justify-content-center">
+                                <ng-otp-input (onInputChange)="onMobileOtpChange($event)" [config]="config"></ng-otp-input>
+                              </div>
+                              <button class="btn btn-success w-100 mt-4" [disabled]="mobileOtp.length !== 6 || otpLoading" (click)="verifyMobileOtp()">
+                                {{ otpLoading ? 'Verifying...' : 'Verify' }}
+                              </button>
+                            </div>
+                          </div>
+                        </p-accordionTab>
+                        <p-accordionTab header="Authenticator App">
+                          <div class="text-center">
+                            <div *ngIf="!showEnable2fa">
+                              <h6 class="mb-3">Enter 6-digit Code from Authenticator App</h6>
+                              <div class="d-flex justify-content-center">
+                                <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+                              </div>
+                              <button class="btn btn-success w-100 mt-4" [disabled]="otp.length !== 6 || otpLoading" (click)="verifyTotp()">
+                                {{ otpLoading ? 'Verifying...' : 'Verify' }}
+                              </button>
+                            </div>
+
+                            <div *ngIf="showEnable2fa">
+                              <h5 class="mb-3">Enable 2FA with Authenticator App</h5>
+                              <div *ngIf="loading" class="text-center"><p>Loading...</p></div>
+                              <div *ngIf="showQr && !showOtpForEnable">
+                                <h6>Scan with your Authenticator App</h6>
+                                <div class="d-flex justify-content-center mb-3">
+                                  <ngx-qrcode
+                                    [elementType]="elementType"
+                                    [errorCorrectionLevel]="errorCorrectionLevel"
+                                    [value]="otpAuthUri"
+                                    [width]="250"
+                                  ></ngx-qrcode>
+                                </div>
+                                <p>Or enter manually:</p>
+                                <div class="mb-3">
+                                  <label>Account</label>
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" [value]="maskedLabel" readonly>
+                                    <button class="btn btn-outline-secondary" (click)="copyText(label)">Copy</button>
+                                  </div>
+                                </div>
+                                <div class="mb-3">
+                                  <label>Key</label>
+                                  <div class="input-group">
+                                    <input type="text" class="form-control" [value]="maskedSecret" readonly>
+                                    <button class="btn btn-outline-secondary" (click)="copyText(secret)">Copy</button>
+                                  </div>
+                                </div>
+                                <button class="btn btn-primary w-100" (click)="proceedToEnable()">I have scanned the QR code, Proceed</button>
+                              </div>
+                              <div *ngIf="showOtpForEnable">
+                                <h6>Enter 6-digit Code from Authenticator to confirm</h6>
+                                <div class="d-flex justify-content-center">
+                                  <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+                                </div>
+                                <button class="btn btn-success w-100 mt-4" [disabled]="otp.length !== 6 || otpLoading" (click)="verifyTotpForEnable()">
+                                  {{ otpLoading ? 'Verifying...' : 'Verify and Enable' }}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </p-accordionTab>
+                      </p-accordion>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center" *ngIf="projectContext !== 'munichre'">
+        <div class="text-center mt-1 d-flex">
+          <div class="mt-2 font-weight-bold mr-2"></div>
+          <img [src]="assetsFolder + '/images/Final - MunichRE.png'" height="60px">
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- </form> -->

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="16px" viewBox="0 0 9 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Nav bar close</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Icons-1" transform="translate(-81.000000, -290.000000)" stroke="#FFFFFF" stroke-width="1.2">
+            <path d="M89,291 L82.4003,297.6 C82.14,297.86 82.14,298.282 82.4003,298.542 L89,305.142" id="Icon/Nav-bar-close"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,763 @@
+@import url("https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lightgallery.css");
+@import url("https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lg-zoom.css");
+body {
+  margin: 0;
+}
+.gallery-item {
+  margin: 5px;
+}
+
+::ng-deep.lg-outer .lg-inner {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none;
+  background: black;
+  white-space: nowrap;
+}
+.top-10px {
+  top: -10px;
+  position: relative;
+}
+.top-10px>select.form-control {
+  width: 100%;
+    height: calc(1.5em + 0.75rem + 6px)!important;
+    color: #6c757d!important;
+    font-size: 16px!important;
+    font-weight: 400!important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.dropdown-menu.show{
+  display: block;
+  width: 278px;
+  margin-left: 33px;
+  margin-top: 15px;
+  height: 250px;
+  border: 0px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute!important;
+}
+.dropdown-menu.show::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 77%;
+  margin-left: -5px;
+  border-width: 9px;
+  border-style: solid;
+  visibility: visible;
+  border-color: transparent transparent #fff transparent;
+}
+   
+.card.tab_top {
+  position: absolute;
+  right: 0px;
+  border-radius: 0px;
+  left: 0px;
+  top: -14px;
+  width: 100%;
+}
+.date_text {
+  color: #272b2e;
+  font-weight: 400;
+  font-size: 20px;
+}
+.dropdown_agency.dropdown-menu.show {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  top: 10px !important;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background: #ffffff;
+  box-shadow: 0 0 8px 1px rgb(0 0 0 / 16%);
+  background-clip: padding-box;
+  border: 0px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+.dropdown_agency.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 10%;
+  margin-left: -5px;
+  border-width: 9px;
+  border-style: solid;
+  visibility: visible;
+  border-color: transparent transparent #fff transparent;
+}
+.ponter {
+  cursor: pointer;
+}
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-family: Open Sans;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #175788;
+}
+.card_map {
+  background: #d8d8d82e;
+  border-radius: 6px;
+}
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid #dee2e6 !important;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  vertical-align: middle;
+  line-height: 19px;
+}
+.tbl_scroll {
+  height: 560px;
+  overflow-y: scroll;
+}
+.view_text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: #03a3bf;
+}
+.text-select {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+  color: #424345;
+}
+.chart_title {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 27px;
+}
+.title {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #272b2e;
+}
+.title_one {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #272b2e;
+}
+.color_check {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.color_check input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  border: 1px solid #d46a39;
+  background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+.color_check:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.color_check input:checked ~ .checkmark {
+  background-color: #d46a39;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.color_check input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.color_check .checkmark:after {
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.card_head {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #272b2e;
+}
+label.color_check {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #d46a39;
+}
+
+label.color_check1 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #e3ba14;
+}
+
+label.color_check2 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #42a2bb;
+}
+label.color_default {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000;
+}
+.ul_summary {
+  list-style-type: none;
+}
+
+.color_check1 {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.color_check1 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  border: 1px solid #e3ba14;
+  background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+.color_check1:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.color_check1 input:checked ~ .checkmark {
+  background-color: #e3ba14;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.color_check1 input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.color_check1 .checkmark:after {
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.color_check2 {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.color_check2 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  border: 1px solid #42a2bb;
+  background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+.color_check2:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.color_check2 input:checked ~ .checkmark {
+  background-color: #42a2bb;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.color_check2 input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.color_check2 .checkmark:after {
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.color_default {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.color_default input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  border: 1px solid #d46a39;
+  background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+.color_default:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.color_default input:checked ~ .checkmark {
+  background-color: #fff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.color_default input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.color_default .checkmark:after {
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.title-head {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #272b2e;
+}
+.ul_summary li span {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #272b2e;
+  opacity: 0.8;
+}
+
+.dropdown_edit.dropdown-menu.show {
+  position: absolute;
+  top: 100%;
+  left: -111px !important;
+  z-index: 1000;
+  float: left;
+  top: 10px !important;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background: #ffffff;
+  box-shadow: 0 0 8px 1px rgb(0 0 0 / 16%);
+  background-clip: padding-box;
+  border: 0px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+.dropdown_edit button {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #272b2e;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #1757881a !important;
+  cursor: pointer;
+}
+.table-bordered {
+  border: 1px solid #dee2e6 !important;
+}
+
+::ng-deep.p-datatable .p-datatable-header {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #e9ecef;
+  border-width: 1px 0 1px 0;
+  padding: 1.2rem 1rem;
+  font-weight: 600;
+}
+::ng-deep.p-datatable-thead {
+  position: sticky;
+  top: 0px;
+}
+::ng-deep.p-datatable .p-datatable-thead > tr > th {
+  text-align: left;
+  padding: 1.2rem 1rem;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  font-weight: 600;
+  color: #495057;
+  background: #f8f9fa;
+  transition: box-shadow 0.2s;
+}
+
+::ng-deep.ranges > ul > li > button.active {
+  background-color: #e32027 !important;
+  color: #f8f9fa;
+}
+
+::ng-deep .md-drppicker {
+  background-color: #ffffff !important;
+}
+
+::ng-deep .md-drppicker td.start-date {
+  color: #fff;
+  background-color: #e32027 !important;
+}
+::ng-deep .md-drppicker td.end-date {
+  color: #fff;
+  background-color: #e32027;
+}
+
+.date_drop {
+  width: 210px;
+}
+
+::ng-deep.p-float-label .p-inputwrapper-filled ~ label,
+.p-float-label .p-inputwrapper-focus ~ label,
+.p-float-label input.p-filled ~ label,
+.p-float-label input:focus ~ label,
+.p-float-label textarea.p-filled ~ label,
+.p-float-label textarea:focus ~ label {
+  top: 1px !important;
+  left: 15px !important;
+  font-size: 12px !important;
+  background: transparent !important;
+  width: auto;
+}
+
+.form-control.daterange {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 8px) !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+::ng-deep.md-drppicker.double {
+  width: 634px !important;
+  margin-left: -22px !important;
+  margin-top: 0px !important;
+}
+
+::ng-deep .md-drppicker .clear-button .clear-icon svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  pointer-events: none;
+  top: 0.125em;
+  position: relative;
+  display: none;
+}
+.title_text{
+  font-size: 17px;
+    color: #272B2E;
+    font-weight: 600;
+}
+.border-right {
+  border-right: 2px solid #000!important;
+  font-weight: 800;
+}
+.text-black{
+  color: #000;
+}
+.text-red{
+  color: red;
+}
+.text-green{
+  color: green;
+}
+.text-orange{
+  color: orange;
+}
+/* .scroll {
+  height: 150px;
+  overflow-x: scroll;
+  white-space: nowrap;
+  overflow-y: hidden;
+} */
+::ng-deep.p-multiselect {
+  background: #ffffff;
+  border: 1px solid #ced4da;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 3px;
+  width: 100%;
+}
+.mt-35px{
+  margin-top: 34px;
+}
+::ng-deep.p-fluid .p-multiselect {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+:host .p-12-flex, .p-14-flex {
+  position: relative;
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+:host .p-12-flex {
+  flex: 0 0 12.5%;
+  max-width: 12.5%;
+}
+
+:host .p-14-flex {
+  flex: 0 0 14%;
+  max-width: 14%;
+}
+
+:host .p-flex-center {
+  align-self: center;
+  margin-top: 15px;
+}
+
+:host .filter-card-title {
+  font-weight: 700!important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
+    line-height: 1.2;
+    margin: -8px -8px;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 6px 6px 0px 0px;
+    transition: all .5s ease-in-out;
+    color: #fff;
+    background-color: #858687;
+}
+
+:host .toggle-img-area {
+    border: 2px solid;
+    padding: 8px;
+    height: 27px;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: #424345;
+    transition: all .5s ease-in-out;
+}
+
+:host-context(.munichre) .filter-card-title.close-toggle {
+    background-color: #175788;
+}
+
+:host-context(.saksham) .filter-card-title.close-toggle {
+    background-color: #e32027;
+}
+
+:host .filter-card-title.close-toggle .toggle-img-area{
+  border-color: #fff;
+}
+
+:host .filter-card-title .toggle-img {
+  transition:  all .5s ease-in-out;
+  filter: invert(1);
+  transform: rotate(90deg);
+}
+
+:host .filter-card-title.close-toggle .toggle-img {
+  filter: none;
+  transform: rotate(271deg);
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  :host .p-12-flex {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  :host .p-14-flex {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

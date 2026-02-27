@@ -1,0 +1,72 @@
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+  }
+  
+  .map-frame {
+    border: 2px solid black;
+    height: 500px;
+  }
+  
+  #map {
+    height: 100%;
+  }
+  
+  ::ng-deep .leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
+    display: none !important;
+  }
+  
+  .map-buttons {
+    position: absolute;
+    z-index: 1000;
+    left: 10%;
+  }
+  
+  ::ng-deep .leaflet-verticalcenter {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    top: 50%; /* possible because the placeholder's parent is the map */
+    transform: translateY(-50%); /* using the CSS3 Transform technique */
+    padding-top: 10px;
+  }
+  
+  ::ng-deep .leaflet-verticalcenter .leaflet-control {
+    margin-bottom: 10px;
+  }
+  .btn-sm.one {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: 0px;
+  }
+  .mr-1.border-2px{
+    margin-right: 2px!important;
+  }
+  
+  .all-btn {
+    color: #fff;
+    border-color: #01020f !important;
+    background-color: #01020f !important;
+  }
+  .demo-btn {
+    color: #fff;
+    border-color: #008ae6 !important;
+    background-color: #008ae6 !important;
+  }
+  .harvest-btn {
+    color: #fff;
+    border-color: #12a120 !important;
+    background-color: #12a120 !important;
+  }
+  .field-btn {
+    color: #fff;
+    border-color: #aa2c13 !important;
+    background-color: #aa2c13 !important;
+  }
+  
+  

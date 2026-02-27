@@ -1,0 +1,571 @@
+<ng-container *ngIf="!showDetails">
+    <div class="row">
+        <ng-container *ngIf="loading">
+            <div class="text-center">
+                <div class="loader">
+                    <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="lookupLoader">
+            <div class="col-12 bg-white rounded">
+                <div class="row align-items-end justify-content-start">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"  [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 bg-white rounded mt-4">
+                <div class="row align-items-end justify-content-start">
+                    <div class="col-sm-12">
+                        <app-skeleton-loader [show]="true" [count]="10" [height]="'25px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <div class="col-md-12" *ngIf="!lookupLoader">
+            <div class="card p-2">
+                <div class="filter-card-title" (click)="isFilterCollapsed = !isFilterCollapsed" [class.close-toggle]="isFilterCollapsed">
+                    <div>
+                        Apply Filters
+                    </div>
+                    <div class="toggle-img-area">
+                        <img src="{{assetsFolder}}/images/Nav_bar_close.svg" alt="toggle" class="toggle-img">
+                    </div>
+                </div>
+                <div class="card-body" [ngbCollapse]="isFilterCollapsed">
+                    <div class="row align-items-end justify-content-start">
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">Year <sup class="text-danger">*</sup></label>
+                                <select class="form-control" [(ngModel)]="selectedYear" (ngModelChange)="onYearSelect($event)">
+                                    <option value="">Select Year</option>
+                                    <option *ngFor="let data of yearData" [value]="data.id">{{data.year}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">Season <sup class="text-danger">*</sup></label>
+                                <select class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonSelect($event)">
+                                    <option value="">Select Season</option>
+                                    <option *ngFor="let data of seasonData" [value]="data.id">{{data.season_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div *ngIf="projectContext === 'munichre' && ['1','2'].includes(user?.user_role)" class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">Client <sup class="text-danger">*</sup></label>
+                                <select class="form-control" [(ngModel)]="singleClient" (ngModelChange)="onSingleClinetChange($event)">
+                                    <option value="">Select Client</option>
+                                    <option *ngFor="let data of clientData" [value]="data.UNIT_ID">{{data.UNIT_NAME}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="['1','2','3','4','5','6'].includes(user?.user_role)">
+                            <div *ngIf="projectContext === 'munichre'">
+                                <div *ngIf="dataPurpose === 'get_consolidated_surveydata' && surveyName === 'Revisit CHM'; else otherAgency" class="p-fluid p-grid">
+                                    <label for="">Agency <sup class="text-danger">*</sup></label>
+                                    <p-dropdown
+                                        [(ngModel)]="selectedAgencyRevisit" 
+                                        (ngModelChange)="onAgencyChange([$event])"
+                                        [options]="agencyData"
+                                        optionLabel="agency_name" 
+                                        optionValue="agency_id" 
+                                        placeholder="Select Agency">
+                                    </p-dropdown>
+                                </div>
+                                <ng-template #otherAgency>
+                                    <div class="p-fluid p-grid">
+                                        <label for="" class="text-left">Agency <sup class="text-danger">*</sup></label>
+                                        <p-multiSelect [options]="agencyData" [(ngModel)]="selectedAgency" (ngModelChange)="onAgencyChange($event)"
+                                        defaultLabel="Select Agency" optionLabel="agency_name" title="Select Agency" optionValue="agency_id">
+                                        </p-multiSelect>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <div *ngIf="projectContext === 'saksham'" class="p-fluid p-grid">
+                                <label for="" class="text-left">Agency <sup class="text-danger">*</sup></label>
+                                <p-multiSelect [options]="agencyData" [(ngModel)]="selectedAgency" (ngModelChange)="onAgencyChange($event)"
+                                defaultLabel="Select Agency" optionLabel="agency_name" title="Select Agency" optionValue="agency_id">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="!isStateLoading">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div *ngIf="projectContext === 'munichre'">
+                                    <div *ngIf="dataPurpose === 'get_consolidated_surveydata' && surveyName === 'Revisit CHM'; else otherStates" class="p-fluid p-grid">
+                                        <label for="">State</label>                                                              
+                                        <p-dropdown 
+                                            class="custom-dropdown"
+                                            [(ngModel)]="selectedState[0]" 
+                                            (ngModelChange)="onStateSelect([$event])"
+                                            [options]="statesData"
+                                            [disabled]="!deactiveField"
+                                            optionLabel="state_name" 
+                                            placeholder="Select State">
+                                        </p-dropdown>
+                                    </div>
+                                    <ng-template #otherStates>                                
+                                        <div class="p-fluid p-grid">
+                                            <label for="">State</label>
+                                            <span class="p-float-label">
+                                                <p-multiSelect [baseZIndex]="500" defaultLabel="All States"
+                                                    [options]="statesData" [(ngModel)]="selectedState" optionLabel="state_name"
+                                                    (ngModelChange)="onStateSelect($event)" [disabled]="!deactiveField">
+                                                </p-multiSelect>
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                                <div *ngIf="projectContext === 'saksham'" class="p-fluid p-grid">
+                                    <label for="">State</label>
+                                    <span class="p-float-label">
+                                        <p-multiSelect [baseZIndex]="500" defaultLabel="All States"
+                                            [options]="statesData" [(ngModel)]="selectedState" optionLabel="state_name"
+                                            (ngModelChange)="onStateSelect($event)" [disabled]="!deactiveField">
+                                        </p-multiSelect>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="p-fluid p-grid">
+                                    <label for="">District</label>
+                                    <p-multiSelect [baseZIndex]="500" defaultLabel="All Districts" [showHeader]="true"
+                                        [group]="true" [options]="districtData" [(ngModel)]="selectedDist"
+                                        optionLabel="district_name" (ngModelChange)="onDistSelect($event)"
+                                        [disabled]="!districtData.length">
+                                        <ng-template let-group pTemplate="group">
+                                            <div class="p-d-flex p-ai-center">
+                                                <span>{{group.state_name}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="p-fluid p-grid">
+                                    <label for="">Block</label>
+                                    <p-multiSelect [baseZIndex]="500" defaultLabel="All Blocks" [showHeader]="true"
+                                        [group]="true" [options]="blockData" [(ngModel)]="selectedBlock"
+                                        optionLabel="tehsil_name" (ngModelChange)="onTehsilSelect($event)"
+                                        [disabled]="!blockData.length">
+                                        <ng-template let-group pTemplate="group">
+                                            <div class="p-d-flex p-ai-center">
+                                                <span>{{group.district_name}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="isStateLoading">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <div class="pt-5 font-weight-bold">Locations are loading...</div>
+                            </div>
+                        </ng-container>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="showCrop">
+                            <div class="p-fluid p-grid">
+                                <label for="" class="text-left">Crop</label>
+                                <p-multiSelect [options]="cropsData" [(ngModel)]="selectedCrop"
+                                    defaultLabel="Crop" optionLabel="crop" title="Select Crops" (ngModelChange)="resetData()" [disabled]="!deactiveField">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="surveyId == 6">
+                            <div class="p-fluid p-grid">
+                                <label for="" class="text-left">Other Activity</label>
+                                <p-multiSelect [options]="otherActivityData" [(ngModel)]="selectedOtherActivity"
+                                    defaultLabel="Activity" optionLabel="label" title="select activity" (ngModelChange)="resetData()" [disabled]="!deactiveField">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="parentSurveyId">
+                            <div class="form-group">
+                                <label for="survey_conducted">No. of visit</label>
+                                <select name="survey_conducted" id="survey_conducted" class="form-control" [(ngModel)]="noOfVisit" (ngModelChange)="resetData()" [disabled]="!deactiveField">
+                                    <option value="">No. of visit</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid" *ngIf="!userLoading">
+                                <label for="">User</label>
+                                <p-multiSelect [baseZIndex]="500" defaultLabel="All Users" [options]="usersData"
+                                    [(ngModel)]="selectedUser" optionLabel="username" (ngModelChange)="resetData()" [disabled]="!deactiveField">
+                                </p-multiSelect>
+                            </div>
+                            <div *ngIf="userLoading" class="pt-5 font-weight-bold">Users are loading...</div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
+                            <div class="tab-content top-10px">
+                                <label for="">Date Range</label>
+                                <input #dateRangePicker type="text" name="daterange" displayFormat="DD MMM YYYY" format="DD MMM YYYY"
+                                    [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                                    [showClearButton]="true" [showCancel]="true" [linkedCalendars]="false"
+                                    ngxDaterangepickerMd [(ngModel)]="selectedFromDate"
+                                    class="form-control daterange" [locale]="localeValue" (change)="resetData()" [maxDate]="maxDate" [hidden]="!selectedAgency?.length">
+                                <input type="text" class="form-control daterange" [value]="dateRangePicker.value" disabled [hidden]="selectedAgency?.length"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-2 col-col-2" *ngIf="showDateType">
+                            <div class="d-flex justify-content-around align-items-center flex-wrap top-10px">
+                                <div class=""><label for="datetime"><input id="datetime" type="radio" [(ngModel)]="dateType" name="date_type" value="datetime" [disabled]="!deactiveField"> Submitted</label></div>
+                                <div class=""><label for="approved_reject_date"><input id="approved_reject_date" type="radio" [(ngModel)]="dateType" name="date_type" value="approved_reject_date" [disabled]="!deactiveField"> Approved</label></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-2 col-lg-2 mt-2">
+                            <button class="btn btn_apply text-white top-10px" (click)="applyFilter()" [disabled]="!deactiveField">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 co-lg-12">
+            <div class="row" *ngIf="colDefs?.length">
+                <div class="col-sm-12 col-md-12 col-lg-7" *ngIf="showDataLabels">
+                    <div class="d-flex justify-content-start flex-wrap p-2">
+                        <div *ngIf="showDraft">
+                            <span class="title_text pr-2 pl-2 text-black"><strong>Total Draft:</strong> {{datalabel.totalDraft}}</span>
+                        </div>
+                        <ng-container *ngIf="!showDraft">
+                            <div>
+                                <span class="title_text pr-2 pl-2 text-black"><strong>Total Uploads:</strong> {{datalabel.totalUploads}}</span>
+                            </div>
+                            <div><span class="border-right"></span></div>
+                            <div>
+                                <span class="title_text pr-2 pl-2 text-orange"><strong>Pending:</strong> {{datalabel.totalPending}}</span>
+                            </div>
+                            <div><span class="border-right"></span></div>
+                            <div>
+                                <span class="title_text pr-2 pl-2 text-green"><strong>Approved:</strong> {{datalabel.totalApproved}}</span>
+                            </div>
+                            <div><span class="border-right"></span></div>
+                            <div>
+                                <span class="title_text text-red pr-2 pl-2"><strong>Rejected:</strong> {{datalabel.totalRejected}}</span>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="w-100 text-right m-1 p-1" *ngIf="isDataApprove">
+                        <button class="btn btn-success btn-sm mr-1" *ngIf="canApprove" (click)="onApproveSet('approve_data')">Approve</button>
+                        <button class="btn btn-danger btn-sm mr-1" *ngIf="canReject" (click)="onApproveSet('reject_data')">Reject</button>
+                        <button class="btn btn-info btn-sm mr-1" *ngIf="canPending" (click)="onApproveSet('revert_approve_data')">Revert</button>
+                    </div>
+                    <div class="table-responsive" *ngIf="colDefs?.length">
+                        <p-table #dt [value]="tableData" [columns]="colDefs" [scrollable]="true" [style]="{width:'100%'}"
+                            scrollHeight="450px" [showCurrentPageReport]="true">
+    
+                            <ng-template pTemplate="caption">
+                                <div class="w-100 mb-4">
+                                    <div class="d-inline-block float-right ml-4 mr-4" role="link">
+                                        <div class="col">
+                                            <div ngbDropdown class="">
+                                                <i class="fa fa-eye" aria-hidden="true" id="column-toggle" ngbDropdownToggle></i>
+                                              <div ngbDropdownMenu aria-labelledby="column-toggle">
+                                                <form class="px-4 py-3">
+                                                  <input type="hidden" [name]="csrfTokenName" formControlName="csrf_token" [value]="csrfToken" />
+                                                  <div class="form-check" *ngFor="let col of allColDefs">
+                                                    <input type="checkbox" class="form-check-input" [id]="col.field" [name]="col.field" [(ngModel)]="col.visibility" (change)="onColumnVisibilityChange()">
+                                                    <!-- <input type="checkbox" class="form-check-input" [id]="col.field"> -->
+                                                    <label class="form-check-label" [for]="col.field">
+                                                        {{col.header}}
+                                                    </label>
+                                                  </div>
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="d-inline-block float-right mr-2" role="link">
+                                        
+                                    </div>
+                                    <div class="d-inline-block float-right ml-3 mr-2" role="link" (click)="downloadTable()">
+                                        <img src="{{assetsFolder}}/images/Download.svg" alt="download button">
+                                    </div>
+                                    <div class="d-inline-block float-right mr-2">
+                                        <div class="input-group">
+                                             <!-- <input type="text" [(ngModel)]="globalFilter"
+                                                class="form-control form-control-sm"
+                                                (ngModelChange)="dt.filterGlobal($event, 'contains')"
+                                                placeholder="Search keyword" *ngIf="surveyId != 2"/> -->
+                                            <ng-container *ngIf="surveyId == 2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1"> <i
+                                                            class="pi pi-search"></i></span>
+                                                </div>
+                                                <input type="text" [(ngModel)]="surveyIntimationNo"
+                                                    class="form-control form-control-sm"
+                                                    placeholder="Search Intimation No"   (ngModelChange)="onIntimationNumberChange($event)"/>
+                                            </ng-container>
+                                                <div class="input-group-prepend ml-1">
+                                                    <span class="input-group-text" id="basic-addon1"> <i
+                                                            class="pi pi-search"></i></span>
+                                                </div>
+                                                <input type="text" [(ngModel)]="searchCaseId"
+                                                class="form-control form-control-sm"
+                                                placeholder="Search Case ID" (ngModelChange)="onCaseIdChange($event)"/>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col *ngFor="let col of columns" style="width:150px">
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <ng-container *ngFor="let col of columns">
+                                        <ng-container *ngIf="col.visibility">
+                                            <th class="tbl_header_bg" [pSortableColumn]="col.field"
+                                                *ngIf="!buttonsType.includes(col.type)">
+                                                {{col.header}}
+                                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                                            </th>
+                                            <th *ngIf="buttonsType.includes(col.type)">
+                                                {{col.header}}
+                                            </th>
+                                        </ng-container>
+                                    </ng-container>
+    
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-survey let-columns="columns">
+                                <tr>
+                                    <ng-container *ngFor="let col of columns">
+                                    <td *ngIf="col.visibility">
+                                        <ng-container *ngIf="buttonsType.includes(col.type)">
+                                            <button class="btn btn-sm btn-success" *ngIf="col.type=='kml'"
+                                                (click)="open(reset,col,survey)">Download KML
+                                            </button>
+                                            <button class="btn btn-sm btn-success" *ngIf="col.subtype=='image'"
+                                                (click)="open(imgpopup,col,survey)">Download
+                                                Image
+                                            </button>
+                                            <!-- [routerLink]="['/crop-view-details', surveyId, survey.data_id]"  -->
+                                            <button class="btn btn-sm btn-success" *ngIf="col.type=='viewbutton'"
+                                               (click)="onViewData(survey.data_id)">View Data
+                                            </button>
+                                            <button class="btn btn-sm btn-success" *ngIf="col.type=='signature'"
+                                                (click)="open(signpopup,col,survey)">Show Signature
+                                            </button>
+                                            <input type="checkbox" *ngIf="col.type=='approveBox'"
+                                                [(ngModel)]="survey[col.field]">
+    
+                                        </ng-container>
+                                        <ng-container *ngIf="!buttonsType.includes(col.type)">
+                                            {{survey[col.field]}}
+                                        </ng-container>
+                                    </td>
+                                    </ng-container>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <app-pagination *ngIf="tableData.length" #pagination (pageTrigger)="onPageTrigger($event)"
+                            [currentpage]="currentpage" [recordsPerPage]="recordsPerPage"
+                            [currentRocords]="tableData?.length" [toalRecord]="toalRecord"></app-pagination>
+                        <p *ngIf="!surveyData.length && !loading" class="text-center mt-4">No records found</p>
+                    </div>
+                </div>
+            </div>
+            <ng-template #reset let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">KML Records</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body mt-1">
+                            <div class="table-responsive">
+                                <table id="recent-orders" class="table table-hover table-xl mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">ID</th>
+                                            <th class="border-top-0">File Name</th>
+                                            <th class="border-top-0">Measured Area</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of kml_files">
+                                            <td>
+                                                {{data.kml_id}}
+                                            </td>
+                                            <td>
+                                                {{data.file_name}}
+                                            </td>
+                                            <td>
+                                                {{data.measured_area}}
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-success round"
+                                                    (click)="download_kml(data)">Download</a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="!kml_files?.length">
+                                            <th colspan="2" class="text-danger text-center">
+                                                <ng-container *ngIf="!loading">No Data Available</ng-container>
+                                                <ng-container *ngIf="loading">Loading...</ng-container>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+    
+    
+            </ng-template>
+            <ng-template #imgpopup let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Field Images </h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body mt-1">
+                            <lightgallery [settings]="settings" [onBeforeSlide]="onBeforeSlide">
+                                <ng-container *ngFor="let data of img_files">
+                                    <a
+                                        *ngIf="projectContext !== 'munichre' || data?.safeUrl"
+                                        class="gallery-item"
+                                        [href]="projectContext === 'munichre' ? data.safeUrl : imgUrl + data.file_name + imgUrlSuffix"
+                                        data-lg-size="480-475-480, 800-791-800, 1406-1390"
+                                    >
+                                        <img
+                                        class="img-responsive mb-2"
+                                        [src]="projectContext === 'munichre' ? data.safeUrl : imgUrl + data.file_name + imgUrlSuffix"
+                                        height="200px"
+                                        alt="Survey Image"
+                                        />
+                                    </a>
+                                </ng-container>
+                            </lightgallery>
+                            <ng-container *ngIf="!img_files?.length">
+                                <ng-container class="text-danger text-center">
+                                    <ng-container *ngIf="!loading">No Data Available</ng-container>
+                                    <ng-container *ngIf="loading">Loading...</ng-container>
+                                </ng-container>
+                            </ng-container>
+    
+                        </div>
+                    </div>
+                </div>
+    
+    
+    
+            </ng-template>
+            <ng-template #signpopup let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Signature</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body text-center mt-1">
+                            <lightgallery [settings]="settings" [onBeforeSlide]="onBeforeSlide">
+                                <ng-container *ngFor="let data of img_files">
+                                    <a
+                                        *ngIf="projectContext !== 'munichre' || data?.safeUrl"
+                                        class="gallery-item"
+                                        [href]="projectContext === 'munichre' ? data.safeUrl : imgUrl + data.file_name + imgUrlSuffix"
+                                        data-lg-size="480-475-480, 800-791-800, 1406-1390"
+                                    >
+                                        <img
+                                        class="img-responsive mb-2"
+                                        [src]="projectContext === 'munichre' ? data.safeUrl : imgUrl + data.file_name + imgUrlSuffix"
+                                        height="200px"
+                                        alt="Survey Image"
+                                        />
+                                    </a>
+                                </ng-container>
+                            </lightgallery>
+                            <ng-container *ngIf="!img_files?.length">
+                                <ng-container class="text-danger text-center">
+                                    <ng-container *ngIf="!loading">No Data Available</ng-container>
+                                    <ng-container *ngIf="loading">Loading...</ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="showDetails">
+    <app-chm-view-details [survey_id]="surveyId" [data_id]="detailDataId" [isChild]="true" (emitAction)="onDetailEmit()" [plannedCropData]="dataCrops"></app-chm-view-details>
+</ng-container>

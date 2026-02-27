@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="21px" viewBox="0 0 20 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Map view_Unselected</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons-2" transform="translate(-312.000000, -833.000000)" fill="#3C3C3C" fill-rule="nonzero">
+            <g id="Icon/Map-view_Unselected" transform="translate(312.000000, 833.000000)">
+                <path d="M15.963,12.996 C15.963,11.893 16.856,11 17.958,11 L17.958,11 C19.06,11 19.954,11.893 19.954,12.996 L19.954,19.004 C19.954,20.107 19.06,21 17.958,21 L17.958,21 C16.856,21 15.963,20.107 15.963,19.004 L15.963,12.996 Z" id="Path"></path>
+                <path d="M7.983,8.996 C7.983,7.893 8.876,7 9.978,7 L9.978,7 C11.08,7 11.974,7.893 11.974,8.996 L11.974,19.004 C11.974,20.107 11.08,21 9.978,21 L9.978,21 C8.876,21 7.983,20.107 7.983,19.004 L7.983,8.996 Z" id="Path"></path>
+                <path d="M0,1.996 C0,0.893 0.893,0 1.996,0 L1.996,0 C3.098,0 3.991,0.893 3.991,1.996 L3.991,19.004 C3.991,20.107 3.098,21 1.996,21 L1.996,21 C0.893,21 0,20.107 0,19.004 L0,1.996 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

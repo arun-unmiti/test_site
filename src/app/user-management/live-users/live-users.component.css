@@ -1,0 +1,8 @@
+.tbl_header thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 16px;
+    background: #175788;
+    color: #fff;
+    text-align: left;
+}

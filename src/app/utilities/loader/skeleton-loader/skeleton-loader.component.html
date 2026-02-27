@@ -1,0 +1,18 @@
+<div *ngIf="show" class="skeleton-loader" [style.padding]="padding">
+    <ng-container *ngFor="let loader of loaders">
+        <ng-container *ngTemplateOutlet="showLoader;context:{'loaderObj': loader}">
+        </ng-container>
+    </ng-container>
+</div>
+
+
+  <ng-template #showLoader let-loader="loaderObj">
+    <div class="skeleton-loader__item" [style.height]="height" [style.margin]="loader.margin"></div>
+  </ng-template>
+  
+  <!-- <div *ngIf="show" class="skeleton-loader progress">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div> -->

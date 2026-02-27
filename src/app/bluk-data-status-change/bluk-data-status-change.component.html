@@ -1,0 +1,131 @@
+<div class="card p-2">
+    <div class="card-header bg-white">
+        <h3 class="title">{{title}}</h3>
+    </div>
+    <div class="card-body" *ngIf="!initLoading && !invalidRecords?.length">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="status" class="label font-weight-bold">Change records status to</label>
+                    <select name="status" id="status" class="form-control" [(ngModel)]="updatedStatus"
+                        (ngModelChange)="onStatusFlagChange($event)">
+                        <option value="">Select Status</option>
+                        <option *ngFor="let data of statuses" [value]="data.value">{{data.label}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="upload-box">
+                    <div class="message-area">
+                        <div class="h4">
+                            Upload or Drag file here
+                        </div>
+                        <small *ngIf="fileName">{{fileName}} file is selected</small>
+                    </div>
+                    <form enctype="multipart/form-data">
+                        <input type="hidden" [name]="csrfTokenName" formControlName="csrf_token" [value]="csrfToken" />
+                        <!-- Backend validation enforces strict MIME type and content validation. -->
+                        <input #fileEle type="file" name="upload-file" id="upload-file" class="uploadfield"
+                            accept=".xlsx,.xls" (click)="onFileEleClick(fileEle)" (change)="onFileChange($event)">
+                        <!-- Backend validation enforces strict MIME type and content validation. -->
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row align-items-center">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+                        <a [href]="exportFile" class="font-weight-bold">Download
+                            Template</a>
+
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2 pl-3">
+                    <div class="text-danger">
+                        <div class="font-weight-bold h6">Note</div>
+                        <div class="pl-4">
+                            <ol>
+                                <li>
+                                    <span *ngIf="surveyId == 2">Please make sure the "AI Id", "Case Id" and "Intimation No" are valid.</span>
+                                    <span *ngIf="surveyId != 2">Please make sure the "AI Id" and "Case Id" are valid.</span>
+                                </li>
+                                <li *ngIf="surveyId == 2"><span>Please make sure the intimation numbers are not duplicate. </span></li>
+                                <li *ngIf="updatedStatus=='revert_approve_data'"><span>Make sure the records are in
+                                        Approved or Rejected Bucket.</span></li>
+                                <li *ngIf="updatedStatus=='reject_data'"> <span>Make sure the records are in Pending or
+                                        Approved Bucket.</span></li>
+                                <li *ngIf="updatedStatus=='approve_data'"> <span>Make sure the records are in Pending
+                                        Bucket.</span></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn_apply text-white mt-3" [disabled]="loading" (click)="onSubmit()">{{loading ?
+                        'Loading...' :'Submit'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="initLoading">
+        <div class="row justify-content-end align-items-end">
+            <div class="col-sm-12">
+                <app-skeleton-loader [show]="true" [count]="1" [height]="'75px'" [padding]="'1px'"
+                    [margin]="'1px'"></app-skeleton-loader>
+            </div>
+            <div class="col-sm-12">
+                <app-skeleton-loader [show]="true" [count]="1" [height]="'200px'" [padding]="'1px'"
+                    [margin]="'1px'"></app-skeleton-loader>
+            </div>
+            <div class="col-sm-1">
+                <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"
+                    width="40px"></app-skeleton-loader>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="invalidRecords?.length">
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <button class="btn btn_apply text-white mt-3" (click)="onFaildDownload()">Download</button>
+            </div>
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <p-table #dt [value]="invalidRecords" [columns]="invalidColumns" [scrollable]="true"
+                        [style]="{width:'100%'}" scrollHeight="400px" [showCurrentPageReport]="true"
+                        [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5, 10, 25, 50]">
+
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <ng-container *ngFor="let col of columns">
+                                    <th>{{col}}</th>
+                                </ng-container>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-row let-columns="columns">
+                            <tr>
+                                <ng-container *ngFor="let col of columns">
+                                    <td>{{row[col]}}</td>
+                                </ng-container>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div class="col-sm-12 mt-4">
+                <div class="row align-items-end justify-content-end">
+                    <div class="col-sm-12">
+                        <h5 class="text-center text-danger">
+                            The above records are not valid to approve, please approve them manually.
+                        </h5>
+                    </div>
+                    <div class="col-sm-11">
+                        <h5 *ngIf="validRecords?.length">Would you like to approve rest of the records?</h5>
+                    </div>
+                    <div class="col-sm-1 text-right" *ngIf="validRecords?.length">
+                        <button class="btn btn_apply text-white mt-3" [disabled]="loading"
+                            (click)="onSubmit()">{{loading ? 'Loading...' :'Submit'}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

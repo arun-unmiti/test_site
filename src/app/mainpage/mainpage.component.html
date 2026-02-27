@@ -1,0 +1,176 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-header-gradient fixed-top">
+  <!-- <button class="side-nav-toggler" (click)="isSideNavOpen = !isSideNavOpen">
+      &#9776;
+    </button> -->
+  <a *ngIf="projectContext === 'saksham'" class="navbar-brand" href="javascript:void(0)">
+    <img class="logo" [src]="assetsFolder + '/images/saksham_logo.png'" alt="Saksham Logo" height="60">
+  </a>
+  <a *ngIf="projectContext === 'munichre'" class="navbar-brand" href="javascript:void(0)">
+    <img class="logo" [src]="assetsFolder + '/images/MunichRe.svg'" alt="Munich Re Logo" />
+  </a>
+  <button class="navbar-toggler" (click)="isMenuCollapsed = !isMenuCollapsed">
+    &#9776;
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isMenuCollapsed">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item pr-2 mr-2" *ngIf="!['1', '2'].includes(userDetail?.user_role)">
+        <img class="logo d-inline-block dropdown" alt="client logo" [src]="imgFile" style="height: 40px;">
+      </li>
+      <li class="nav-item pr-2">
+        <div ngbDropdown class="d-inline-block" #myDrop="ngbDropdown">
+          <span class="profile_align" id="dropdownBasic1" ngbDropdownToggle><span
+              class="text-notifi"><span>4</span></span><img src="{{assetsFolder}}/images/Notification.svg" alt="notifications">
+              <span class="hide_note_text">Notifications</span>
+          </span>
+          <div ngbDropdownMenu class="dropdown_notification" aria-labelledby="dropdownBasic1">
+            <div class="d-flex justify-content-between p-13px mb-0">
+              <p class="user_notification mb-0"><img src="{{assetsFolder}}/images/User.svg" class="pr-2" height="15px"> New user
+                account request</p>
+              <p class="user_notification mb-0"><img (click)="$event.stopPropagation(); myDrop.close();"
+                  src="{{assetsFolder}}/images/close.png" height="13px"></p>
+            </div>
+            <span class="font-12px">Added by mohan</span>
+            <div class="view-profile" (click)="visibleSidebar2 = true">View Profile <img
+                src="{{assetsFolder}}/images/rightarrow.png" class="pl-2" height="13px"></div>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <div ngbDropdown class="d-inline-block">
+          <span class="profile_align" id="dropdownBasic1" ngbDropdownToggle>
+            <div class="d-flex mr-2">
+              <!-- <div class="pr-2"><img class="pos1" src="assets/images/profile-circle.png" height="25px">
+                <img class="pos2" src="assets/images/profile.png" height="">
+              </div> -->
+              {{userDetail?.first_name}} {{userDetail?.last_name}} <img class="pl-2"
+                [src]="assetsFolder + '/images/Dropdownarrow_Header.svg'">
+            </div>
+          </span>
+          <div ngbDropdownMenu class="dropdown_edit" aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem class="active" routerLink="/profile"> <img [src]="assetsFolder + '/images/Login_Header.svg'"
+                style="height: 16px;
+                  margin-top: -5px;"> Profile</button>
+            <!-- <button ngbDropdownItem *ngIf="!userDetail?.user_id"> <img src="assets/images/Logout_Header.svg" height="17px">Login</button> -->
+            <button ngbDropdownItem (click)="logout()"> <img [src]="assetsFolder + '/images/Logout_Header.svg'" height="17px">
+              Logout</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000">
+  <!-- Sidebar content remains unchanged -->
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="row">
+            <div class="col-lg-12 mb-4">
+              <div class="d-flex justify-content-between">
+                <span class="text-notifi1"><span>4</span></span>
+                <img src="{{assetsFolder}}/images/Notification.svg" alt="Notifications" />
+                <span class="side-text">Notifications</span>
+                <div>
+                  <img
+                    class="pointer"
+                    src="{{assetsFolder}}/images/close.png"
+                    height="17px"
+                    (click)="visibleSidebar2 = false"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 bg-light pb-3">
+              <div class="d-flex justify-content-between p-13px pb-0 mb-0">
+                <p class="user_notification mb-0">
+                  <img src="{{assetsFolder}}/images/User.svg" class="pr-2" height="15px" />
+                  New user account request
+                </p>
+                <span class="mb-0 text-12px">1 day ago</span>
+              </div>
+              <span class="font-12px">Added by mohan</span>
+              <div class="view-profile">
+                View Profile
+                <img src="{{assetsFolder}}/images/rightarrow.png" class="pl-2" height="13px" />
+              </div>
+            </div>
+            <!-- Other sidebar items remain unchanged -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-sidebar>
+
+<section class="wrapper">
+  <section class="side-nav" [hidden]="isSideNavOpen">
+    <!-- <section class="side-nav" > -->
+    <div class="nav-side-menu" [class.shorter_nav_menu]="isShorterMenu" [ngStyle]="projectContext === 'munichre' ? {'background-image': 'linear-gradient(15deg, #175788 0%, #175788 100%)'} : {}">
+      <div class="menu-list">
+        <div class="sidebar-content nav-side-men">
+          <div class="sidebar-brand float-right">
+            <div id="close-sidebar" style="padding: 10px 15px;margin-top: -36px;">
+              <img class="pointer" [src]="isShorterMenu ? collapseImage : notcollapseImage" (click)="isShorterMenu = !isShorterMenu">
+            </div>
+          </div>
+          <div class="sidebar-menu mt-3">
+            <ul class="" style="margin-top: 40px;height: 100vh;">
+              <ng-container *ngTemplateOutlet="showSideMenuList;context:{'menus': sideMenus}">
+              </ng-container>
+            </ul>
+          </div>
+          <!-- sidebar-menu  -->
+        </div>
+      </div>
+      <!-- <div class="bg-white footer-new-text" [hidden]="isShorterMenu">
+        <div class="text-center pt-2 pr-3 d-flex align-items-center justify-content-center"><img src="assets/images/Final - MunichRE.png" height="40px"></div>
+      </div> -->
+    </div>
+  </section>
+
+  <section class="app-content p-2" [class.longer-Content]="isShorterMenu" #pageArea>
+    <div class="container-fluid mb-5">
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+</section>
+
+<!-- Dynamic Menus Code -->
+<ng-template #showSideMenuList let-menus="menus">
+  <li *ngFor="let menu of menus;index as i">
+    <ng-container *ngIf="!menu.children">
+      <a href="javascript:void(0)" [routerLink]="[menu.link]" class="p-5px">
+        <ng-container *ngIf="menu.icon">
+          <span class="text-white" *ngIf="menu.icon.includes('fa ')"><i [class]="menu.icon" aria-hidden="true"></i>&nbsp;</span>
+          <img class="pr-3" [src]="menu.icon" alt="menu-icon" *ngIf="!menu.icon.includes('fa ')">
+        </ng-container>
+        <span *ngIf="!isShorterMenu">{{menu.menu_name}}</span>
+      </a>
+    </ng-container>
+    <ng-container *ngIf="menu.children">
+      <a class="d-flex  hover_usermanagement p-5px" role="link" (click)="toggleMenuItems(menus,i)">
+        <ng-container *ngIf="menu.icon">
+          <span class="text-white" *ngIf="menu.icon.includes('fa ')"><i [class]="menu.icon" aria-hidden="true"></i>&nbsp;</span>
+          <img class="pr-3" [src]="menu.icon" alt="menu-icon" *ngIf="!menu.icon.includes('fa ')">
+        </ng-container>
+        <span *ngIf="!isShorterMenu">{{menu.menu_name}}</span>
+        <span><i class="fas px-1"
+            [ngClass]="{'fa-caret-up': !menu.isCollase, 'fa-caret-down': menu.isCollase}"></i></span>
+      </a>
+      <ul class="ml-2" [(ngbCollapse)]="menu.isCollase">
+        <ng-container *ngTemplateOutlet="showSideMenuList;context:{'menus': menu.children}">
+        </ng-container>
+        </ul>
+    </ng-container>
+  </li>
+</ng-template>
+
+<div *ngIf="projectContext === 'saksham'" class="fixed-main-bottom bg-white p-2" style.width="{{((pageArea?.clientWidth || 0) -10) + 'px'}}">
+  <div class="text-center pr-3 d-flex align-items-center justify-content-end">
+    <img [src]="assetsFolder + '/images/Final - MunichRE.png'" height="40px">
+  </div>
+</div>
+
+<!-- [ngClass]="{'app-content-expand': isSideNavOpen}" -->

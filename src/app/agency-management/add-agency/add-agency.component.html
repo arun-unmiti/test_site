@@ -1,0 +1,171 @@
+<div class="row mb-2">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <h5 class="add-title pointer"><button class="btn btn-sm btn-back mr-2" title="Back"  (click)="back()"><img loading="lazy" src="{{assetsFolder}}/images/icon-left-arrow.svg"></button> 
+       Add Agency
+    </h5>
+  </div>
+</div>
+
+
+<div class="row">
+  <form action="" autocomplete="off" [formGroup]="regForm" (ngSubmit)="createClient()">
+    <input type="hidden" [name]="csrfTokenName" formControlName="csrf_token" [value]="csrfToken" />
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="row mt-4">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="p-fluid p-grid">
+                <div class="p-field">
+                  <span class="p-float-label">
+                    <input type="text" id="name" formControlName="name"
+                      class="form-control input_type p-inputtext" pInputText />
+                    <label for="name">Agency Name <sup class="text-danger">*</sup></label>
+                  </span>
+                </div>
+                <div *ngIf="submitted && f.name.errors" class="text-danger">
+                  <div *ngIf="f.name.errors.required">Agency name is required</div>
+                </div>
+              </div>
+            </div>
+
+            
+
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="p-fluid p-grid">
+                <div class="p-field">
+                  <span class="p-float-label">
+                    <input type="tel" id="phone" class="form-control input_type p-inputtext" pInputText
+                      formControlName="phone" maxlength="10" />
+                    <label for="phone">Mobile Number <sup class="text-danger">*</sup></label>
+                  </span>
+                </div>
+                <div *ngIf="submitted && f.phone.errors" class="text-danger">
+                  <p *ngIf="f.phone.errors.required">Mobile number is required</p>
+                  <p *ngIf="f.phone.errors.minlength">Mobile number must be 10 digits</p>
+                  <p *ngIf="f.phone.errors.pattern">Please enter valid Mobile number</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
+              <div class="p-fluid p-grid">
+                <div class="p-field">
+                  <span class="p-float-label">
+                    <textarea id="address" formControlName="address" rows="1" cols="30"
+                      class="form-control input_type p-inputtext" pInputTextarea></textarea>
+                    <label for="address">Address <sup class="text-danger">*</sup></label>
+                  </span>
+                </div>
+              </div>
+              <div *ngIf="submitted && f.address.errors" class="text-danger-alert">
+                <p *ngIf="f.address.errors.required">Address is required</p>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6" *ngIf="projectContext === 'munichre' && userDetails.user_role == 1">
+              <div class="p-fluid p-grid">
+                <div class="p-field">
+                  <span class="p-float-label">
+                    <select class="form-control"  name="user_role" formControlName="client">
+                      <option value="">-- Select Client --</option>
+                      <option *ngFor="let client of clients" [value]="client.UNIT_ID">{{client.UNIT_NAME}}</option>
+                    </select>
+                  </span>
+                </div>
+                <div *ngIf="submitted && f.client.errors" class="text-danger">
+                  <p *ngIf="f.client.errors.required">Client is required</p>
+                </div>
+              </div>
+            </div>
+           
+            <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="file-input" (click)="fileUpload.value = ''">
+                  <form enctype="multipart/form-data">
+                    <input type="hidden" [name]="csrfTokenName" formControlName="csrf_token" [value]="csrfToken" />
+                    <!-- Backend validation enforces strict MIME type and content validation. -->
+                    <input
+                      type="file"
+                      name="file-input"
+                      id="file-input"
+                      class="file-input__input"
+                      accept="application/pdf"
+                      (change)="onFileSelected($event, fileUpload)" 
+                      #fileUpload
+                    />
+                    <!-- Backend validation enforces strict MIME type and content validation. -->
+                    <label class="file-input__label" for="file-input">
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="upload"
+                        class="svg-inline--fa fa-upload fa-w-16"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
+                        ></path>
+                      </svg>
+                      <span>Upload file</span></label
+                    >
+                    <span *ngIf="fileName">{{fileName}}</span>
+                  </form>
+                </div>                 
+            </div>
+
+
+
+
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <span class="title_text">Point of Contact</span>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 mt-2">
+              <div class="p-fluid p-grid">
+                <div class="p-field">
+                  <span class="p-float-label">
+                    <input type="text" id="pocname" class="form-control input_type p-inputtext" pInputText
+                      formControlName="pocname" />
+                    <label for="pocname">Name <sup class="text-danger">*</sup></label>
+                  </span>
+                </div>
+                <div *ngIf="submitted && f.pocname.errors" class="text-danger">
+                  <p *ngIf="f.pocname.errors.required">POC Name is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-6 mt-2">
+              <div class="p-fluid p-grid">
+                <div class="p-field">
+                  <span class="p-float-label">
+                    <input type="text" id="pocemail" class="form-control input_type p-inputtext" pInputText
+                      formControlName="pocemail" />
+                    <label for="pocemail">Email <sup class="text-danger">*</sup></label>
+                  </span>
+                </div>
+                <div *ngIf="submitted && f.pocemail.errors" class="text-danger">
+                  <p *ngIf="f.pocemail.errors.required">POC Email is required</p>
+                  <p *ngIf="f.pocemail.errors.email">Invalid Email format</p>
+                </div>
+              </div>
+            </div>
+
+           
+
+
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <button type="submit" class="btn btn_apply text-white float-right" [disabled]="loader">{{loader?
+                'Loading...': 'Add Agency'}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+

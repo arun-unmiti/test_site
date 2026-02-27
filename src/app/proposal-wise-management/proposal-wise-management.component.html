@@ -1,0 +1,545 @@
+<ng-container *ngIf="loading">
+    <div class="text-center">
+        <div class="loader">
+            <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #progressContent let-modal>
+	<div class="modal-body pb-4">
+		<ng-container *ngIf="isUploading">
+            <div class="row">
+                <div class="cols-sm-12 col-md-12 col-lg-12">
+                   <div class="card shadowNone mb-0">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div><h3 class="title-upload text-center mb-2 mx-1">Uploading Records </h3></div>
+                                <div class="loader-dots"></div>
+                            </div>
+                            <div class="progress mb-1" style="height: 15px;">
+                              <div
+                                class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar"
+                                [style.width]="progress + '%'"
+                                aria-valuenow="progress"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                {{ progress }}%
+                              </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div><h5 class="font-14px">Total records to upload: <strong>{{totalUploadRecords}}</strong></h5></div>
+                                <div><h5 class="font-14px">Records uploaded:  <strong>{{uploadedRecords}}</strong></h5></div>
+                            </div>
+
+                            <div><p class="font-14px mb-0 text-left mt-1"><i>Note*: Please do not reload the page as uploading is in process. </i></p></div>
+                        </div>
+                   </div>
+                </div>
+           </div>         
+        </ng-container>
+	</div>
+</ng-template>
+
+<ng-container *ngIf="!showDetails">
+    <ng-container *ngIf="lookupLoader">
+        <div class="col-12 bg-white rounded">
+            <div class="row align-items-end justify-content-start">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 bg-white rounded mt-4">
+            <div class="row align-items-end justify-content-start">
+                <div class="col-sm-12">
+                    <app-skeleton-loader [show]="true" [count]="10" [height]="'25px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!lookupLoader">
+        <div *ngIf="url_id === '21'">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="upload-box">
+                        <div class="message-area">
+                            <div class="h4"> Upload or Drag file here </div>
+                        </div>
+                        <input #fileEle type="file" name="upload-file" id="upload-file" class="uploadfield" accept=".csv"
+                            (change)="onProductFileChange($event)">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="row align-items-center">
+                        <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+                            <a [href]="assetsFolder + '/data/product_verification_template.csv'" class="font-weight-bold text-primary">Download Template</a>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+                            <p-accordion class="mt-3">
+                                <p-accordionTab header="Note/Instruction to follow:">
+                                    <ul class="text-grey disabled-list">
+                                        <li>1. Make sure to copy-paste properly without any additional spaces in the cells.</li>
+                                        <li>2. Make sure to use the lookups tables provided, if the name doesn't match the system won't allow it.</li>
+                                        <li>3. Make sure all the conditions satisfy for records to successfully upload.</li>
+                                        <li>4. Do not create or delete the columns in this sheet.</li>
+                                    </ul>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-2" *ngIf="fileData?.length">
+                <div class="card-header bg-white">
+                    <h3 class="title">Valid Records</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <p-table #dt [value]="fileData" [columns]="fileHeaders" [scrollable]="true" [style]="{width:'100%'}"
+                                    scrollHeight="400px" [showCurrentPageReport]="true" [paginator]="true" [rows]="recordsPerPage"
+                                    [rowsPerPageOptions]="[5, 10, 25, 50, 100]" [currentPageReportTemplate]="page_text" 
+                                    class="custom-p-table" (onPage)="onPageTrigger($event)">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <ng-container *ngFor="let col of columns">
+                                                <th>{{col.header}}</th>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-row let-columns="columns">
+                                        <tr>
+                                            <ng-container *ngFor="let col of columns">
+                                                <ng-container [ngSwitch]="col.field">
+                                                    <ng-container *ngSwitchCase="'crop'">
+                                                        <td>{{cropMapping[row[col.field]]}}</td>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'financial_year'">
+                                                        <td>{{yearMapping[row[col.field]]}}</td>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'season'">
+                                                        <td>{{seasonMapping[row[col.field]]}}</td>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchDefault>
+                                                        <td>{{row[col.field]}}</td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+                            <button class="btn btn_apply text-white mt-3" [disabled]="submitting" (click)="onSubmit()">{{submitting ? 'Loading...' :'Submit'}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-2" *ngIf="invalidFileData?.length">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="title">In-Valid Records</h3>
+                        </div>
+                        <div>
+                            <button class="btn btn_apply text-white" (click)="downloadInvalids()">Download</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <p-table #dt [value]="invalidFileData" [columns]="fileHeaders" [scrollable]="true"
+                                    [style]="{width:'100%'}" scrollHeight="450px" [showCurrentPageReport]="true"
+                                    [paginator]="true" [rows]="invalidRecordsPerPage"
+                                    [rowsPerPageOptions]="[5, 10, 25, 50, 100]" [currentPageReportTemplate]="invalid_page_text" 
+                                    class="custom-p-table" (onPage)="invalidOnPageTrigger($event)">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <ng-container *ngFor="let col of columns">
+                                                <th>{{col.header}}</th>
+                                            </ng-container>
+                                            <th>Remark</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-row let-columns="columns">
+                                        <tr>
+                                            <ng-container *ngFor="let col of columns">
+                                                <ng-container [ngSwitch]="col.field">
+                                                    <ng-container *ngSwitchCase="'crop'">
+                                                        <td class="bg-danger text-white" *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                                        <ng-template #validCell>
+                                                            <td>{{cropMapping[row[col.field]]}}</td>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'financial_year'">
+                                                        <td class="bg-danger text-white" *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                                        <ng-template #validCell>
+                                                            <td>{{yearMapping[row[col.field]]}}</td>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'season'">
+                                                        <td class="bg-danger text-white" *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                                        <ng-template #validCell>
+                                                            <td>{{seasonMapping[row[col.field]]}}</td>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchDefault>
+                                                        <td class="bg-danger text-white" *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                                        <ng-template #validCell>
+                                                            <td>{{row[col.field]}}</td>
+                                                        </ng-template>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                            <td>
+                                                <ol>
+                                                    <li class="text-danger" *ngFor="let text of row.remark">{{text}}.</li>  
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div *ngIf="!['21'].includes(url_id)">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="card p-2">
+                        <div class="card-header filter-card-title d-flex justify-content-between close-toggle p-2 align-items-center"
+                            (click)="isFilterCollapsed = !isFilterCollapsed" [class.close-toggle]="isFilterCollapsed">
+                            <div>
+                                Apply Filters
+                            </div>
+                            <div class="toggle-img-area">
+                                <img src="{{assetsFolder}}/images/Nav_bar_close.svg" alt="toggle" class="toggle-img">
+                            </div>
+                        </div>
+                        <div class="card-body p-2" [ngbCollapse]="isFilterCollapsed">
+                            <form>
+                                <div class="row mt-2">
+                                    <div *ngFor="let field of surveyFields" class="col-sm-12 col-md-4 col-lg-4">
+                                        <div class="form-group">
+                                            <label [for]="field.name">{{ field.label }}<span *ngIf="['lkp_year', 'lkp_season'].includes(field.type)" class="text-danger">*</span></label>
+                                            <ng-container *ngIf="field.type === 'lkp_year'">
+                                                <select [id]="field.field_id" class="form-control" [name]="field.name" [(ngModel)]="selectedYear" (ngModelChange)="onYearSelect($event)">                                      
+                                                    <option value="" selected>select</option>
+                                                    <option *ngFor="let option of yearData" [value]="option.id">{{ option.year }}</option>
+                                                </select>
+                                            </ng-container>                                  
+                                            <ng-container *ngIf="field.type === 'lkp_season'">
+                                                <select [id]="field.field_id" class="form-control" [name]="field.name" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonSelect($event)">                                      
+                                                    <option value="" selected>select</option>
+                                                    <option *ngFor="let option of seasonData" [value]="option.id">{{ option.season_name }}</option>
+                                                </select>
+                                            </ng-container>
+                                            <ng-container *ngIf="field.type === 'product_crop'">
+                                                <span class="p-fluid p-grid">
+                                                    <p-multiSelect [id]="field.field_id" [name]="field.name" [baseZIndex]="500" defaultLabel="All Crops"
+                                                        [options]="cropData" [(ngModel)]="selectedCrop" optionLabel="crop_name" optionValue="crop_code"
+                                                        (ngModelChange)="onCropSelect($event)" [disabled]="!deactiveField">
+                                                    </p-multiSelect>
+                                                </span>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4">
+                                        <label for="">Date Range</label>
+                                        <input type="text" name="daterange" displayFormat="DD MMM YYYY" format="DD MMM YYYY"
+                                            [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                                            [showClearButton]="true" [showCancel]="true" [linkedCalendars]="false"
+                                            ngxDaterangepickerMd [(ngModel)]="selectedFromDate" class="form-control daterange"
+                                            [locale]="localeValue">
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4" style="margin-top: 30px;">
+                                        <button class="btn btn_apply text-white top-10px" (click)="applyFilter()" [disabled]="!deactiveField">Apply</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 co-lg-12">
+                    <div class="row" *ngIf="colDefs?.length">
+                        <div class="col-sm-12 col-md-12 col-lg-7" *ngIf="showDataLabels">
+                            <div class="d-flex justify-content-start flex-wrap p-2">
+                                <div *ngIf="showDraft">
+                                    <span class="title_text pr-2 pl-2 text-black"><strong>Total Draft:</strong> {{datalabel.totalDraft}}</span>
+                                </div>
+                                <ng-container *ngIf="!showDraft">
+                                    <div>
+                                        <span class="title_text pr-2 pl-2 text-black"><strong>Total Uploads:</strong> {{datalabel.totalUploads}}</span>
+                                    </div>
+                                    <ng-container *ngIf="url_id !=='22'">
+                                        <div><span class="border-right"></span></div>
+                                        <div>
+                                            <span class="title_text pr-2 pl-2 text-orange"><strong>Pending:</strong> {{datalabel.totalPending}}</span>
+                                        </div>
+                                        <div><span class="border-right"></span></div>
+                                        <div>
+                                            <span class="title_text pr-2 pl-2 text-green"><strong>Approved:</strong> {{datalabel.totalApproved}}</span>
+                                        </div>
+                                        <div><span class="border-right"></span></div>
+                                        <div>
+                                            <span class="title_text text-red pr-2 pl-2"><strong>Rejected:</strong> {{datalabel.totalRejected}}</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="w-100 text-right m-1 p-1" *ngIf="isDataApprove">
+                                <button class="btn btn-success btn-sm mr-1" *ngIf="canApprove" (click)="onApproveSet('approve_data')">Approve</button>
+                                <button class="btn btn-danger btn-sm mr-1" *ngIf="canReject" (click)="onApproveSet('reject_data')">Reject</button>
+                                <button class="btn btn-info btn-sm mr-1" *ngIf="canPending" (click)="onApproveSet('revert_approve_data')">Revert</button>
+                            </div>
+                            <div class="table-responsive" *ngIf="colDefs?.length">
+                                <p-table #dt [value]="tableData" [columns]="colDefs" [scrollable]="true" [style]="{width:'100%'}"
+                                    scrollHeight="450px" [showCurrentPageReport]="true">
+                                    <ng-template pTemplate="caption">
+                                        <div class="w-100 mb-4">
+                                            <div class="d-inline-block float-right ml-4 mr-4" role="link">
+                                                <div class="col">
+                                                    <div ngbDropdown class="" *ngIf="url_id !== '22'">
+                                                        <i class="fa fa-eye" aria-hidden="true" id="column-toggle" ngbDropdownToggle></i>
+                                                        <div ngbDropdownMenu aria-labelledby="column-toggle">
+                                                            <form class="px-4 py-3">
+                                                                <div class="form-check" *ngFor="let col of allColDefs">
+                                                                    <input type="checkbox" class="form-check-input" [id]="col.field" [name]="col.field"
+                                                                        [(ngModel)]="col.visibility" (change)="onColumnVisibilityChange()">
+                                                                    <label class="form-check-label" [for]="col.field">
+                                                                        {{col.header}}
+                                                                    </label>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-inline-block float-right mr-2" role="link">
+                                            </div>
+                                            <div class="d-inline-block float-right ml-3 mr-2" role="link" (click)="downloadTable()">
+                                                <img *ngIf="url_id !== '22'" src="{{assetsFolder}}/images/Download.svg" alt="download button">
+                                                <button *ngIf="url_id === '22'" class="btn btn_apply text-white">Download</button>
+                                            </div>
+                                            <div class="d-inline-block float-right mr-2" *ngIf="url_id !== '22'">
+                                                <div class="input-group">
+                                                    <ng-container *ngIf="surveyId == 2">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="pi pi-search"></i></span>
+                                                        </div>
+                                                        <input type="text" [(ngModel)]="surveyIntimationNo" class="form-control form-control-sm"
+                                                            placeholder="Search Intimation No" (ngModelChange)="onIntimationNumberChange($event)"/>
+                                                    </ng-container>
+                                                    <div class="input-group-prepend ml-1">
+                                                        <span class="input-group-text" id="basic-addon1"><i class="pi pi-search"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="searchCaseId" class="form-control form-control-sm"
+                                                        [placeholder]="url_id === '22' ? 'Search Application ID' : 'Search Case ID'"
+                                                        (ngModelChange)="onCaseIdChange($event)"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="colgroup" let-columns>
+                                        <colgroup>
+                                            <col *ngFor="let col of columns" style="width:150px">
+                                        </colgroup>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <ng-container *ngFor="let col of columns">
+                                                <ng-container *ngIf="col.visibility">
+                                                    <th class="tbl_header_bg" [pSortableColumn]="col.field" *ngIf="!buttonsType.includes(col.type)">
+                                                        {{col.header}}
+                                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                    </th>
+                                                    <th *ngIf="buttonsType.includes(col.type)">
+                                                        {{col.header}}
+                                                    </th>
+                                                </ng-container>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-survey let-columns="columns">
+                                        <tr>
+                                            <ng-container *ngFor="let col of columns">
+                                                <td *ngIf="col.visibility">
+                                                    <ng-container *ngIf="buttonsType.includes(col.type)">
+                                                        <button class="btn btn-sm btn-success" *ngIf="col.type=='kml'" (click)="open(reset,col,survey)">Download KML</button>
+                                                        <button class="btn btn-sm btn-success" *ngIf="col.subtype=='image'" (click)="open(imgpopup,col,survey)">Download Image</button>
+                                                        <button class="btn btn-sm btn-success" *ngIf="col.type=='viewbutton'" (click)="onViewData(survey.data_id)">View Data</button>
+                                                        <button class="btn btn-sm btn-success" *ngIf="col.type=='signature'" (click)="open(signpopup,col,survey)">Show Signature</button>
+                                                        <input type="checkbox" *ngIf="col.type=='approveBox'" [(ngModel)]="survey[col.field]">
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!buttonsType.includes(col.type)">
+                                                        {{survey[col.field]}}
+                                                    </ng-container>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <app-pagination *ngIf="tableData.length" #pagination (pageTrigger)="onPageTrigger($event)"
+                                    [currentpage]="currentpage" [recordsPerPage]="recordsPerPage"
+                                    [currentRocords]="tableData?.length" [toalRecord]="toalRecord"></app-pagination>
+                                <p *ngIf="!surveyData.length && !loading" class="text-center mt-4">No records found</p>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #reset let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">KML Records</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card">
+                                <div class="card-body mt-1">
+                                    <div class="table-responsive">
+                                        <table id="recent-orders" class="table table-hover table-xl mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-top-0">ID</th>
+                                                    <th class="border-top-0">File Name</th>
+                                                    <th class="border-top-0">Measured Area</th>
+                                                    <th class="border-top-0">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of kml_files">
+                                                    <td>{{data.kml_id}}</td>
+                                                    <td>{{data.file_name}}</td>
+                                                    <td>{{data.measured_area}}</td>
+                                                    <td>
+                                                        <a class="btn btn-sm btn-success round" (click)="download_kml(data)">Download</a>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="!kml_files?.length">
+                                                    <th colspan="2" class="text-danger text-center">
+                                                        <ng-container *ngIf="!loading">No Data Available</ng-container>
+                                                        <ng-container *ngIf="loading">Loading...</ng-container>
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template #imgpopup let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Field Images</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card">
+                                <div class="card-body mt-1">
+                                    <lightgallery [settings]="settings" [onBeforeSlide]="onBeforeSlide">
+                                        <a data-lg-size="480-475-480, 800-791-800, 1406-1390" class="gallery-item"
+                                            *ngFor="let data of img_files" href='{{imgUrl +""+ data.file_name +""+ imgUrlSuffix}}'>
+                                            <img class="img-responsive" src='{{imgUrl +""+ data.file_name +""+ imgUrlSuffix}}' height="200px" class="mb-2">
+                                        </a>
+                                    </lightgallery>
+                                    <ng-container *ngIf="!img_files?.length">
+                                        <ng-container class="text-danger text-center">
+                                            <ng-container *ngIf="!loading">No Data Available</ng-container>
+                                            <ng-container *ngIf="loading">Loading...</ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template #signpopup let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Signature</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card">
+                                <div class="card-body text-center mt-1">
+                                    <lightgallery [settings]="settings" [onBeforeSlide]="onBeforeSlide">
+                                        <a data-lg-size="480-475-480, 800-791-800, 1406-1390" class="gallery-item"
+                                            *ngFor="let data of img_files" href='{{imgUrl +"/"+ data.file_name +""+ imgUrlSuffix}}'>
+                                            <img class="img-responsive" src='{{imgUrl +"/"+ data.file_name +""+ imgUrlSuffix}}' height="200px" class="mb-2">
+                                        </a>
+                                    </lightgallery>
+                                    <ng-container *ngIf="!img_files?.length">
+                                        <ng-container class="text-danger text-center">
+                                            <ng-container *ngIf="!loading">No Data Available</ng-container>
+                                            <ng-container *ngIf="loading">Loading...</ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+
+<ng-container *ngIf="showDetails">
+    <app-chm-view-details [survey_id]="surveyId" [data_id]="detailDataId" [isChild]="true" (emitAction)="onDetailEmit()" [plannedCropData]="dataCrops"></app-chm-view-details>
+</ng-container>

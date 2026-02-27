@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="14px" viewBox="0 0 10 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Mobile_Small</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Icons-2" transform="translate(-370.000000, -76.000000)" stroke="#424345">
+            <g id="Icon/Mobile_Small" transform="translate(371.000000, 77.000000)">
+                <path d="M7,0 L1,0 C0.448,0 0,0.4477 0,1 L0,11 C0,11.5523 0.448,12 1,12 L7,12 C7.552,12 8,11.5523 8,11 L8,1 C8,0.4477 7.552,0 7,0 Z" id="Path"></path>
+                <path d="M4,10 C4.552,10 5,9.5523 5,9 C5,8.4477 4.552,8 4,8 C3.448,8 3,8.4477 3,9 C3,9.5523 3.448,10 4,10 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

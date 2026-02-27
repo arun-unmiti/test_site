@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="23px" viewBox="0 0 22 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Graph view_Unselected</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons-2" transform="translate(-66.000000, -828.000000)">
+            <g id="Icon/Graph-view_Unselected" transform="translate(67.000000, 829.000000)">
+                <path d="M14.7009,9 L16.3142,9 C17.2187,9 18.0117,9.602 18.2515,10.47 L20.1121,17.205 C20.5535,18.802 19.6102,20.453 18.0053,20.893 C17.745,20.964 17.4762,21 17.2062,21 L3.0138,21 C1.3493,21 -2.84217094e-14,19.657 -2.84217094e-14,18 C-2.84217094e-14,17.731 0.0363,17.464 0.1079,17.205 L1.9685,10.47 C2.2083,9.602 3.0013,9 3.9058,9 L5.3864,9" id="Path" stroke="#272B2E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M10.11,16 C13.7936,11.115 15.6353,7.644 15.6353,5.587 C15.6353,2.502 13.1616,0 10.11,0 C7.0584,0 4.5847,2.502 4.5847,5.587 C4.5847,7.644 6.4264,11.115 10.11,16 Z" id="Path" stroke="#272B2E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M10.11,6 C10.9422,6 11.6169,5.328 11.6169,4.5 C11.6169,3.672 10.9422,3 10.11,3 C9.2778,3 8.6031,3.672 8.6031,4.5 C8.6031,5.328 9.2778,6 10.11,6 Z" id="Path" fill="#272B2E" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

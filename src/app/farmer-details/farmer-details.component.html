@@ -1,0 +1,155 @@
+<ng-container *ngIf="loading">
+    <div class="text-center">
+        <div class="loader">
+            <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+        </div>
+    </div>
+</ng-container>
+<div class="row">
+    <div class="col-sm-12 col-lg-12">
+        <div class="card">
+            <div class="card-header bg_dark">
+                <h4 class="mb-0 title text-white float-left">Farmer Details</h4>
+                <button *ngIf="kmlFileInfo?.length && kmlMap" class="btn btn-success font-weight-bold float-right ml-1 mr-1" (click)="downloadFile()"> Download </button>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                       <div class="card" style="box-shadow: none;border: 1px solid #175788;min-height: 615px;z-index: 9;">
+                           <div class="card-body p-1">
+                            <!-- <button class="btn btn-sm btn-primary" (click)="generateKML()">generate KML</button> -->
+                            <!-- <app-leafletmap [height]="height" [editableMap]="true" #map></app-leafletmap> -->
+                            <ng-container *ngIf="showMap">
+                                <app-leafletmap [height]="height" [locationData]="locationData" [showpopup]="false" (pointClick)="onPointClick($event)" #map></app-leafletmap>
+                            </ng-container>
+                           </div>
+                       </div>
+                        <!-- <div class="" id="map" style="width:100%; height: 500px;border:1px solid lightgray"></div> -->
+                    </div>
+
+                    <ng-container *ngIf="selectedFarmer?.id">
+                        <div class="col-sm-12 col-md-4 col-lg-4">
+                            <div class="card" style="box-shadow: none;border: 1px solid #175788;min-height: 615px;z-index: 9;">
+                                <div class="card-header tbl_bg_head border-0">
+                                    <h4 class="mb-0 title text-white  text-center">Plot Details</h4>
+                                </div>
+                                <div class="card-body p-1">
+                                    <div class="table-responsive mb-0" style="height: 555px;">
+                                        <ng-container *ngIf="basicTab">
+                                            <table class="table table-bordered" style="overflow-x: hidden;">
+                                                <thead>
+                                                    <tr *ngFor="let field of basicTab.childern">
+                                                        <th>{{field.label}}</th>
+                                                        <td>{{getData(field)}}</td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-12 col-md-4 col-lg-4">
+                            <div class="row" >
+                               <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="card" style="box-shadow: none;border: 1px solid #175788;min-height: 615px;z-index: 9;">
+                                    <div class="card-header tbl_bg_head border-0">
+                                        <h4 class="mb-0 title  text-white text-center">KML</h4>
+                                    </div>
+                                       <div class="card-body p-1">
+                                         <ng-container *ngIf="kmlFileInfo">
+                                                 <app-leafletmap [height]="heightKLM" [lat]="lat" [lng]="lng" [zoomView]="18" [locationData]="kmlFileInfo" mapType="kml" #kmlMap></app-leafletmap>
+                                        </ng-container>
+                                       </div>
+                                   </div>
+                               </div>
+                            </div>
+                        </div>
+
+                    </ng-container>
+                    
+                    <div class="col-sm-12 col-md-8 col-lg-8" *ngIf="!selectedFarmer?.id">
+                        <h4 class="text-danger text-center">Please select map point</h4>
+                    </div>
+                    
+                    <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="imageFiles?.length && !isAllImgMissed">
+                        <lightgallery [settings]="settings" [onBeforeSlide]="onBeforeSlide">
+                            <a *ngFor="let data of imageFiles"
+                                class="gallery-item"
+                                [href]="projectContext === 'munichre' ? data.safeUrl : imgUrl + data.file_name"
+                                data-lg-size="480-475-480, 800-791-800, 1406-1390">
+                                
+                                <img class="img-responsive mb-2"
+                                        [src]="projectContext === 'munichre' ? data.safeUrl : imgUrl + data.file_name"
+                                        [alt]="projectContext === 'munichre' ? 'Survey Image' : data.file_name"
+                                        height="200px"
+                                        (error)="onNoImage($event, data)" />
+                            </a>
+                        </lightgallery>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="selectedFarmer?.id && tablesTab?.length">
+                        <div *ngFor="let fieldData of tablesTab">
+                        <ng-container *ngIf="fieldData">
+                        <h4><strong>{{fieldData.label}}</strong></h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="tbl_bg_head">
+                                        <th class="text-white" *ngFor="let field of fieldData.childern">{{field.label}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="">
+                                        <td *ngFor="let field of fieldData.childern"> {{getData(field)}} </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        </ng-container>
+                    </div>
+                    </div>
+
+
+
+                    <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="executeDetail">
+                        <h4><strong>Executive Details</strong></h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr class="tbl_bg_head">
+                                        <th class="text-white">Name</th>
+                                        <th class="text-white">Mobile No</th>
+                                        <th class="text-white">Email ID</th>
+                                        <th class="text-white">Date of Survey</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{executeDetail?.first_name}} {{executeDetail?.last_name}}</td>
+                                        <td>{{executeDetail?.phone}}</td>
+                                        <td>{{executeDetail?.email_id}}</td>
+                                        <td>{{selectedFarmer.datetime}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-sm-12 col-md-12 col-lg-12">
+                        <button class="btn btn-primary font-weight-bold float-right  ml-1 mr-1"> Cancel </button>
+                        <button class="btn btn-success font-weight-bold float-right  ml-1 mr-1"> Verify </button>
+                        <button class="btn btn-danger font-weight-bold float-right  ml-1 mr-1"> Reject </button>
+                        <button class="btn btn-purple font-weight-bold float-right ml-1 mr-1"> Save screenshot </button>
+                    </div> -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <pre>{{selectedFarmer | json}}</pre> -->

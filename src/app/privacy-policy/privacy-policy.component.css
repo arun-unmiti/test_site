@@ -1,0 +1,33 @@
+:host .bg-header-gradient {
+    height: 100px;
+}
+
+:host .priacy {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.45;
+    margin-top: 100px;
+    margin-bottom: 60px;
+    text-align: left;
+    color: #6b6f82;
+    background-color: #f9fafd;
+    padding: 20px;
+  }
+
+:host .priacy .card {
+    padding: 20px;
+}
+
+:host .list-items {
+  list-style-type: disc !important;
+  padding-left: 35px;
+}
+
+:host .fixed-main-bottom{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000; /* 1030 */
+}

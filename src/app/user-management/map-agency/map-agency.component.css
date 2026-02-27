@@ -1,0 +1,90 @@
+.list-group-item.title {
+    z-index: 2;
+    color: #fff;
+    background-color: #e32027;
+    border-color: #e32027;
+    position: sticky;
+    top: 0px;
+}
+select.form-control option:hover
+{
+	background-color:#e32027!important;
+}
+
+select option:active {
+	background-color: #e32027!important;
+  }
+
+ul {
+    margin-left: 20px;
+}
+
+/*Treeview Checkbox*/
+ul.tree {
+	padding: 0
+}
+
+.tree * {
+	padding: 0px;
+	margin: 0px;
+	outline: none;
+	font: 16px "Calibri";
+	font-weight: lighter;
+	list-style-type: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.tree input[type=checkbox] {
+	vertical-align: middle !important;
+}
+
+.tree ul {
+	/* display: none; */
+	margin: 4px auto;
+	margin-left: 6px;
+	border-left: 1px dashed #dfdfdf;
+}
+
+
+.tree li {
+	padding: 12px 18px;
+	cursor: pointer;
+	vertical-align: middle;
+	background: #fff;
+}
+
+.tree li:first-child {
+	border-radius: 3px 3px 0 0;
+}
+
+.tree li:last-child {
+	border-radius: 0 0 3px 3px;
+}
+
+.tree .active,
+.active li {
+	background: #efefef;
+}
+
+.tree label {
+	width: 70%;
+	cursor: pointer;
+}
+
+.tree input[type=checkbox] {
+	margin: -2px 6px 0 0px;
+}
+
+.has > label {
+	color: #000;
+}
+
+.tree .total {
+	color: #E13300;
+}
+
+.mh{
+    max-height: 100px;
+}

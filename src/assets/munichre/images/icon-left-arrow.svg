@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="14px" viewBox="0 0 8 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Lefet arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M1.1404344,1.01195699 C0.8708957,0.79632603 0.47758796,0.84002689 0.26195699,1.1095656 C0.04632603,1.3791043 0.09002689,1.77241204 0.3595656,1.98804301 L6.6095656,6.988043 C6.83782725,7.1706523 7.1621727,7.1706523 7.3904344,6.988043 L13.6404344,1.98804301 C13.9099731,1.77241204 13.953674,1.3791043 13.738043,1.1095656 C13.522412,0.84002689 13.1291043,0.79632603 12.8595656,1.01195699 L7,5.6996095 L1.1404344,1.01195699 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Tata-cornell/Table-view-3" transform="translate(-518.000000, -769.000000)">
+            <g id="Icon/Lefet-arrow" transform="translate(522.000000, 776.000000) rotate(90.000000) translate(-522.000000, -776.000000) translate(515.000000, 772.000000)">
+                <g id="Path-24" fill="#424345" fill-rule="nonzero">
+                    <path d="M1.1404344,1.01195699 C0.8708957,0.79632603 0.47758796,0.84002689 0.26195699,1.1095656 C0.04632603,1.3791043 0.09002689,1.77241204 0.3595656,1.98804301 L6.6095656,6.988043 C6.83782725,7.1706523 7.1621727,7.1706523 7.3904344,6.988043 L13.6404344,1.98804301 C13.9099731,1.77241204 13.953674,1.3791043 13.738043,1.1095656 C13.522412,0.84002689 13.1291043,0.79632603 12.8595656,1.01195699 L7,5.6996095 L1.1404344,1.01195699 Z" id="path-3"></path>
+                </g>
+                <g id="Rectangle-Clipped">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="path-3"></g>
+                    <rect id="Rectangle" fill="#26322F" mask="url(#mask-2)" x="-3" y="-6" width="20" height="20"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

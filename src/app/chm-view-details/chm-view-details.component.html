@@ -1,0 +1,1416 @@
+<ng-container *ngIf="loader">
+    <div class="text-center">
+        <div class="loader">
+            <img loading="lazy" class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="printingMsg">
+    <section class="text-center">
+        <section class="loader w-100">
+            <h2 class="w-100 text-dark">{{printingMsg}}</h2>
+        </section>
+    </section>
+</ng-container>
+<div class="card w-100" *ngIf="sLoader">
+                    <div class="card-body">
+                        <app-skeleton-loader [show]="true" [count]="4" [height]="'100px'"></app-skeleton-loader>
+                        <app-skeleton-loader [show]="true" [count]="1" [height]="'500px'"></app-skeleton-loader>
+                    </div>
+</div>
+<!--Start New Details page Design-->
+<div class="row" [ngClass]="isPrinting ? 'printing' : ''" *ngIf="!sLoader">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row" *ngIf="!loader">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="d-flex justify-content-between">
+                            <div class="title_one"><button class="btn btn-sm btn-back mr-2" *ngIf="!isPrinting" (click)="back()"><img loading="lazy"
+                                        src="{{assetsFolder}}/images/icon-left-arrow.svg" class="pointer"
+                                        ></button><span *ngIf="farmerName">Farmer Name :
+                                    {{farmerName}}</span></div>
+                            <div class="title_one">Case ID: {{data?.case_ID}}</div>
+                            <div class="title_one">Data ID: {{data_id}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12" *ngFor="let tab of parentTabs;let i=index">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h4 class="title_one">{{tab.label}} </h4>
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="card-body p-2">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <thead>
+                                    <tr class="tbl_bg_head text-white">
+                                        <th nowrap *ngFor="let child of tab.childs">{{child.label}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td *ngFor="let child of tab.childs" nowrap>
+                                            <div>
+                                                <ng-container [ngSwitch]="child.type">
+                                                    <ng-container *ngSwitchCase="'lkp_state'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_district'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_block'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_village'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_crop'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]
+                                                        ||
+                                                        child.optionMap[0+parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_tehsil'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_grampanchayat'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_season'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_year'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_notified_unit'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_soil_type'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'lkp_ifsc'">
+                                                        {{child.optionMap[parentData['field_'+child.field_id]] || data['field_'+child.field_id]}}
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'file'">
+                                                        <ng-container *ngIf="child.subtype == 'image'">
+                                                            <div *ngIf="parentFieldImages[child.field_id]"
+                                                                class="d-flex flex-column">
+                                                                <ng-container
+                                                                    *ngFor="let img of parentFieldImages[child.field_id];let i = index">
+                                                                    <ng-container *ngIf="img.id">
+                                                                        <ng-container
+                                                                            *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                            <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                src='{{missedImage}}'
+                                                                                (click)="openInGallery(missedImage)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                            <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                        </ng-container>
+                                                                        <ng-template #pdfImage>
+                                                                            <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                        </ng-template>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchCase="'signature'">
+                                                        <div *ngIf="parentFieldImages[child.field_id]"
+                                                            class="d-flex flex-column">
+                                                            <ng-container
+                                                                *ngFor="let img of parentFieldImages[child.field_id];let i = index">
+                                                                <ng-container *ngIf="img.id">
+                                                                    <ng-container
+                                                                        *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                        <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                            src='{{missedImage}}'
+                                                                            (click)="openInGallery(missedImage)"
+                                                                            width="80px" height="80px" class="mb-1">
+                                                                        <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                        <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                            src='{{imgUrl + img.file_name +imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                            (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                            width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                    </ng-container>
+                                                                    <ng-template #pdfImage>
+                                                                        <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                            src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                            (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                            width="80px" height="80px" class="mb-1">
+                                                                        <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                            src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                            (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                            width="80px" height="80px" class="mb-1">
+                                                                    </ng-template>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngSwitchDefault>
+                                                        {{parentData['field_'+child.field_id]}}
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12" *ngFor="let tab of tabs;let i=index">
+        <ng-container *ngIf="(!isEditable && [mediaField, signatureField].includes(+tab.field_id)) && (!showMedia || !showSignature)">
+            <div class="card" *ngIf="!showMedia && tab.field_id == mediaField">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                            <button class="btn btn_apply text-white btn-sm" (click)="showMediaImages()">View {{tab.label}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="!showSignature && tab.field_id == signatureField">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                            <button class="btn btn_apply text-white btn-sm" (click)="showSignatureImages()">View {{tab.label}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="(isEditable || ((tab.field_id != mediaField || showMedia) && (tab.field_id != signatureField || showSignature)))">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4 class="title_one">{{tab.label}} </h4>
+                </div>
+                <div *ngIf="i == 0 && !isPrinting">
+                    <button *ngIf="!isEditable && data?.approved_reject != 1" class="btn btn_apply text-white btn-sm" (click)="onEditDetail()">
+                        Edit Details </button>
+                    <button class="btn btn-sm btn-danger mx-1" *ngIf="!isEditable" (click)="exportPDF()" hidden="true">PDF</button>
+                </div>
+            </div>
+   
+            <div class="card mt-2">
+                <div class="card-body p-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr class="tbl_bg_head text-white">
+                                            <th nowrap *ngFor="let child of tab.childs">{{child.label}}
+                                                <ng-container *ngIf="isEditable">
+                                                    <ng-container [ngSwitch]="child.type">
+                                                        <ng-container *ngSwitchCase="'file'">
+                                                            <ng-container *ngIf="child.subtype == 'image'">
+                                                                <ng-container
+                                                                    *ngIf="!(fieldImages[child.field_id] && fieldImages[child.field_id].length >= +child.maxlength)">
+                                                                    <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                        [attr.data-type]="child.type"
+                                                                        [attr.data-subtype]="child.subtype"
+                                                                        [hidden]="true " type="file" #imgInput
+                                                                        [accept]="typeAccept"
+                                                                        (input)="onNewImageAdded($event, child.field_id)" />
+                                                                    <button class="btn btn-sm btn-success add_btn_fix"
+                                                                        (click)="onImageAddClick(imgInput)"><i
+                                                                            class="fa fa-plus plus-icon-fix"></i></button>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'signature'">
+                                                            <ng-container
+                                                                *ngIf="!(fieldImages[child.field_id] && fieldImages[child.field_id].length)">
+                                                                <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype" [hidden]="true "
+                                                                    type="file" #imgInput [accept]="typeAccept"
+                                                                    (input)="onNewImageAdded($event, child.field_id)" />
+                                                                <button class="btn btn-sm btn-success add_btn_fix"
+                                                                    (click)="onImageAddClick(imgInput)"><i
+                                                                        class="fa fa-plus plus-icon-fix"></i></button>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td *ngFor="let child of tab.childs" nowrap>
+                                                <ng-container *ngIf="!child.noEditable">
+                                                    <div [hidden]="!isEditable">
+                                                        <ng-container [ngSwitch]="child.type">
+                                                            <ng-container *ngSwitchCase="'text'">
+                                                                <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" type="text"
+                                                                    [attr.maxlength]="child.maxlength"
+                                                                    class="form-control" [required]="child.required"
+                                                                    (change)="onFiedChange($event,child.type, child.field_id)">
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    provide value</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'kml_location'">
+                                                                <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" type="text"
+                                                                    [attr.maxlength]="child.maxlength"
+                                                                    class="form-control" [required]="child.required"
+                                                                    (change)="onFiedChange($event,child.type, child.field_id)">
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    provide value</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'survey_intimation_no'">
+                                                                <div class="bg-light p-2" *ngIf="![1,2,3,4].includes(+user?.user_role)">{{surveyIntimationTextData.static}}-{{surveyIntimationTextData.year}}-{{surveyIntimationTextData.state}}-{{surveyIntimationTextData.season}}
+                                                                </div>
+                                                                <input id="intimationNoPrefix" type="text" class="form-control" [style.minWidth]="'200px'" [value]="intimationNoPrefix" (change)="onIntimationPrefixChange()" *ngIf="[1,2,3,4].includes(+user?.user_role)" maxlength="14">
+                                                                <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                        [attr.data-type]="child.type"
+                                                                        [attr.data-subtype]="child.subtype"
+                                                                        [id]="'input_'+child.field_id" type="text"
+                                                                        class="form-control" [required]="child.required"
+                                                                        [attr.data-freeText]="surveyIntimationTextData.freeText"
+                                                                        [attr.maxlength]="projectContext === 'munichre' ? 9 : 8"
+                                                                        (keydown)="onlyNumberKeyDown($event)"
+                                                                        (change)="onFiedChange($event,child.type, child.field_id)">
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'number'">
+                                                                <ng-container [ngSwitch]="child.subtype">
+                                                                    <ng-container *ngSwitchCase="'phone'">
+                                                                        <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                            [attr.data-type]="child.type"
+                                                                            [attr.data-subtype]="child.subtype"
+                                                                            [attr.maxlength]="child.maxlength"
+                                                                            [id]="'input_'+child.field_id" type="tel"
+                                                                            [required]="child.required" class="form-control"
+                                                                            (change)="onFiedChange($event,child.type, child.field_id)">
+                                                                    </ng-container>
+                                                                    <ng-container *ngSwitchDefault>
+                                                                        <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                            [attr.data-type]="child.type"
+                                                                            [attr.data-subtype]="child.subtype"
+                                                                            [id]="'input_'+child.field_id" type="number"
+                                                                            [required]="child.required" class="form-control"
+                                                                            (change)="onFiedChange($event,child.type, child.field_id)" [max]="child.max_val">
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    provide value</small>
+                                                                <small class="text-danger" *ngIf="data['field_'+child.field_id] && child.max_val && +data['field_'+child.field_id] > +child.max_val">
+                                                                    {{child.label}} value must be less than {{child.max_val}}
+                                                                </small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'date'">
+                                                                <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" type="date"
+                                                                    [required]="child.required" class="form-control"
+                                                                    max="2028-12-31"
+                                                                    min="2022-01-01"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    provide value</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'textarea'">
+                                                                <textarea [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)" [attr.maxlength]="child.maxlength"></textarea>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    provide value</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'select'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">
+                                                                        {{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'radio-group'">
+                                                                <div [id]="'input_'+child.field_id">
+                                                                    <div *ngFor="let option of child.options">
+                                                                        <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                            [attr.data-type]="child.type"
+                                                                            [attr.data-subtype]="child.subtype" type="radio"
+                                                                            [required]="child.required"
+                                                                            [attr.data-option-value]="option.value"
+                                                                            [value]="option.value"
+                                                                            [name]="'field_'+child.field_id"
+                                                                            (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                        {{option.label}}
+                                                                    </div>
+                                                                </div>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_state'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_district'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_block'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_village'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_crop'">
+                                                                <ng-container *ngIf="!isCropLoading">
+                                                                    <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                        [attr.data-type]="child.type"
+                                                                        [attr.data-subtype]="child.subtype"
+                                                                        [id]="'input_'+child.field_id" [required]="child.required"
+                                                                        class="form-control"
+                                                                        (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                        <option value="">Select an option</option>
+                                                                        <option *ngFor="let option of child.options"
+                                                                            [attr.data-option-value]="option.value"
+                                                                            [value]="option.value">{{option.label}}</option>
+                                                                    </select>
+                                                                    <small class="text-danger" *ngIf="child.invalid">Please
+                                                                        select an option</small>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="isCropLoading">
+                                                                    <p>Crop options are loading please wait...</p>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'product_crop'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_tehsil'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_grampanchayat'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_season'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_year'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_notified_unit'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)"
+                                                                    disabled>
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_soil_type'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'lkp_ifsc'">
+                                                                <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [id]="'input_'+child.field_id" [required]="child.required"
+                                                                    class="form-control"
+                                                                    (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    <option value="">Select an option</option>
+                                                                    <option *ngFor="let option of child.options"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value">{{option.label}}</option>
+                                                                </select>
+                                                                <small class="text-danger" *ngIf="child.invalid">Please
+                                                                    select an option</small>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'file'">
+                                                                <ng-container *ngIf="child.subtype == 'image'">
+                                                                    <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                                    <div *ngIf="fieldImages[child.field_id]"
+                                                                        class="d-flex flex-column">
+                                                                        <ng-container
+                                                                            *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                            <ng-container *ngIf="img.id; else newImage">
+                                                                                <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                                        <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                            [attr.data-type]="child.type"
+                                                                                            [attr.data-subtype]="child.subtype"
+                                                                                            [hidden]="true" type="file" #imgUpdateInput
+                                                                                            [accept]="typeAccept"
+                                                                                            (input)="onNewImageUpdated($event, img)">
+                                                                                            <button class="btn-primary cross-btn-fix"
+                                                                                                type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                                        </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                                    <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                    src='{{missedImage}}'
+                                                                                    (click)="openInGallery(missedImage)"
+                                                                                    width="80px" height="80px" class="mb-1">
+                                                                                    <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                    <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                        (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                        width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                </ng-container>
+                                                                                <ng-template #pdfImage>
+                                                                                    <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                        (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                    <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                        (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                </ng-template>
+                                                                            </ng-container>
+                                                                            <ng-template #newImage>
+                                                                                <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                                <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                    <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                    [attr.data-type]="child.type"
+                                                                                    [attr.data-subtype]="child.subtype"
+                                                                                    [hidden]="true" type="file" #imgUpdateInput
+                                                                                    [accept]="typeAccept"
+                                                                                    (input)="onNewImageUpdated($event, img)">
+                                                                                    <button class="btn-primary cross-btn-fix"
+                                                                                        type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                                    <img loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src='{{img.file_name}}'
+                                                                                        (click)="openInGallery(img.file_name)"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                </ng-container>
+                                                                                <ng-template #pdfImage>
+                                                                                    <img loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                        (click)="openInGallery(img.file_name)"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                </ng-template>
+                                                                            </ng-template>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchCase="'signature'">
+                                                                <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                                <div *ngIf="fieldImages[child.field_id]"
+                                                                    class="d-flex flex-column">
+                                                                    <ng-container
+                                                                        *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                        <ng-container *ngIf="img.id; else newImage">
+                                                                            <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                                        <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                            [attr.data-type]="child.type"
+                                                                                            [attr.data-subtype]="child.subtype"
+                                                                                            [hidden]="true" type="file" #imgUpdateInput
+                                                                                            [accept]="typeAccept"
+                                                                                            (input)="onNewImageUpdated($event, img)">
+                                                                                            <button class="btn-primary cross-btn-fix"
+                                                                                                type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                                        </ng-container>
+                                                                                    <ng-container
+                                                                                    *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                                    <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                        src='{{missedImage}}'
+                                                                                        (click)="openInGallery(missedImage)"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                    <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                    <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                        (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                        width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                </ng-container>
+                                                                                <ng-template #pdfImage>
+                                                                                    <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                        (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                    <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                        (click)="openInGallery(img.file_name)"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                </ng-template>
+                                                                        </ng-container>
+                                                                        <ng-template #newImage>
+                                                                            <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                            <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                [attr.data-type]="child.type"
+                                                                                [attr.data-subtype]="child.subtype"
+                                                                                [hidden]="true" type="file" #imgUpdateInput
+                                                                                [accept]="typeAccept"
+                                                                                (input)="onNewImageUpdated($event, img)">
+                                                                                <button class="btn-primary cross-btn-fix"
+                                                                                    type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                            </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                                <img loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                    src='{{img.file_name}}'
+                                                                                    (click)="openInGallery(img.file_name)"
+                                                                                    width="80px" height="80px" class="mb-1">
+                                                                            </ng-container>
+                                                                            <ng-template #pdfImage>
+                                                                                <img loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                    src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                    (click)="openInGallery(img.file_name)"
+                                                                                    width="80px" height="80px" class="mb-1">
+                                                                            </ng-template>
+                                                                        </ng-template>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngSwitchDefault>{{data['field_'+child.field_id]}}
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </div>
+                                                </ng-container>
+                                                <div [hidden]="isEditable && !child.noEditable">
+                                                    <ng-container [ngSwitch]="child.type">
+                                                        <ng-container *ngSwitchCase="'lkp_state'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_district'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_block'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_village'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_crop'">
+                                                            <ng-container *ngIf="child && data && data['field_'+child.field_id]">
+                                                                {{child.optionMap[data['field_'+child.field_id]]
+                                                                ||
+                                                                child.optionMap[0+data['field_'+child.field_id]]}}
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'product_crop'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_tehsil'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_grampanchayat'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_season'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_year'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_notified_unit'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_soil_type'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_ifsc'">
+                                                            {{child.optionMap[data['field_'+child.field_id]] || data['field_'+child.field_id]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'file'">
+                                                            <ng-container *ngIf="child.subtype == 'image'">
+                                                                <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                                <div *ngIf="fieldImages[child.field_id]"
+                                                                    class="d-flex flex-column">
+                                                                    <ng-container
+                                                                        *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                        <ng-container *ngIf="img.id">
+                                                                            <ng-container
+                                                                                *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                                <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                    src='{{missedImage}}'
+                                                                                    (click)="openInGallery(missedImage)"
+                                                                                    width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                    src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                    (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                    width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                            </ng-container>
+                                                                            <ng-template #pdfImage>
+                                                                                <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                    src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                    (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                    width="80px" height="80px" class="mb-1">
+                                                                                <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                    src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                    (click)="openInGallery(imgUrl + img.file_name +imgUrlSuffix)"
+                                                                                    width="80px" height="80px" class="mb-1">
+                                                                            </ng-template>
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'signature'">
+                                                            <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                            <div *ngIf="fieldImages[child.field_id]"
+                                                                class="d-flex flex-column">
+                                                                <ng-container
+                                                                    *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                    <ng-container *ngIf="img.id">
+                                                                        <ng-container
+                                                                            *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                            <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                src='{{missedImage}}'
+                                                                                (click)="openInGallery(missedImage)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                            <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                        </ng-container>
+                                                                        <ng-template #pdfImage>
+                                                                            <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                        </ng-template>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchDefault>{{data['field_'+child.field_id]}}
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
+            <ng-container *ngFor="let child of tab.childs">
+                <ng-container *ngIf="child?.childs?.length && data['field_'+child.field_id] && child.showChild">
+                    <ng-container *ngTemplateOutlet="showChild1;context:{'field': child}">
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="!(showMapContainer || isEditable) && !isPrinting && !['8', '9', '10', '11'].includes(survey_id.toString())">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xl-12 text-center">
+                        <button class="btn btn_apply text-white btn-sm" *ngIf="!showMapContainer" (click)="showMapContainer=true"> View KML</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="showMapContainer || isEditable">
+        <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="data && showMap && !isPrinting">
+            <div class="card">
+                <div class="card-body p-2">
+                    <div class="w-100 text-right">
+                        <button class="btn btn_apply text-white btn-sm" *ngIf="showMapContainer" (click)="showMapContainer=false"> Hide KML</button>
+                    </div>
+                    <ng-container *ngIf="isEditable">
+                        <app-edit-kml (action)="onKMLAction($event)" [survey_id]="survey_id" [data]="data"
+                            [editableMap]="isEditable" [areaIds]="districtIds" [geoJsonData]="geoJsonData"></app-edit-kml>
+                    </ng-container>
+                    <ng-container *ngIf="!isEditable">
+                        <app-edit-kml (action)="onKMLAction($event)" [survey_id]="survey_id" [data]="data" [areaIds]="districtIds" [geoJsonData]="geoJsonData"></app-edit-kml>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+   
+        <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="data && showMap && isPrinting">
+            <div class="card">
+                <div class="card-body p-2 text-center">
+                    <img [src]="mapImgSrc" alt="map image" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="!isEditable && !isPrinting">
+        <div class="card" *ngIf="data && (data?.approved_reject != 1 || (data?.approved_reject != null && [1,2,3,4].includes(+user?.user_role)) || (data?.approved_reject != 0 && ([1,2,3,4].includes(+user?.user_role) || data?.approved_reject == null)))">
+            <div class="card-body">
+                <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'75px'"></app-skeleton-loader>
+                <div class="row" *ngIf="!imageLoader">
+                    <div class="col-sm-12 col-md-6 col-xl-6 pt-2">
+                        <strong>
+                            Do you want to change status?
+                        </strong>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-6 text-right">
+                        <button *ngIf="!data?.approved_reject && data?.approved_reject != 0" class="btn btn-primary mr-1"
+                            (click)="updateStatus('approve_data')">Approve</button>
+                        <button *ngIf="data?.approved_reject != null && [1,2,3,4].includes(+user?.user_role)"
+                            class="btn btn-info mr-1" (click)="updateStatus('revert_approve_data')">Revert</button>
+                        <button *ngIf="data?.approved_reject != 0 && ([1,2,3,4].includes(+user?.user_role) || data?.approved_reject == null)" class="btn btn-danger mr-1"
+                            (click)="updateStatus('reject_data')">Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End New Details page Design-->
+<ng-template #showChild1 let-tab="field">
+    <div class="ml-4 row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4 class="title_one">{{tab.label}}</h4>
+                </div>
+            </div>
+            <div class="card mt-2">
+                <div class="card-body p-2">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr class="tbl_bg_head text-white">
+                                            <th nowrap *ngFor="let child of tab.childs">{{child.label}}
+                                                <ng-container *ngIf="isEditable">
+                                                    <ng-container [ngSwitch]="child.type">
+                                                        <ng-container *ngSwitchCase="'file'">
+                                                            <ng-container *ngIf="child.subtype == 'image'">
+                                                                <ng-container
+                                                                    *ngIf="!(fieldImages[child.field_id] && fieldImages[child.field_id].length >= +child.maxlength)">
+                                                                    <input
+                                                                        [attr.data-field-id]="'field_'+child.field_id"
+                                                                        [attr.data-type]="child.type"
+                                                                        [attr.data-subtype]="child.subtype"
+                                                                        [hidden]="true" type="file" #imgInput
+                                                                        [accept]="typeAccept"
+                                                                        (input)="onNewImageAdded($event, child.field_id)" />
+                                                                    <button class="btn btn-sm btn-success add_btn_fix"
+                                                                        (click)="onImageAddClick(imgInput)"><i
+                                                                            class="fa fa-plus plus-icon-fix"></i></button>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'signature'">
+                                                            <ng-container
+                                                                *ngIf="!(fieldImages[child.field_id] && fieldImages[child.field_id].length)">
+                                                                <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                    [attr.data-type]="child.type"
+                                                                    [attr.data-subtype]="child.subtype"
+                                                                    [hidden]="true " type="file" #imgInput
+                                                                    [accept]="typeAccept"
+                                                                    (input)="onNewImageAdded($event, child.field_id)" />
+                                                                <button class="btn btn-sm btn-success add_btn_fix"
+                                                                    (click)="onImageAddClick(imgInput)"><i
+                                                                        class="fa fa-plus plus-icon-fix"></i></button>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td *ngFor="let child of tab.childs" nowrap>
+                                                <div [hidden]="!isEditable">
+                                                    <ng-container [ngSwitch]="child.type">
+                                                        <ng-container *ngSwitchCase="'text'">
+                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                [attr.data-type]="child.type"
+                                                                [attr.data-subtype]="child.subtype"
+                                                                [id]="'input_'+child.field_id" type="text"
+                                                                class="form-control" [disabled]="child.disabled"
+                                                                [required]="child.required"
+                                                                [attr.maxlength]="child.maxlength"
+                                                                (change)="onFiedChange($event,child.type, child.field_id)">
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                provide value</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'kml_location'">
+                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                [attr.data-type]="child.type"
+                                                                [attr.data-subtype]="child.subtype"
+                                                                [id]="'input_'+child.field_id" type="text"
+                                                                class="form-control" [disabled]="child.disabled"
+                                                                [required]="child.required"
+                                                                [attr.maxlength]="child.maxlength"
+                                                                (change)="onFiedChange($event,child.type, child.field_id)">
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                provide value</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'number'">
+                                                            <ng-container [ngSwitch]="child.subtype">
+                                                                <ng-container *ngSwitchCase="'phone'">
+                                                                    <input
+                                                                        [attr.data-field-id]="'field_'+child.field_id"
+                                                                        [attr.data-type]="child.type"
+                                                                        [attr.data-subtype]="child.subtype"
+                                                                        [id]="'input_'+child.field_id"
+                                                                        [disabled]="child.disabled" type="tel"
+                                                                        [attr.maxlength]="child.maxlength"
+                                                                        [required]="child.required" class="form-control"
+                                                                        (change)="onFiedChange($event,child.type, child.field_id)">
+                                                                </ng-container>
+                                                                <ng-container *ngSwitchDefault>
+                                                                    <input
+                                                                        [attr.data-field-id]="'field_'+child.field_id"
+                                                                        [attr.data-type]="child.type"
+                                                                        [attr.data-subtype]="child.subtype"
+                                                                        [id]="'input_'+child.field_id"
+                                                                        [disabled]="child.disabled" type="number"
+                                                                        [required]="child.required" class="form-control" [max]="child.max_val"
+                                                                        (change)="onFiedChange($event,child.type, child.field_id)">
+                                                                </ng-container>
+                                                            </ng-container>
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                provide value</small>
+                                                                <small class="text-danger" *ngIf="data['field_'+child.field_id] && child.max_val && +data['field_'+child.field_id] > +child.max_val">
+                                                                    {{child.label}} value must be less than {{child.max_val}}
+                                                                </small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'date'">
+                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                [attr.data-type]="child.type"
+                                                                [attr.data-subtype]="child.subtype"
+                                                                [id]="'input_'+child.field_id"
+                                                                max="2028-12-31"
+                                                                min="2022-01-01"
+                                                                [disabled]="child.disabled" type="date"
+                                                                [required]="child.required" class="form-control"
+                                                                (input)="onFiedChange($event,child.type, child.field_id)">
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                provide value</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'textarea'">
+                                                            <textarea [attr.data-field-id]="'field_'+child.field_id"
+                                                                [attr.data-type]="child.type"
+                                                                [attr.data-subtype]="child.subtype"
+                                                                [disabled]="child.disabled"
+                                                                [id]="'input_'+child.field_id"
+                                                                [required]="child.required" class="form-control"
+                                                                (input)="onFiedChange($event,child.type, child.field_id)" [attr.maxlength]="child.maxlength"></textarea>
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                provide value</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'select'">
+                                                           
+                                                            <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                [attr.data-type]="child.type"
+                                                                [attr.data-subtype]="child.subtype"
+                                                                [id]="'input_'+child.field_id"
+                                                                [disabled]="child.disabled" [required]="child.required"
+                                                                class="form-control"
+                                                                (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                <option value="">Select an option</option>
+                                                                <option *ngFor="let option of child.options"
+                                                                    [attr.data-option-value]="option.value"
+                                                                    [value]="option.value">
+                                                                    {{option.label}}</option>
+                                                            </select>
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                select an option</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'radio-group'">
+                                                            <div [id]="'input_'+child.field_id">
+                                                                <div *ngFor="let option of child.options">
+                                                                    <input
+                                                                        [attr.data-field-id]="'field_'+child.field_id"
+                                                                        [attr.data-type]="child.type"
+                                                                        [attr.data-subtype]="child.subtype" type="radio"
+                                                                        [disabled]="child.disabled"
+                                                                        [required]="child.required"
+                                                                        [name]="'field_'+child.field_id"
+                                                                        [attr.data-option-value]="option.value"
+                                                                        [value]="option.value"
+                                                                        (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                    {{option.label}}
+                                                                </div>
+                                                            </div>
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                select an option</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'lkp_crop'">
+                                                            <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                [attr.data-type]="child.type"
+                                                                [attr.data-subtype]="child.subtype"
+                                                                [id]="'input_'+child.field_id"
+                                                                [disabled]="child.disabled" [required]="child.required"
+                                                                class="form-control"
+                                                                (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                <option value="">Select an option</option>
+                                                                <option *ngFor="let option of child.options"
+                                                                    [attr.data-option-value]="option.value"
+                                                                    [value]="option.value">{{option.label}}</option>
+                                                            </select>
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                select an option</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'product_crop'">
+                                                            <select [attr.data-field-id]="'field_'+child.field_id"
+                                                                [attr.data-type]="child.type"
+                                                                [attr.data-subtype]="child.subtype"
+                                                                [id]="'input_'+child.field_id"
+                                                                [disabled]="child.disabled" [required]="child.required"
+                                                                class="form-control"
+                                                                (input)="onFiedChange($event,child.type, child.field_id)">
+                                                                <option value="">Select an option</option>
+                                                                <option *ngFor="let option of child.options"
+                                                                    [attr.data-option-value]="option.value"
+                                                                    [value]="option.value">{{option.label}}</option>
+                                                            </select>
+                                                            <small class="text-danger" *ngIf="child.invalid">Please
+                                                                select an option</small>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'file'">
+                                                            <ng-container *ngIf="child.subtype == 'image'">
+                                                                <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                                <div *ngIf="fieldImages[child.field_id]"
+                                                                    class="d-flex flex-column">
+                                                                    <ng-container
+                                                                        *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                        <ng-container *ngIf="img.id; else newImage">
+                                                                            <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                                        <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                            [attr.data-type]="child.type"
+                                                                                            [attr.data-subtype]="child.subtype"
+                                                                                            [hidden]="true" type="file" #imgUpdateInput
+                                                                                            [accept]="typeAccept"
+                                                                                            (input)="onNewImageUpdated($event, img)">
+                                                                                            <button class="btn-primary cross-btn-fix"
+                                                                                                type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                                        </ng-container>
+                                                                                    <ng-container
+                                                                                    *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                                    <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                        src='{{missedImage}}'
+                                                                                        (click)="openInGallery(missedImage)"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                    <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                    <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                        (click)="openInGallery(img.file_name)"
+                                                                                        width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                                </ng-container>
+                                                                                <ng-template #pdfImage>
+                                                                                    <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                        (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                    <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                        src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                        (click)="openInGallery(img.file_name)"
+                                                                                        width="80px" height="80px" class="mb-1">
+                                                                                </ng-template>
+                                                                        </ng-container>
+                                                                        <ng-template #newImage>
+                                                                            <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                                        <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                            [attr.data-type]="child.type"
+                                                                                            [attr.data-subtype]="child.subtype"
+                                                                                            [hidden]="true" type="file" #imgUpdateInput
+                                                                                            [accept]="typeAccept"
+                                                                                            (input)="onNewImageUpdated($event, img)">
+                                                                                            <button class="btn-primary cross-btn-fix"
+                                                                                                type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                                        </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                                <img loading="lazy"
+                                                                                    class="img-responsive" [class.blink]="img.blink"
+                                                                                    src='{{img.file_name}}'
+                                                                                    (click)="openInGallery(img.file_name)"
+                                                                                    width="80px" height="80px"
+                                                                                    class="mb-1">
+                                                                            </ng-container>
+                                                                            <ng-template #pdfImage>
+                                                                                <img loading="lazy"
+                                                                                    class="img-responsive" [class.blink]="img.blink"
+                                                                                    src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                    (click)="openInGallery(img.file_name)"
+                                                                                    width="80px" height="80px"
+                                                                                    class="mb-1">
+                                                                            </ng-template>
+                                                                        </ng-template>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'signature'">
+                                                            <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                            <div *ngIf="fieldImages[child.field_id]"
+                                                                class="d-flex flex-column">
+                                                                <ng-container
+                                                                    *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                    <ng-container *ngIf="img.id; else newImage">
+                                                                        <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                                        <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                            [attr.data-type]="child.type"
+                                                                                            [attr.data-subtype]="child.subtype"
+                                                                                            [hidden]="true" type="file" #imgUpdateInput
+                                                                                            [accept]="typeAccept"
+                                                                                            (input)="onNewImageUpdated($event, img)">
+                                                                                            <button class="btn-primary cross-btn-fix"
+                                                                                                type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                            <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                src='{{missedImage}}'
+                                                                                (click)="openInGallery(missedImage)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                            <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                        </ng-container>
+                                                                        <ng-template #pdfImage>
+                                                                            <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                        </ng-template>
+                                                                    </ng-container>
+                                                                    <ng-template #newImage>
+                                                                        <button *ngIf="!img.blink && !img.isMissed" class="btn-danger cross-btn-fix"
+                                                                                    type="button" data-lg-id="none"
+                                                                                    (click)="onDeleteClick($event,gallery, i, child.field_id)"><i
+                                                                                        class="fa fa-close"></i></button>
+                                                                                        <ng-container *ngIf="!img.blink && img.isMissed">
+                                                                                            <input [attr.data-field-id]="'field_'+child.field_id"
+                                                                                            [attr.data-type]="child.type"
+                                                                                            [attr.data-subtype]="child.subtype"
+                                                                                            [hidden]="true" type="file" #imgUpdateInput
+                                                                                            [accept]="typeAccept"
+                                                                                            (input)="onNewImageUpdated($event, img)">
+                                                                                            <button class="btn-primary cross-btn-fix"
+                                                                                                type="button" data-lg-id="none" (click)="imgUpdateInput.click()"> <i class="fa fa-refresh text-white"></i></button>
+                                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                            <img loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src='{{img.file_name}}'
+                                                                                (click)="openInGallery(img.file_name)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                        </ng-container>
+                                                                        <ng-template #pdfImage>
+                                                                            <img loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(img.file_name)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                        </ng-template>
+                                                                    </ng-template>
+                                                                </ng-container>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchDefault>{{data['field_'+child.field_id]}}
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </div>
+                                                <div [hidden]="isEditable">
+                                                    <ng-container [ngSwitch]="child.type">
+                                                        <ng-container *ngSwitchCase="'lkp_crop'">
+                                                            {{child.optionMap[data['field_'+child.field_id]]
+                                                            ||
+                                                            child.optionMap[0+data['field_'+child.field_id]]}}
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'file'">
+                                                            <ng-container *ngIf="child.subtype == 'image'">
+                                                                <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                                <div *ngIf="fieldImages[child.field_id]"
+                                                                    class="d-flex flex-column">
+                                                                    <ng-container
+                                                                        *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                        <ng-container *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                            <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                                src='{{missedImage}}'
+                                                                                (click)="openInGallery(missedImage)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                            <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src='{{imgUrl + img.file_name + imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                        </ng-container>
+                                                                        <ng-template #pdfImage>
+                                                                            <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                            <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                                src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                                (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                                width="80px" height="80px" class="mb-1">
+                                                                        </ng-template>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchCase="'signature'">
+                                                            <app-skeleton-loader [show]="imageLoader" [count]="1" [height]="'100px'"></app-skeleton-loader>
+                                                            <div *ngIf="fieldImages[child.field_id] && fieldImages[child.field_id].length"
+                                                                class="d-flex flex-column">
+                                                                <ng-container
+                                                                    *ngFor="let img of fieldImages[child.field_id];let i = index">
+                                                                    <ng-container *ngIf="img.type?.toLowerCase() !=='pdf'; else pdfImage">
+                                                                        <img *ngIf="img.isMissed" loading="lazy" class="img-responsive"
+                                                                            src='{{missedImage}}'
+                                                                            (click)="openInGallery(missedImage)"
+                                                                            width="80px" height="80px" class="mb-1">
+                                                                        <img *ngIf="!img.isMissed && projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink" [src]="imageBlobUrls[img.id] || missedImage" (click)="openInGallery(imageBlobUrls[img.id] || missedImage)" width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                        <img *ngIf="!img.isMissed && projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                            src='{{imgUrl + img.file_name +imgUrlSuffix + "&timestamp=" + img.timestamp}}'
+                                                                            (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                            width="80px" height="80px" class="mb-1" (error)="onImageError(img)">
+                                                                    </ng-container>
+                                                                    <ng-template #pdfImage>
+                                                                        <img *ngIf="projectContext === 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                            src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                            (click)="openInGallery(imageBlobUrls[img.id] || missedImage, 'application/pdf')"
+                                                                            width="80px" height="80px" class="mb-1">
+                                                                        <img *ngIf="projectContext !== 'munichre'" loading="lazy" class="img-responsive" [class.blink]="img.blink"
+                                                                            src="{{assetsFolder}}/images/pdf-icon.png"
+                                                                            (click)="openInGallery(imgUrl + img.file_name + imgUrlSuffix)"
+                                                                            width="80px" height="80px" class="mb-1">
+                                                                    </ng-template>
+                                                                  
+                                                                </ng-container>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngSwitchDefault>{{data['field_'+child.field_id]}}
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngFor="let child of tab.childs">
+                <ng-container *ngIf="child?.childs?.length && data['field_'+child.field_id] && child.showChild">
+                    <ng-container *ngTemplateOutlet="showChild1;context:{'field': child}">
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</ng-template>
+<ng-template #galleryModel let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="btn btn-sm btn-dark" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+        <div class="w-100 text-center">
+            <ng-container *ngIf="!isPdf">
+                <img [src]="galleryUrl" class="modal-img" alt="gallery-url" (click)="toggleZoom($event)" />
+            </ng-container>
+            <ng-container *ngIf="isPdf">
+                <div [innerHtml]="galleryUrl | safe: 'html'"></div>
+                <!-- <iframe #pdfBox class="w-100" [attr.src]="galleryUrl | safe: 'url'"></iframe> -->
+            </ng-container>
+        </div>
+    </div>
+</ng-template>

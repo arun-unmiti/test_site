@@ -1,0 +1,6 @@
+.pagination-container {
+    height: 40px;
+    border-top: 1px solid rgb(148, 141, 141);
+    border-bottom: 1px solid rgb(148, 141, 141);
+    font-weight: 500;
+}

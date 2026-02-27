@@ -1,0 +1,446 @@
+<ng-container *ngIf="loading && !isFileData">
+    <div class="text-center">
+        <div class="loader">
+            <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+        </div>
+    </div>
+</ng-container>
+
+<div class="row stricky">
+    <div class="col-sm-12 col-lg-12 col-md-12">
+        <div class="card p-2">
+            <div class="filter-card-title" (click)="isFilterCollapsed = !isFilterCollapsed" [class.close-toggle]="isFilterCollapsed">
+                <div>
+                    Apply Filters
+                </div>
+                <div class="toggle-img-area">
+                    <img src="{{assetsFolder}}/images/Nav_bar_close.svg" alt="toggle" class="toggle-img">
+                </div>
+            </div>
+            <div class="card-body p-2" [ngbCollapse]="isFilterCollapsed">
+                <div class="row align-items-end justify-content-start">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Year <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="singleYear" (ngModelChange)="onYearSelect($event)">
+                                <option value="">Select Year</option>
+                                <option *ngFor="let data of yearOptions" [value]="data.id">{{data.year}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Season <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="singleseason" (ngModelChange)="onSeasonSelect($event)">
+                                <option value="">Select Season</option>
+                                <option *ngFor="let data of seasonOptions" [value]="data.id">{{data.season_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div *ngIf="projectContext === 'munichre' && ['1','2'].includes(user?.user_role)" class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Client <sup class="text-danger">*</sup></label>
+                            <p-multiSelect [options]="clientData" [(ngModel)]="selectedClient" (ngModelChange)="onClientSelect($event)"
+                            defaultLabel="Select Client" optionLabel="UNIT_NAME" title="Select client" optionValue="UNIT_ID">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="['1','2','3','4','5','6'].includes(user?.user_role)">
+                        <div class="p-fluid p-grid">
+                            <label for="" class="text-left">Agency <sup class="text-danger">*</sup></label>
+                            <p-multiSelect [options]="agencyData" [(ngModel)]="selectedAgency" (ngModelChange)="onAgencyChange($event)"
+                            defaultLabel="Select Agency" optionLabel="agency_name" title="Select Agency" optionValue="agency_id">
+                            </p-multiSelect>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="!isStateLoading">
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">State</label>
+                                <span class="p-float-label">
+                                    <p-multiSelect [baseZIndex]="500" defaultLabel="All States"
+                                        [options]="states" [(ngModel)]="selectedState" optionLabel="state_name"
+                                        (ngModelChange)="onStateChange($event)" [disabled]="!deactiveField">
+                                    </p-multiSelect>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">District</label>
+                                <p-multiSelect [baseZIndex]="500" defaultLabel="All Districts" [showHeader]="true"
+                                    [group]="true" [options]="districtOptions" [(ngModel)]="selectedDistrict"
+                                    optionLabel="district_name" (ngModelChange)="onDistrictChange($event)"
+                                    [disabled]="!districtOptions.length">
+                                    <ng-template let-group pTemplate="group">
+                                        <div class="p-d-flex p-ai-center">
+                                            <span>{{group.state_name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="p-fluid p-grid">
+                                <label for="">Block</label>
+                                <p-multiSelect [baseZIndex]="500" defaultLabel="All Blocks" [showHeader]="true"
+                                    [group]="true" [options]="tehsilOptions" [(ngModel)]="selectedTehsil"
+                                    optionLabel="tehsil_name"
+                                    [disabled]="!tehsilOptions.length">
+                                    <ng-template let-group pTemplate="group">
+                                        <div class="p-d-flex p-ai-center">
+                                            <span>{{group.district_name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="isStateLoading">
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <div class="pt-5 font-weight-bold">Locations are loading...</div>
+                        </div>
+                    </ng-container>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Crop</label>
+                            <p-multiSelect *ngIf="!croploading" [options]="cropOptions" [(ngModel)]="selectedCrop"
+                                        defaultLabel="Crop" optionLabel="crop" title="Select Crops">
+                                    </p-multiSelect>
+                            <div class="mt-2" *ngIf="croploading">Crops are loading please wait...</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
+                        <div class="tab-content top-10px">
+                            <label for="">Date Range</label>
+                            <input #dateRangePicker type="text" name="daterange" class="form-control p-multiselect daterange mt-1"
+                                        [(ngModel)]="selectedDate" [locale]="localeValue"
+                                        [showCustomRangeLabel]="true" [alwaysShowCalendars]="true"
+                                        placeholder="Date" [showClearButton]="true" [showCancel]="true"
+                                        [linkedCalendars]="false" [ranges]="ranges" ngxDaterangepickerMd
+                                        title="Select Date" [hidden]="!selectedAgency?.length"/>
+                            <input type="text" class="form-control daterange" [value]="dateRangePicker.value" disabled [hidden]="selectedAgency?.length"/>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button class="btn btn_apply text-white mt-2 ml-0" (click)="onSearch()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-lg-12">
+        <div class="row" *ngIf="allData?.length || isFileData">
+            <div class="col-sm-12 col-md-9 col-lg-12">
+                <div class="card" style="margin-top: -10px;box-shadow: none;">
+                    <div class="card-body p-1">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <h2 class="title mb-0" style="font-size: 15px;">Crop Cutting Experiment Survey</h2>
+                                <div class="d-flex justify-content-around text-center border p-2 flex-wrap">
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">No of CCE Planned</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{labels?.no_of_cce_plan}}</h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">No of CCEs Co-Witnessed</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{labels?.no_of_cce_co_witnessed}}</h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">Total Exposure</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{abbreviateNumber(labels?.total_exposure) || 0}}</h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">Planned Exposure</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{abbreviateNumber(labels?.planned_exposure) || 0}}</h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">Exposure Covered</h5>
+                                        <h4 class="tbl_num_text_700 mb-0">{{abbreviateNumber(labels?.exposure_covered) || 0}}</h4>
+                                    </div>
+                                    <div class="border-right"></div>
+                                    <div>
+                                        <h5 class="tbl_title_text mb-0">Total State, District, Blocks Visited</h5>
+                                        <h5 class="tbl_title_text mb-0">State <span class="tbl_num_text_700">{{labels?.states}}</span>, District - <span class="tbl_num_text_700">{{labels?.districts}}</span>, Blocks - <span class="tbl_num_text_700">{{labels?.tehsils}}</span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="allData?.length || surveyData?.length || isFileData" class="result-container">
+    <div class="alert-area" *ngIf="isFileData && timestamp">
+        <div class="alert alert-info" role="alert">
+            Displaying data for dates {{projectContext === 'munichre' ? '01/11/2023' : '01/11/2023'}} to {{timestamp}}
+        </div>
+    </div>
+    <ul [destroyOnHide]="false" ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>Data View</a>
+            <ng-template ngbNavContent>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">Loss Ratios (%) over time</h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="Loss_Ratio_over_time" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">Loss Ratios (%)</h4>
+                                        <p class="text-center mb-0"><b>({{locationLabel}} wise Actual/Expected)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="Loss_ratio" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">Loss Ratios (%)</h4>
+                                        <p class="text-center mb-0"><b>(Crop Wise)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="Loss_Ratio_crop_wise" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-6 pr-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">CCE Exposure (Cr)</h4>
+                                        <p class="text-center mb-0"><b>(Planned/Co-Witnessed)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="locationCompletionRatioChart" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-6 pl-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">No of CCE’s</h4>
+                                        <p class="text-center mb-0"><b>(Planned/Co-Witnessed)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="cropCompletionRatioChart" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-6 pr-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">CCE’s Completion</h4>
+                                        <p class="text-center mb-0"><b>(Insurance Unit (%))</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="Ius_all_planned_cce_completed" style="width: 100%;height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-6 pl-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">Claim Amount (Cr)</h4>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="Claim_Amount" style="width: 100%;height: 424px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-11 col-lg-11">
+                                        <h4 class="title text-center">CCE Surveys Progress Update</h4>
+                                        <p class="text-center mb-0"><b>(Loss / No Loss reported)</b></p>
+                                    </div>
+                                    <div class="col-sm-12 col-md-1 col-lg-1">
+                                        <img src="{{assetsFolder}}/images/exclamation-mark.png" class="float-right" height="25px"
+                                            ngbTooltip="Graph information will be updated soon!">
+                                    </div>
+                                </div>
+                                <div class="" [chart]="ius_having_loss_and_no_loss" style="width: 100%;height: 600px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4" *ngIf="isFileData && timestamp">
+                    <div class="alert alert-info" role="alert">
+                        CCE dashboard data last updated on : {{timestamp}}
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2" *ngIf="surveyData?.length">
+            <a ngbNavLink (click)="refreshDetail()">Map View</a>
+            <ng-template ngbNavContent>
+                <app-farmer-details #mapDetail [surveyData]="surveyData" [surveyLocation]="surveyLocation" surveyId="3">
+                </app-farmer-details>
+            </ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+
+<div *ngIf="!allData?.length && !surveyData?.length && !isFileData" class="mt-4">
+    <h4 class="text-danger text-center">To View Data, Please search</h4>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="title text-center">Loss Ratios (%)</h4>
+        <p class="text-center mb-0"><b>(Crop Wise)</b></p>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="" [chart]="Loss_Ratio_all_crop_wise" style="width: 100%;height: 600px;"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #actualExpectedLossModal let-modal>
+    <div class="modal-header">
+        <h4 class="title text-center">Loss Ratios (%)</h4>
+        <p class="text-center mb-0"><b>(Actual/Expected)</b></p>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="" [chart]="Loss_ratio_modal" style="width: 100%;height: 600px;"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #cceExposureModal let-modal>
+    <div class="modal-header">
+        <h4 class="title text-center">CCE Exposure (Cr)</h4>
+        <p class="text-center mb-0"><b>(Planned/Co-Witnessed)</b></p>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="" [chart]="locationCompletionRatioChart_modal" style="width: 100%;height: 600px;"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #noOfCCEModal let-modal>
+    <div class="modal-header">
+        <h4 class="title text-center">No of CCE’s</h4>
+        <p class="text-center mb-0"><b>(Planned/Co-Witnessed)</b></p>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="" [chart]="cropCompletionRatioChart_modal" style="width: 100%;height: 600px;"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #cceProgressModal let-modal>
+    <div class="modal-header">
+        <h4 class="title text-center">CCE Surveys Progress Update</h4>
+        <p class="text-center mb-0"><b>(Loss / No Loss reported)</b></p>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="" [chart]="ius_having_loss_and_no_loss_modal" style="width: 100%;height: 600px;"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

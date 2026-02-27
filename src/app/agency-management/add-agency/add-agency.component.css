@@ -1,0 +1,231 @@
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  .upload_btn {
+        border: none;
+        background-color: transparent;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        color: #272B2E;
+  }
+  
+  .upload_box{
+    background: #FBFBFB;
+    opacity: 0.8;
+    border: 1px dashed rgba(39, 43, 46, 0.3);
+    border-radius: 4px;
+  }
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+  .img_size{
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: #272B2E;
+    opacity: 0.4;
+    text-align: center;
+  }
+  .text-support{
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    color: #272B2E;
+    opacity: 0.4;
+  }
+  /* .form-control.input_type{
+    background: #f8f9fa;
+    border: 1px solid #272b2e4d;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-bottom: 35px;
+  }
+   */
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    opacity: 1;
+    color: #272B2E!important;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #272B2E;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #272B2E;
+  }
+  .fixed-bottom1{
+        position: fixed;
+        right: 0;
+        bottom: -24px;
+        left: 0;
+        z-index: 1;
+  }
+  .btn-cancel{
+    background: #FFFFFF;
+    border: 1px solid #42A2BB;
+    box-sizing: border-box;
+    border-radius: 6px; 
+    margin-right: 20px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    color: #42A2BB;
+  }
+  .btn-next{
+    font-family: Open Sans;
+    font-style: normal;
+    background: #42A2BB;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    color: #FFFFFF;
+  }
+  .form-control.input_type {
+    background: #fff;
+    border: 1px solid #272b2e4d;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-bottom: 35px;
+}
+  .form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 10px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+  ::ng-deep.p-float-label .p-inputwrapper-filled~label, .p-float-label .p-inputwrapper-focus~label, .p-float-label input.p-filled~label, .p-float-label input:focus~label, .p-float-label textarea.p-filled~label, .p-float-label textarea:focus~label{
+    top: 0px!important;
+    left: 15px!important;
+    font-size: 12px!important;
+    background: aliceblue!important;
+} 
+
+::ng-deep.p-dropdown {
+  background: #fff;
+  border: 1px solid #ced4da;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 3px;
+  margin-bottom: 35px;
+}
+::ng-deep.p-inputtext {
+  margin: 0;
+  width: 100%;
+}
+
+.text-danger{
+  margin-top: -35px;
+}
+
+.text-danger-alert{
+  color: #dc3545!important;
+}
+
+.file-custom:after {
+  content: "Choose file...";
+  }
+  .file-custom:before {
+  position: absolute;
+  top: -.075rem;
+  right: -.075rem;
+  bottom: -.075rem;
+  z-index: 6;
+  display: block;
+  content: "Browse";
+  height: 2.5rem;
+  padding: .5rem 1rem;
+  line-height: 1.5;
+  color: #555;
+  background-color: #eee;
+  border: .075rem solid #ddd;
+  border-radius: 0 .25rem .25rem 0;
+  }
+  .file input:focus ~ .file-custom {
+  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
+  }
+
+
+.file-input__input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  /* overflow: hidden; */
+  position: absolute;
+  z-index: -1;
+}
+
+.file-input__label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 12px;
+  background-color: #ea5a5f;
+  box-shadow: 0px 0px 2px #ea5a5f;
+}
+
+::ng-deep.p-float-label label {
+  position: absolute;
+  pointer-events: none;
+  top: 0%!important;
+  left: 14px;
+  background: #fff;
+  margin-top: -.5rem;
+  transition-property: all;
+  transition-timing-function: ease;
+  line-height: 1;
+}
+
+.file-input__label svg {
+  height: 16px;
+  margin-right: 4px;
+}

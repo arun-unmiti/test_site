@@ -1,0 +1,150 @@
+:host .filter-card-title {
+    font-weight: 700!important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1rem;
+      line-height: 1.2;
+      margin: -8px -8px;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 6px 6px 0px 0px;
+      transition: all .5s ease-in-out;
+      color: #fff;
+      background-color: #858687;
+  }
+  
+  :host .toggle-img-area {
+      border: 2px solid;
+      padding: 8px;
+      height: 27px;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-color: #424345;
+      transition: all .5s ease-in-out;
+  }
+
+  :host-context(.munichre) .filter-card-title.close-toggle {
+      background-color: #175788;
+  }
+
+  :host-context(.saksham) .filter-card-title.close-toggle {
+      background-color: #e32027;
+  }
+  
+  :host .filter-card-title.close-toggle .toggle-img-area{
+    border-color: #fff;
+  }
+  
+  :host .filter-card-title .toggle-img {
+    transition:  all .5s ease-in-out;
+    filter: invert(1);
+    transform: rotate(90deg);
+  }
+  
+  :host .filter-card-title.close-toggle .toggle-img {
+    filter: none;
+    transform: rotate(271deg);
+  }
+
+
+  ::ng-deep.p-datatable .p-datatable-header {
+    background: #f8f9fa;
+    color: #495057;
+    border: 1px solid #e9ecef;
+    border-width: 1px 0 1px 0;
+    padding: 1.2rem 1rem;
+    font-weight: 600;
+  }
+  ::ng-deep.p-datatable-thead {
+    position: sticky;
+    top: 0px;
+  }
+  ::ng-deep.p-datatable .p-datatable-thead > tr > th {
+    text-align: left;
+    padding: 1.2rem 1rem;
+    border: 1px solid #e9ecef;
+    border-width: 0 0 1px 0;
+    font-weight: 600;
+    color: #495057;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+  }
+  
+  ::ng-deep.ranges > ul > li > button.active {
+    background-color: #e32027 !important;
+    color: #f8f9fa;
+  }
+  
+  ::ng-deep .md-drppicker {
+    background-color: #ffffff !important;
+  }
+  
+  ::ng-deep .md-drppicker td.start-date {
+    color: #fff;
+    background-color: #e32027 !important;
+  }
+  ::ng-deep .md-drppicker td.end-date {
+    color: #fff;
+    background-color: #e32027;
+  }
+  
+  .date_drop {
+    width: 210px;
+  }
+  
+  ::ng-deep.p-float-label .p-inputwrapper-filled ~ label,
+  .p-float-label .p-inputwrapper-focus ~ label,
+  .p-float-label input.p-filled ~ label,
+  .p-float-label input:focus ~ label,
+  .p-float-label textarea.p-filled ~ label,
+  .p-float-label textarea:focus ~ label {
+    top: 1px !important;
+    left: 15px !important;
+    font-size: 12px !important;
+    background: transparent !important;
+    width: auto;
+  }
+  
+  .form-control.daterange {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 8px) !important;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  
+  ::ng-deep.md-drppicker.double {
+    width: 634px !important;
+    margin-left: -22px !important;
+    margin-top: 0px !important;
+  }
+  
+  ::ng-deep .md-drppicker .clear-button .clear-icon svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    pointer-events: none;
+    top: 0.125em;
+    position: relative;
+    display: none;
+  }
+
+  :host .table-crop-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  :host .ml-table td {
+    vertical-align: middle;
+  }

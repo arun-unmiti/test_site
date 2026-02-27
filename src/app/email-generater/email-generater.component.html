@@ -1,0 +1,29 @@
+<div class="card p-2 mt-2">
+    <div class="card-body">
+        <div class="row align-items-end">
+            <div class="col-sm-4">
+                <label for="client"></label>
+                <select class="form-control" name="client" id="client" [(ngModel)]="selectedClient"
+                    [disabled]="disableSelect">
+                    <option value="">All Clients</option>
+                    <option *ngFor="let data of clientData" [value]="data.UNIT_ID">{{data.UNIT_NAME}}</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="client"></label>
+                <select class="form-control" name="season" id="season" [(ngModel)]="season"
+                    [disabled]="disableSelect" (ngModelChange)="onSeasonChange($event)">
+                    <option *ngFor="let data of seasonList" [value]="data.value">{{data.label}}</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn_apply text-white" [disabled]="disableSelect" (click)="getPlanandCCEData()">{{exportButtonText}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex align-items-stretch justify-content-center email-container">
+    <div class="d-flex flex-cloumn align-items-center justify-content-center text-center">
+        <h2 class="font-weight-bold">{{message}}</h2>
+    </div>
+</div>

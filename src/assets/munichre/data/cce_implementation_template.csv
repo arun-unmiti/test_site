@@ -1,0 +1,7 @@
+Year,Season,State,DISTRICT,TALUKA,RI circle,GP,Village,Notified Unit,Crop,CCE Type,Random no,Longitude, latitude,Farmer Name,Farmer Mobile no,Shape of CCE plot,Dimension of plot
+2022,Kharif,State 1,Beed,Ashti,Dhamngaon,Hakewadi(900684),Birangalwadi(558750),Tehsil Level,Onion,Random,123xxxx,,,Abc XXX,,Square,10*10
+2022,Kharif,State 3,Chikmagalur,Chikmagalur,Ambale,Hariharadalli,Aradavalli,RICircle Level,Potato - RF,Smart sampling,,18.98xxxx,75.746xxxxx,CBZ xxx,,Square,10*10
+2022,Kharif,State 2,Akola,Akot,Asegaon Bazar,Dewulgaon(168981),Deulgaon(529776),RICircle Level,Soybean (Bhat),Random,2345xxx,,,UYX eee,,Square,5*5
+2022,Rabi,State 2,Beed,Ashti,Dhamngaon,Hakewadi(900684),Birangalwadi(558750),Tehsil Level,Onion,Smart sampling,,18.98xxxx,75.746xxxxx,OUD XXX,,Triangle,5
+2022,Rabi,State 2,Akola,Telhara,Pathardi,Manabda(169363),Manabda(529672),RICircle Level,Soybean (Bhat),Random,3456xxx,,,QUY DDD,,Triangle,5
+2022,Rabi,State 2,Akola,Akola,Borgaon Manju,Devali(168881),Devali(530095),RICircle Level,Soybean (Bhat),Smart sampling,,18.982xxx,75.7467xxx,BAX ZZZ,,Triangle,5

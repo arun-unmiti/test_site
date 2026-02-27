@@ -1,0 +1,29 @@
+<div class="row bg-white m-2 p-2 align-items-end justify-content-center">
+    <div class="col-sm-12 col-md-12 co-lg-12">
+        <h4 class="title">Download Excel</h4>
+    </div>
+
+
+
+    <div class="col-sm-12 col-md-8 co-lg-8 mt-4">
+        <label for="">Select Survey <sup class="text-danger">*</sup></label>
+        <select class="form-control" [(ngModel)]="surveyFile">
+            <option value="">Select Survey</option>
+            <option value="survey1.xlsx">Survey 1 (CHM)</option>
+            <option value="survey2.zip">Survey 2 (CLS)</option>
+            <option value="survey3.xlsx">Survey 3 (CCE)</option>
+            <option value="survey4.xlsx">Survey 4 (CHM Revisit)</option>
+            <option value="survey6.xlsx">Survey 6 (Other Activity)</option>
+            <option value="survey7.xlsx">Survey 7 (Two Step Multipicking)</option>
+        </select>
+    </div>
+    <div class="col-sm-12 col-md-4 co-lg-4">
+        <button class=" btn btn_apply text-white mt-3" (click)="downloadExcel(achor)">Download</button>
+    </div>
+
+    <div hidden>
+        <a download #achor></a>
+    </div>
+
+
+</div>

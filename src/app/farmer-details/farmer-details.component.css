@@ -1,0 +1,68 @@
+@import url('https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lightgallery.css');
+@import url('https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lg-zoom.css');
+
+.bg_dark{
+    background-color: #e32027;
+}
+.bg_green{
+    background-color: #E3BA14;
+}
+:host-context(.munichre) .tbl_bg_head{
+    background: #497ba2!important;
+    color: #fff;
+}
+:host-context(.saksham) .tbl_bg_head{
+    background: #e32027!important;
+    color: #fff;
+}
+.btn-purple{
+    background-color: #e5363c;
+    border: 1px solid #e5363c;
+    color: #fff;
+}
+.title_img {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 27px;
+    color: #272B2E;
+}
+.table-bordered td, .table-bordered th {
+    border: 1px solid #20385082!important;
+}
+::ng-deep.owl-carousel .nav-button {
+    height: 50px;
+    width: 25px;
+    position: absolute;
+    top: -12px!important;
+}
+.active{
+    border: 2px solid blue;
+}
+a img {
+    border: 2px solid #000;
+}
+
+.tbl_bg_head > th {
+    white-space: nowrap;
+}
+.table td, .table th {
+    padding: 0.5rem;
+}
+.gallery-item {
+    margin: 5px;
+  }
+  
+  ::ng-deep.lg-outer .lg-inner {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+    background: black;
+    white-space: nowrap;
+  }

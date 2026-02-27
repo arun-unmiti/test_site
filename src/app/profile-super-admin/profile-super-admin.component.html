@@ -1,0 +1,605 @@
+<div class="row">
+    <div class="col-12 mb-2">
+        <h5 class="profile-title text-center">{{labelDetails?.name}} <span
+                class="profile-sub-title">({{labelDetails?.roleName}})</span></h5>
+    </div>
+    <div class="col-sm-12 col-md-3 col-lg-3 mt-1 pr-0" *ngIf="[1,2].includes(+userDetails.user_role)">
+        <div class="card">
+            <div class="card-body">
+                <ul class="d-flex flex-column">
+                    <li class="profile-tab" [class.active]="active==1" (click)="changeTab(1)"
+                        *ngIf="[1,2].includes(+userDetails.user_role)">
+                        <div>Dashboard Log</div>
+                    </li>
+                    <li class="profile-tab" [class.active]="active==2" (click)="changeTab(2)"
+                        *ngIf="[1,2].includes(+userDetails.user_role)">
+                        <div>Email Log</div>
+                    </li>
+                    <!-- <li class="profile-tab" [class.active]="active==6" (click)="changeTab(6)"
+                        *ngIf="[1,2].includes(+userDetails.user_role)">
+                        <div class="">
+                           <div> Set Default Date</div>
+                            <p class="mb-0"><small>(Dashboard and Emails)</small></p>
+                        </div>
+                    </li> -->
+                    <li class="profile-tab" [class.active]="active==3" (click)="changeTab(3)"
+                        *ngIf="[1,2].includes(+userDetails.user_role)">
+                        <div>Client Emails</div>
+                    </li>
+                    <li class="profile-tab" [class.active]="active==4" (click)="changeTab(4)"
+                        *ngIf="[1,2].includes(+userDetails.user_role)">
+                        <div>Change Password</div>
+                    </li>
+                    <li class="profile-tab" [class.active]="active==5" (click)="changeTab(5)"
+                        *ngIf="[1,2].includes(+userDetails.user_role)">
+                        <div>Bulk Reset</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div
+        [ngClass]="[1,2].includes(+userDetails.user_role) ? 'col-sm-12 col-md-9 col-lg-9' : 'col-sm-12 col-md-9 col-lg-9'">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <ng-container [ngSwitch]="active">
+                            <ng-container *ngSwitchCase="1">
+                                <div class="row align-items-center justify-content-end" *ngIf="loadingDashboardLog">
+                                    <div class="col-sm-2">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'30px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'30px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="!loadingDashboardLog">
+                                    <div class="row">
+                                        <div class="col text-right">
+                                            <div ngbDropdown class="d-inline-block mr-1">
+                                                <button type="button" class="btn btn-primary" id="survey_init"
+                                                    ngbDropdownToggle>
+                                                    Initiate Manually
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="survey_init">
+                                                    <button ngbDropdownItem
+                                                        (click)="openConfirmation(1,'dashboard')">CHM</button>
+                                                    <button ngbDropdownItem
+                                                        (click)="openConfirmation(2,'dashboard')">CLS</button>
+                                                    <button ngbDropdownItem
+                                                        (click)="openConfirmation(3,'dashboard')">CCE</button>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-success" title="Refresh Dashboard Log"
+                                                (click)="getDashboardLog()">
+                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo</th>
+                                                    <th>Survey Type</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    <th>Comment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of dashboardLogs">
+                                                    <td>{{data.sno}}</td>
+                                                    <td>{{data.survey_type}}</td>
+                                                    <td>{{data.date}}</td>
+                                                    <td>{{data.status}}</td>
+                                                    <td>{{data.comment}}</td>
+                                                </tr>
+                                                <tr *ngIf="!dashboardLogs?.length">
+                                                    <td colspan="5" class="text-center">No data avaliable</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <app-pagination *ngIf="dashboardLogs.length" #dashboardPagination
+                                            (pageTrigger)="onDashboardPageTrigger($event)"
+                                            [currentpage]="currentDashboardpage"
+                                            [recordsPerPage]="dashboardRecordsPerPage"
+                                            [currentRocords]="dashboardLogs?.length"
+                                            [toalRecord]="totalDashboardRecord"></app-pagination>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="2">
+                                <div class="row align-items-center justify-content-end" *ngIf="loadingEmailLog">
+                                    <div class="col-sm-2">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'30px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'30px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="!loadingEmailLog">
+                                    <div class="row">
+                                        <div class="col text-right">
+                                            <div ngbDropdown class="d-inline-block mr-1">
+                                                <button type="button" class="btn btn-primary" id="survey_init"
+                                                    ngbDropdownToggle>
+                                                    Initiate Manually
+                                                </button>
+                                                <div ngbDropdownMenu aria-labelledby="survey_init">
+                                                    <button ngbDropdownItem
+                                                        (click)="openConfirmation(1,'email')">CHM</button>
+                                                    <button ngbDropdownItem
+                                                        (click)="openConfirmation(2,'email')">CLS</button>
+                                                    <button ngbDropdownItem
+                                                        (click)="openConfirmation(3,'email')">CCE</button>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-success" title="Refresh Email Log"
+                                                (click)="getEmailLog()">
+                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo</th>
+                                                    <th>Survey Type</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    <th>Comment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of emailLogs">
+                                                    <td>{{data.sno}}</td>
+                                                    <td>{{data.survey_type}}</td>
+                                                    <td>{{data.date}}</td>
+                                                    <td>{{data.status}}</td>
+                                                    <td>{{data.comment}}</td>
+                                                </tr>
+                                                <tr *ngIf="!emailLogs?.length">
+                                                    <td colspan="5" class="text-center">No data avaliable</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <app-pagination *ngIf="emailLogs.length" #emailPagination
+                                            (pageTrigger)="onDashboardPageTrigger($event)"
+                                            [currentpage]="currentemailpage" [recordsPerPage]="dashboardRecordsPerPage"
+                                            [currentRocords]="emailLogs?.length"
+                                            [toalRecord]="totalEmailRecord"></app-pagination>
+                                    </div>
+                                    <div hidden>
+                                        <div [innerHTML]="cceFreams | safe: 'html'">
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="3">
+                                <div class="row" *ngIf="lookupLoader || clientEmailLoading">
+                                    <div class="col-sm-10">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="!lookupLoader && !clientEmailLoading">
+                                    <div class="row my-2">
+                                        <div class="col-sm-12 text-right">
+                                            <button class="btn btn-success" (click)="openAddEmail()">Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>SNo</th>
+                                                    <th>Email</th>
+                                                    <th>Type</th>
+                                                    <th>Survey</th>
+                                                    <th>Client</th>
+                                                    <th>Active</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of clientEmails; let i=index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{data.email}}</td>
+                                                    <td>{{data.type | uppercase}}</td>
+                                                    <td>{{surveysMap[data.survey]}}</td>
+                                                    <td>{{clientMap[data.client]}}</td>
+                                                    <td>
+                                                        <div class="custom-control custom-switch">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                [id]="data.checkbox" [(ngModel)]="data.status"
+                                                                (ngModelChange)="updateEmailStatus($event, data)">
+                                                            <label class="custom-control-label"
+                                                                [for]="data.checkbox"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="4">
+                                <!-- <div class="row">
+                                    <div class="col-md-12 mt-245px">
+                                        <div class="text-center mt-2">
+                                            <a href="javascript:void(0)" class="pointer" routerLink="/change-password"><span
+                                                    class="text-pass"> <img src="assets/images/Lock.svg"> Change
+                                                    Password</span></a>
+                                        </div>
+                                        <p class="text-details"><img src="assets/images/Mobile_Small.svg"> {{labelDetails?.phoneNumber}} </p>
+                                        <p class="text-details"> <img src="assets/images/Mail_Small.svg"> {{labelDetails?.email}} </p>
+                                    </div>
+                                </div> -->
+
+                                <app-change-password></app-change-password>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="5">
+                                <div class="row" *ngIf="lookupLoader">
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12 text-right">
+                                        <div class="w-25 float-right">
+                                            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                                [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="!lookupLoader">
+                                    <div class="col-12">
+                                        <label for="year">Year <sup class="text-danger">*</sup> </label>
+                                        <select name="year" id="year" class="form-control" [(ngModel)]="selectedYear"
+                                            (ngModelChange)="onYearChange()">
+                                            <option value="">select year</option>
+                                            <option *ngFor="let data of yearOptions" [value]="data.id">{{data.year}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="season">Season <sup class="text-danger">*</sup> </label>
+                                        <select name="season" id="season" class="form-control"
+                                            [(ngModel)]="selectedseason" (ngModelChange)="onSeasonChange()">
+                                            <option value="">select season</option>
+                                            <option *ngFor="let data of seasonOptions" [value]="data.id">
+                                                {{data.season_name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="client">client <sup class="text-danger">*</sup> </label>
+                                        <select name="client" id="client" class="form-control"
+                                            [(ngModel)]="selectedClient" (ngModelChange)="onClientChange()">
+                                            <option value="">select client</option>
+                                            <option *ngFor="let data of clientOptions" [value]="data.UNIT_ID">
+                                                {{data.UNIT_NAME}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="agency">Agency <sup class="text-danger">*</sup> </label>
+                                        <select name="agency" id="agency" class="form-control"
+                                            [(ngModel)]="selectedAgency">
+                                            <option value="">select agency</option>
+                                            <option *ngFor="let data of agencyOptions" [value]="data.agency_id">
+                                                {{data.agency_name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="p-fluid p-grid">
+                                            <label for="" class="mt-1">Roles</label>
+                                            <p-multiSelect [options]="roleOptions" [(ngModel)]="selectedRoles"
+                                                defaultLabel="select role" optionLabel="label" title="Select Agency"
+                                                optionValue="value">
+                                            </p-multiSelect>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-right mt-1">
+                                        <button class=" btn btn_apply text-white top-10px"
+                                            (click)="openResetConfirmation(resetConfirmation)">Submit</button>
+                                    </div>
+                                </div>
+
+                                <ng-template #resetConfirmation let-modal>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Confirm Reset</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="text-danger font-weight-bold">Caution!</h4>
+                                        <p>If you agree to reset the locations of selected client, agency, year and
+                                            season combination. All the users(State admins, Cluster admins, District
+                                            admins and Surveyors) assigned locations for that combination will be
+                                            cleared. </p>
+                                        <p>This cannot be un-done! </p>
+                                        <p class="text-primary">Are you sure you want to go-ahead ? </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" [disabled]="resetting"
+                                            (click)="modal.close('Close click')">No</button>
+                                        <button type="button" ngbAutofocus class="btn btn-primary"
+                                            [disabled]="resetting" (click)="submitDefault(modal)">{{resetting ?
+                                            'Loading...' : 'Yes'}}</button>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+
+                            <ng-container *ngSwitchCase="6">
+                                <div class="row" *ngIf="lookupLoader; else changeDateContent">
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                            [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                    </div>
+                                    <div class="col-sm-12 text-right">
+                                        <div class="w-25 float-right">
+                                            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'"
+                                                [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <ng-template #changeDateContent>
+                                   <app-year-season-profile [dashboardData]="defaultDashboardData" [emailData]="defaultEmailData" [years]="yearOptions" [seasons]="seasonOptions" [surveys]="surveys"></app-year-season-profile>
+                                </ng-template>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #reset let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Upload Client Logo</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="uploadForm" (ngSubmit)="upload()">
+            <input type="hidden" [name]="csrfTokenName" formControlName="csrf_token" [value]="csrfToken" />
+
+            <div class="preview" *ngIf="imgFile">
+                <img [src]="imgFile" style="width:100%; height:250px">
+            </div>
+
+            <div class="form-group">
+            </div>
+
+            <div class="form-group text-center">
+
+                <label class="file">
+                    <form enctype="multipart/form-data">
+                        <input type="hidden" [name]="csrfTokenName" formControlName="csrf_token" [value]="csrfToken" />
+                        <!-- Backend validation enforces strict MIME type and content validation. -->
+                        <input type="file" class="form-control" id="file" formControlName="file"
+                            (change)="onImageChange($event)">
+                        <!-- Backend validation enforces strict MIME type and content validation. -->
+                        <span class="file-custom"></span>
+                    </form>
+                </label>
+            </div>
+            <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cancel</button>
+            <button class="btn btn-success float-right mr-1" type="submit">Upload File</button>
+        </form>
+    </div>
+
+
+</ng-template>
+
+
+<ng-template #confirmationContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Initiate {{instType?.title}}</h4>
+        <button type="button" class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12" *ngIf="instType?.type === 'email'">
+                <p-multiSelect [options]="clientOptions" [(ngModel)]="selectedEmailClient" defaultLabel="Client"
+                    optionLabel="UNIT_NAME" title="Select Client">
+                </p-multiSelect>
+            </div>
+            <div class="col-12" *ngIf="instType?.type !== 'email'">
+                <p>Please select client and click on Yes to initiate {{instType?.title}}</p>
+            </div>
+            <div class="col-12" *ngIf="instType?.type === 'email'">
+                <p>Please click on Yes to initiate {{instType?.title}}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="w-100 text-center">
+                <button type="button" class="btn btn-outline-dark mr-1"
+                    [disabled]="initiating || (instType?.type === 'email' && !selectedEmailClient?.length)"
+                    (click)="modal.close('yes')">{{initiating ? 'Loading' : 'Yes'}}</button>
+                <button type="button" class="btn btn-danger" [disabled]="initiating"
+                    (click)="modal.close('no')">No</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #addEmailContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add Email</h4>
+        <button type="button" class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12 my-1">
+                <label for="client_email">Email <sup class="text-danger">*</sup></label>
+                <input type="email" id="client_email" class="form-control" placeholder="example@email.com"
+                    [(ngModel)]="clientEmailObj.email">
+                <small class="text-danger" *ngIf="!clientEmailObj.email">Email is required</small>
+                <small class="text-danger"
+                    *ngIf="clientEmailObj.email && !emailRegex.test(clientEmailObj.email)">Invalid email format</small>
+            </div>
+            <div class="col-sm-12 my-1">
+                <label for="email_type">Select Type <sup class="text-danger">*</sup></label>
+                <select id="email_type" class="form-control" [(ngModel)]="clientEmailObj.type">
+                    <option value="">select type</option>
+                    <option value="to">To</option>
+                    <option value="bcc"> Bcc</option>
+                    <option value="cc">Cc</option>
+                </select>
+                <small class="text-danger" *ngIf="!clientEmailObj.type">Type is required</small>
+            </div>
+            <div class="col-sm-12 my-1">
+                <label for="email_survey">Select Survey <sup class="text-danger">*</sup></label>
+                <select id="email_survey" class="form-control" [(ngModel)]="clientEmailObj.survey">
+                    <option value="">select Survey</option>
+                    <option *ngFor="let survey of surveys" [value]="survey.id">
+                        {{survey.name}}
+                    </option>
+                </select>
+                <small class="text-danger" *ngIf="!clientEmailObj.survey">Survey is required</small>
+            </div>
+            <div class="col-sm-12 my-1">
+                <label for="email_cleint">Select Client <sup class="text-danger">*</sup></label>
+                <select id="email_cleint" class="form-control" [(ngModel)]="clientEmailObj.client">
+                    <option value="">select client</option>
+                    <option *ngFor="let data of clientOptions" [value]="data.UNIT_ID">{{data.UNIT_NAME}}</option>
+                </select>
+                <small class="text-danger" *ngIf="!clientEmailObj.client">Client is required</small>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="w-100 text-center">
+                <button type="button" class="btn btn-outline-dark mr-1" (click)="onAddEmail(modal)">Submit</button>
+                <button type="button" class="btn btn-danger" (click)="modal.close('no')">Cancel</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #emailStatusContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Email Status</h4>
+        <button type="button" class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+
+            <div class="col-sm-12 my-1">
+                <h5>Do you want to {{selectedEmailData?.status ? 'active' : 'inactive'}} <a class="d-inline-block"
+                        [href]="'mailto:'+selectedEmailData?.email">{{selectedEmailData?.email}}</a> email status?</h5>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="w-100 text-center">
+                <button type="button" class="btn btn-success mr-1" (click)="modal.close('yes')">Yes</button>
+                <button type="button" class="btn btn-danger" (click)="modal.close('no')">No</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

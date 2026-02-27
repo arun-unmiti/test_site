@@ -1,0 +1,58 @@
+[
+	{
+		"stateId": 1,
+		"cropLoss": 233,
+		"cropCutting": 73,
+		"cropHealth": 35,
+		"households": 144
+	},
+	{
+		"stateId": 2,
+		"cropLoss": 120,
+		"cropCutting": 27,
+		"cropHealth": 2,
+		"households": 37
+	},
+	{
+		"stateId": 3,
+		"cropLoss": 45,
+		"cropCutting": 0,
+		"cropHealth": 1,
+		"households": 218
+	},
+	{
+		"stateId": 4,
+		"cropLoss": 66,
+		"cropCutting": 31,
+		"cropHealth": 0,
+		"households": 119
+	},
+	{
+		"stateId": 5,
+		"cropLoss": 0,
+		"cropCutting": 21,
+		"cropHealth": 4,
+		"households": 11
+	},
+	{
+		"stateId": 6,
+		"cropLoss": 32,
+		"cropCutting": 11,
+		"cropHealth": 0,
+		"households": 7
+	},
+	{
+		"stateId": 7,
+		"cropLoss": 12,
+		"cropCutting": 23,
+		"cropHealth": 15,
+		"households": 133
+	},
+	{
+		"stateId": 8,
+		"cropLoss": 32,
+		"cropCutting": 17,
+		"cropHealth": 9,
+		"households": 233
+	}
+]

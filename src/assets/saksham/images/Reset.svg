@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Reset</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons-2" transform="translate(-221.000000, -204.000000)">
+            <g id="Icon/Reset" transform="translate(221.000000, 204.000000)">
+                <rect id="Rectangle" fill-opacity="0.01" fill="#D8D8D8" fill-rule="nonzero" x="0" y="0" width="24" height="24"></rect>
+                <path d="M5,13.254 C5,17.12 8.134,20.254 12,20.254 L12,20.254 C15.866,20.254 19,17.12 19,13.254 C19,9.388 15.866,6.254 12,6.254" id="Path" stroke="#272B2E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="Path" stroke="#272B2E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" points="13.061 9.931 11.144 5.952 14.637 3.439"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

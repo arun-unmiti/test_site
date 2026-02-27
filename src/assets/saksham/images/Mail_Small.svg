@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="12px" viewBox="0 0 14 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Mail_Small</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Icons-2" transform="translate(-456.000000, -78.000000)" stroke="#424345">
+            <g id="Icon/Mail_Small" transform="translate(457.000000, 79.000000)">
+                <path d="M1,0 L11,0 C11.552,0 12,0.4477 12,1 L12,9 C12,9.5523 11.552,10 11,10 L1,10 C0.448,10 0,9.5523 0,9 L0,1 C0,0.4477 0.448,0 1,0 Z" id="Path"></path>
+                <path d="M0.407,0.2639 L5.228,4.2688 C5.618,4.5925 6.183,4.5935 6.574,4.2712 L11.347,0.3347" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

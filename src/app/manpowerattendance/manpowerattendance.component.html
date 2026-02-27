@@ -1,0 +1,148 @@
+<ng-container *ngIf="loader">
+  <div class="text-center">
+    <div class="loader">
+      <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+    </div>
+  </div>
+</ng-container>
+
+<div class="row">
+  <div class="col-sm-12 col-md-12 co-lg-12">
+    <div class="card tab_top">
+      <div class="card-body p-10px">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Users</a>
+            <ng-template ngbNavContent>
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12 col-lg-11">
+                      <div class="row">
+                          <div *ngIf="projectContext === 'munichre' && userDetail?.user_id == 1" class="col-sm-12 col-lg-3">
+                            <div class="p-fluid p-grid">
+                              <label for="" class="text-left">Client</label>
+                              <p-multiSelect [baseZIndex]="500" defaultLabel="All Clients" [options]="clientData" [(ngModel)]="selectedClient"
+                                optionLabel="UNIT_NAME" (ngModelChange)="onClientSelect($event)">
+                              </p-multiSelect>
+                            </div>
+                          </div>
+                          <div class="col-sm-12 col-lg-3">
+                            <div class="p-fluid p-grid">
+                              <label for="">State</label>
+                              <span class="p-float-label">
+                                <p-multiSelect [baseZIndex]="500" defaultLabel="All States" [options]="statesData" [(ngModel)]="selectedState"
+                                  optionLabel="state_name" (ngModelChange)="onStateSelect($event)">
+                                </p-multiSelect>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-12 col-lg-3">
+                            <div class="p-fluid p-grid">
+                              <label for="">District</label>
+                              <p-multiSelect [baseZIndex]="500" defaultLabel="All Districts" [showHeader]="true" [group]="true" [options]="districtData" [(ngModel)]="selectedDist"
+                                optionLabel="district_name" (onChange)="onDistSelect($event)" [disabled]="!districtData.length">
+                                <ng-template let-group pTemplate="group">
+                                  <div class="p-d-flex p-ai-center">
+                                      <span>{{group.state_name}}</span>
+                                  </div>
+                              </ng-template>
+                              </p-multiSelect>
+                            </div>
+                          </div>
+                          <div class="col-sm-12 col-lg-3">
+                            <label for="">Date Range</label>
+                            <input type="text" name="daterange" displayFormat="DD MMM YYYY" format="DD MMM YYYY"
+                              [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                              [showClearButton]="true" [showCancel]="true" [linkedCalendars]="false" ngxDaterangepickerMd
+                              [(ngModel)]="selectedFromDate" class="form-control daterange" [locale]="localeValue">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-1">
+                      <button class="btn btn_apply text-white" style="margin-top: 35px;" (click)="applyFilter()">Apply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-8 col-lg-8">
+                          <div class="card_map" id="enumarator_radio_map">
+                            <div id="map-loader" *ngIf="stateDataLoading">
+                              State data is loading, please wait...
+                            </div>
+                            <ng-container *ngIf="showMap">
+                              <div id="mapk" style="height: 500px; width: 100%;"></div>
+                            </ng-container>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="d-flex align-items-center">
+                                <h5 class="tbl_num_text font-16px mb-0 pl-2"><span class="tbl_title_text"><img src="{{assetsFolder}}/images/mpms.svg" height="25px"> Total Users</span> :<span class="tbl_num_text">{{label.users || +label.users === 0 ? label.users : 'NA'}}</span></h5>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card">
+                            <div class="card-body p-0">
+                             <div class="table-responsive">
+                              <table class="table tbl_survey mb-0 pb-0">
+                                <tbody>
+                                  <tr class="">
+                                    <th class="text-green font-16px">
+                                      <div class="d-flex align-items-center">
+                                        <div><span class="box"><img src="{{assetsFolder}}/images/chs.svg" height="25px"></span> </div>
+                                        <div><span class="pl-2">No of Crop Health Monitoring</span></div>
+                                      </div>
+                                    </th>
+                                    <td class="tbl_num_text text-green">{{label.no_of_chm || +label.no_of_chm === 0 ? label.no_of_chm : 'NA'}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th class="text-orange font-16px">
+                                      <div class="d-flex align-items-center">
+                                        <div> <img src="{{assetsFolder}}/images/cls.svg" height="25px"> </div>
+                                        <div>  <span class="pl-2">No of Crop Loss Survey</span></div>
+                                      </div>
+                                     </th>
+                                    <td class="tbl_num_text text-orange">{{label.no_of_cls || +label.no_of_cls === 0 ? label.no_of_cls : 'NA'}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th class="text-dark-gray font-16px">
+                                      <div class="d-flex align-items-center">
+                                        <div> <img src="{{assetsFolder}}/images/cces.svg" height="25px"> </div>
+                                        <div>  <span class="pl-2">No of Crop Cutting Experiments</span></div>
+                                      </div>
+                                     </th>
+                                    <td class="tbl_num_text text-dark-gray">{{label.no_of_cce || +label.no_of_cce === 0 ? label.no_of_cce : 'NA'}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                             </div>
+                            </div>
+                          </div>
+                        </div>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </div>
+</div>

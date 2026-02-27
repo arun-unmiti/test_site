@@ -1,0 +1,508 @@
+<ng-container *ngIf="loader">
+   <div class="text-center">
+      <div class="loader">
+         <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+      </div>
+   </div>
+</ng-container>
+<ng-container *ngIf="lookupLoader">
+   <div class="col-12 bg-white rounded">
+      <div class="row align-items-end justify-content-start">
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-12 bg-white rounded mt-4">
+      <div class="row align-items-end justify-content-start">
+         <div class="col-sm-12">
+            <app-skeleton-loader [show]="true" [count]="10" [height]="'25px'" [padding]="'1px'"
+               [margin]="'1px'"></app-skeleton-loader>
+         </div>
+      </div>
+   </div>
+</ng-container>
+<!-- Filters -->
+<div class="card p-2" *ngIf="!lookupLoader">
+   <div class="filter-card-title" (click)="isFilterCollapsed = !isFilterCollapsed"
+      [class.close-toggle]="isFilterCollapsed">
+      <div>
+         Apply Filters
+      </div>
+      <div class="toggle-img-area">
+         <img src="{{assetsFolder}}/images/Nav_bar_close.svg" alt="toggle" class="toggle-img">
+      </div>
+   </div>
+   <div class="card-body" [ngbCollapse]="isFilterCollapsed">
+      <div class="row align-items-end justify-content-start">
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <div class="p-fluid p-grid">
+               <label for="">Year <sup class="text-danger" *ngIf="isMandentory">*</sup></label>
+               <select class="form-control" [(ngModel)]="selectedYear" (ngModelChange)="onYearSelect($event)">
+                  <option value="">Select Year</option>
+                  <option *ngFor="let data of yearData" [value]="data.id">{{data.year}}</option>
+               </select>
+            </div>
+         </div>
+
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <div class="p-fluid p-grid">
+               <label for="">Season <sup class="text-danger" *ngIf="isMandentory">*</sup></label>
+               <select class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonSelect($event)">
+                  <option value="">Select Season</option>
+                  <option *ngFor="let data of seasonData" [value]="data.id">{{data.season_name}}</option>
+               </select>
+            </div>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="['1','2'].includes(userDetail?.user_role)">
+            <div class="p-fluid p-grid">
+               <label for="">Client <sup class="text-danger" *ngIf="isMandentory">*</sup></label>
+               <select class="form-control" [(ngModel)]="singleClient" (ngModelChange)="onSingleClinetChange($event)">
+                  <option value="">Select Client</option>
+                  <option *ngFor="let data of clientData" [value]="data.UNIT_ID">{{data.UNIT_NAME}}</option>
+               </select>
+            </div>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="['1','2','3','4','5','6'].includes(userDetail?.user_role)">
+            <div class="p-fluid p-grid">
+               <label for="">Role <sup class="text-danger" *ngIf="['3','4'].includes(this.userDetail.user_role)">*</sup></label>
+               <select class="form-control" [(ngModel)]="selectedRole" (ngModelChange)="OnRoleTypeChange($event)"
+                  [disabled]="isRoleValid">
+                  <option value="">Select Role Type</option>
+                  <option value="1">On-role</option>
+                  <option value="2">Off-role</option>
+               </select>
+            </div>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="['1','2','3','4','5','6'].includes(userDetail?.user_role)">
+            <div class="p-fluid p-grid">
+               <label for="">Agency <sup class="text-danger" *ngIf="selectedRole == 2">*</sup></label>
+               <p-multiSelect [options]="agencies" [(ngModel)]="selectedAgency" defaultLabel="Select a Agency"
+                  optionLabel="agency_name" [disabled]="isAgencyValid"
+                  (ngModelChange)="onAgencyChange($event)"></p-multiSelect>
+            </div>
+         </div>
+         <ng-container *ngIf="!isStateLoading">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+               <div class="p-fluid p-grid">
+                  <label for="">State</label>
+                  <p-multiSelect [options]="states" [(ngModel)]="selectedState" defaultLabel="Select a State"
+                     optionLabel="state_name" (ngModelChange)="onStateChange($event)"
+                     [disabled]="isLocationValid"></p-multiSelect>
+               </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-3">
+               <div class="p-fluid p-grid">
+                  <label for="">District</label>
+                  <p-multiSelect [baseZIndex]="500" defaultLabel="All Districts" [showHeader]="true" [group]="true"
+                     [options]="districtOptions" [(ngModel)]="selectedDistrict" optionLabel="district_name"
+                     (ngModelChange)="onDistrictChange($event)" [disabled]="!districtOptions.length">
+                     <ng-template let-group pTemplate="group">
+                        <div class="p-d-flex p-ai-center">
+                           <span>{{group.state_name}}</span>
+                        </div>
+                     </ng-template>
+                  </p-multiSelect>
+               </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-3">
+               <div class="p-fluid p-grid">
+                  <label for="">Block</label>
+                  <p-multiSelect [baseZIndex]="500" defaultLabel="Select a Block" [showHeader]="true" [group]="true"
+                     [options]="blockOptions" [(ngModel)]="selectedBlock" optionLabel="tehsil_name"
+                     [disabled]="!blockOptions.length">
+                     <ng-template let-group pTemplate="group">
+                        <div class="p-d-flex p-ai-center">
+                           <span>{{group.district_name}}</span>
+                        </div>
+                     </ng-template>
+                  </p-multiSelect>
+               </div>
+            </div>
+            <div *ngIf = "projectContext === 'munichre'" class="col-sm-12 col-md-3 col-lg-3">
+               <div class="p-fluid p-grid">
+                  <label for="mobileNumber">Mobile Number</label>
+                  <input type="text"
+                        id="mobileNumber"
+                        class="form-control"
+                        [(ngModel)]="mobileNumber"
+                        placeholder="Enter mobile number"
+                        maxlength="10"
+                        pattern="[0-9]*"
+                        inputmode="numeric"
+                        (keypress)="allowOnlyNumbers($event)">
+               </div>
+            </div>
+         </ng-container>
+
+         <ng-container *ngIf="isStateLoading">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+               <div class="pt-5 font-weight-bold">Locations are loading...</div>
+            </div>
+         </ng-container>
+
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <div class="p-fluid p-grid">
+               <label for="">Is Active</label>
+               <select class="form-control" [(ngModel)]="selectedStatus">
+                  <option value="">Select Status</option>
+                  <option value="1">Active</option>
+                  <option value="0">In-active</option>
+                  <option value="2">Pending</option>
+               </select>
+            </div>
+         </div>
+         <div class="col-sm-12 col-md-3 col-lg-3">
+            <div class="p-fluid p-grid">
+               <button class="btn btn-sm btn_apply mt-1 text-white" (click)="onSearch()"
+                  [disabled]="isStateLoading">Search</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Message -->
+<div class="row" *ngIf="!userList?.length && !loader && !lookupLoader">
+   <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="card">
+         <div class="card-body">
+            <h5 class="text-center text-danger">
+               Please select filter and search
+            </h5>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- User Table -->
+<div class="row" *ngIf="userList?.length">
+   <div class="col-sm-12">
+   </div>
+   <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="card">
+         <div class="card-body">
+            <div class="d-flex float-left">
+               <h5 class="add-title font-16px mt-1">User ({{userList.length}})</h5>
+               <button class="btn btn-sm btn-primary mr-1 ml-3 text-white" routerLink="/users/add-user"><i
+                     class="fa fa-plus"></i> Add Users</button>
+               <ng-container *ngIf="canActiveInActive">
+                  <button class="btn btn-sm btn-success mr-1 ml-3" (click)="confirm(active,1)"> Active Selected
+                  </button>
+                  <button class="btn btn-sm btn-danger mr-1 ml-3" (click)="confirm(active,0)"> In-active Selected
+                  </button>
+               </ng-container>
+            </div>
+
+            <div class="d-flex float-right mb-2">
+               <div class="input-group rounded">
+                  <input type="search" class="form-control rounded" pInputText type="text"
+                     (input)="dt1.filterGlobal(getEventValue($event),'startsWith')" placeholder="Search user"
+                     aria-label="Search" aria-describedby="search-addon" />
+                  <span class="input-group-text border-0 ml-2" id="search-addon">
+                     <i class="fas fa-search"></i>
+                  </span>
+                  <span class="input-group-text border-0 ml-2" (click)="exportTable(userList, 'Users')"
+                     style="cursor: pointer;">
+                     <i class="fas fa-download"></i>
+                  </span>
+                  <button *ngIf="[1,2,3,4].includes(+userDetail.user_role)" class="btn btn-sm btn-success mr-1 ml-3 text-white" (click)="exportAllUsers()">
+                     <i class="fas fa-download"></i>&nbsp;&nbsp;Audit User Report
+                  </button>
+               </div>
+            </div>
+
+            <div class="table-responsive">
+               <p-table [value]="userList" id="userManageTable" #dt1
+                  [globalFilterFields]="['first_name','last_name','email_id','phone', 'user_id', 'role_name', 'statusName']"
+                  [rows]="10" [showCurrentPageReport]="true" [paginator]="true"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                  [rowsPerPageOptions]="[10,25,50]" [(first)]="first" style="margin-bottom: 200px;">
+                  <ng-template pTemplate="header">
+                     <tr>
+                        <th style="width:50px">
+                           <p-checkbox [(ngModel)]="allChecked" [binary]="true"
+                              (ngModelChange)="onAllChecked($event)">
+                           </p-checkbox>
+                        </th>
+                        <th style="width:70px" nowrap>User id</th>
+                        <th nowrap>Full name</th>
+                        <th *ngIf="projectContext === 'saksham'" nowrap style="width:300px">Email id</th>
+                        <th *ngIf="projectContext === 'saksham'" nowrap>Contact number</th>
+                        <th nowrap>Status</th>
+                        <th nowrap>Role</th>
+                        <th *ngIf="!downloading" class="text-center">Action
+                        </th>
+                     </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-user>
+                     <tr>
+                        <td style="width:100px">
+                           <p-checkbox [(ngModel)]="user.checked" [binary]="true"
+                              (ngModelChange)="onSelectUser(user)" *ngIf="user.role_id !=1">
+                           </p-checkbox>
+                        </td>
+                        <td>{{user.user_id || "N/A"}}</td>
+                        <td>{{user.first_name}} {{user.last_name}}</td>
+                        <td *ngIf="projectContext === 'saksham'">{{user.email_id || "N/A"}}</td>
+                        <td *ngIf="projectContext === 'saksham'">{{user.phone || "N/A"}}</td>
+                        <td [ngStyle]="{'color':user.status == 2 ? 'orange' : user.status == 1 ? 'green' : 'red' }">
+                           {{user.statusName}}</td>
+                        <td>{{user.role_name}}</td>
+                        <td *ngIf="!downloading" class="text-center">
+                           <div ngbDropdown class="d-inline-block" style="position: absolute; margin-top: -12px;">
+                              <span class="ponter add-title" id="dropdownBasic1" ngbDropdownToggle>
+                                 <img src="{{assetsFolder}}/images/Options-vertical.svg">
+                              </span>
+                              <div ngbDropdownMenu class="dropdown_agency1" aria-labelledby="dropdownBasic1">
+                                 <a href="javascript:void(0)" (click)="open(content,user)" *ngIf="user.role_id !=1">
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Edit_Blue.svg" height="18px"> Edit User
+                                    </label>
+                                 </a>
+                                 <a href="javascript:void(0)" (click)="open(reset,user, 'reset_password')">
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Reset.svg" height="18px"> Reset Password
+                                    </label>
+                                 </a>
+                                 <a href="javascript:void(0)" (click)="open(reset2fa, user, 'reset_2fa')">
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Reset.svg" height="18px"> Reset 2FA
+                                    </label>
+                                 </a>
+                                 <a href="javascript:void(0)" (click)="changeStatus(user, 1)"
+                                    *ngIf="user.status != 1 && user.role_id !=1">
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Edit_Blue.svg" height="18px"> Activate
+                                    </label>
+                                 </a>
+                                 <a href="javascript:void(0)" (click)="changeStatus(user, 0)"
+                                    *ngIf="user.status != 0 && user.role_id !=1">
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Edit_Blue.svg" height="18px"> Inactivate
+                                    </label>
+                                 </a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                  </ng-template>
+               </p-table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Edit User -->
+<ng-template #content let-modal>
+   <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit User</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <form class="form-group">
+         <input type="hidden" name="csrf_token" value="csrfToken" />
+         <div class="row">
+            <div class="col-md-6 form-group">
+               <label>First Name</label> <span class="text-danger">*</span>
+               <input type="text" name="fname" class="form-control" [(ngModel)]="selectedUser.fname"
+                  placeholder="Enter First name">
+               <span id="fname_error" class="error"></span>
+            </div>
+            <div class="col-md-6 form-group">
+               <label>Last Name</label> <span class="text-danger">*</span>
+               <input type="text" name="lname" class="form-control" [(ngModel)]="selectedUser.lname"
+                  placeholder="Enter Last name">
+               <span id="lname_error" class="error"></span>
+            </div>
+            <div class="col-md-6 form-group">
+               <label>Email Id</label>
+               <input type="email" name="email" class="form-control" [(ngModel)]="selectedUser.email"
+                  placeholder="Enter Email id">
+               <span id="email_error" class="error"></span>
+            </div>
+            <div class="col-md-6 form-group">
+               <label>Employee Id</label> <span class="text-danger">*</span>
+               <input type="text" name="emp_id" class="form-control" [(ngModel)]="selectedUser.emp_id"
+                  placeholder="Enter Employee Id">
+               <span id="emp_error" class="error"></span>
+            </div>
+            <div class="col-md-6 form-group">
+               <label>Mobile Number</label> <span class="text-danger">*</span>
+               <input type="tel" name="phone" class="form-control" maxlength="10" autocomplete="off"
+                  [(ngModel)]="selectedUser.phone">
+               <span id="phone_error" class="error"></span>
+            </div>
+            <div class="col-md-6 form-group">
+               <label>Designation (Department)</label>
+               <input type="text" name="designation" class="form-control" [(ngModel)]="selectedUser.designation">
+               <span id="designation_error" class="error"></span>
+            </div>
+            <div class="col-md-12 form-group">
+               <label for="user_role">Select Role<span class="text-danger">*</span></label>
+               <select class="form-control" [(ngModel)]="selectedUser.role" name="user_role"
+                  [ngModelOptions]="{standalone: true}">
+                  <option value="">-- Select --</option>
+                  <option *ngFor="let data of roles" [value]="data.role_id">{{data.role_name}}</option>
+               </select>
+            </div>
+            <div class="col-md-12 form-group"
+               *ngIf="projectContext === 'munichre' && userDetail.user_role == 1 && !['1','2'].includes(selectedUser.role)">
+               <div class="form-group form-group-pass">
+                  <label for="">Client </label> <span class="text-danger">*</span>
+                  <select class="form-control" name="user_role" [(ngModel)]="selectedUser.client_id"
+                     [ngModelOptions]="{standalone: true}" (ngModelChange)="onClientChange($event)">
+                     <option value="">-- Select Client --</option>
+                     <option *ngFor="let client of clients" [value]="client.UNIT_ID">{{client.UNIT_NAME}}</option>
+                  </select>
+               </div>
+            </div>
+            <div class="col-md-12 form-group"
+               *ngIf="['7','8'].includes(selectedUser.role) && (!['7'].includes(userDetail.user_role) || !userDetail.agency_id )">
+               <label for="">Add employee type </label>
+               <select class="form-control form-control-sm" id="filter-country" (ngModelChange)="onChange($event)"
+                  [(ngModel)]="selectedUser.role_type" [ngModelOptions]="{standalone: true}">
+                  <option value="">Select Roll Type</option>
+                  <option value="1">On-roll</option>
+                  <option value="2">Off-roll</option>
+               </select>
+            </div>
+            <div class="col-md-12 form-group"
+               *ngIf="['7','8'].includes(selectedUser.role) && selectedUser.role_type == 2 && (!['7'].includes(userDetail.user_role) || !userDetail.agency_id )">
+               <label for="agency">Agency </label>
+               <select class="form-control form-control-sm" id="filter-agency"
+                  [(ngModel)]="selectedUser.agency_id" [ngModelOptions]="{standalone: true}">
+                  <option value="">-- Select --</option>
+                  <option *ngFor="let agency of clientAgency" [value]="agency.agency_id">{{agency.agency_name}}</option>
+               </select>
+            </div>
+         </div>
+         <div class="row mt-2">
+            <div class="col-md-12">
+               <button type="button" class="btn btn-danger float-right" (click)="modal.close('Save click')">Close</button>
+               <button type="submit" class="btn btn-success float-right mr-1" [disabled]="update_loader"
+                  (click)="update()">{{update_loader ? 'Loading...' : 'Update'}}</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</ng-template>
+
+<!-- Reset User Password -->
+<ng-template #reset let-modal>
+   <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Reset user password</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <form class="form-group">
+         <input type="hidden" name="csrf_token" value="csrfToken" />
+         <div class="container">
+            <h1>Are you sure?</h1>
+            <p>The User's password will be reset to 'Mpro@123'</p>
+         </div>
+         <div class="row mt-2">
+            <div class="col-md-12">
+               <button type="button" class="btn btn-danger float-right" (click)="modal.close('Save click')">Cancel</button>
+               <button type="submit" class="btn btn-success float-right mr-1" (click)="resetPassword(selectedUser)">Reset</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</ng-template>
+
+<!-- Reset 2FA Confirmation Modal -->
+<ng-template #reset2fa let-modal>
+   <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Reset Two-Factor Authentication</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <div class="container">
+         <h5>Are you sure?</h5>
+         <p>This will disable two-factor authentication for the user. They will need to set it up again on their next login.</p>
+      </div>
+      <div class="row mt-2">
+         <div class="col-md-12">
+            <button type="button" class="btn btn-danger float-right" (click)="modal.dismiss('Cancel')">Cancel</button>
+            <button type="button" class="btn btn-success float-right mr-2" (click)="reset2FA()">Reset 2FA</button>
+         </div>
+      </div>
+   </div>
+</ng-template>
+
+<!-- Active User (Bulk) -->
+<ng-template #active let-modal>
+   <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">BULK STATUS UPDATE</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+         <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <form class="form-group">
+         <input type="hidden" name="csrf_token" value="csrfToken" />
+         <div class="container">
+            <h4>Do you want to {{bulk_msg}} selected users?</h4>
+         </div>
+         <div class="row mt-2">
+            <div class="col-md-12">
+               <button type="button" class="btn btn-danger float-right" (click)="modal.close('Save click')">Cancel</button>
+               <button type="submit" class="btn btn-success float-right mr-1" (click)="setStatus(bulk_status)">Confirm</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</ng-template>

@@ -1,0 +1,87 @@
+<div class="row mt-2">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h5 class="add-title">
+            <button class="btn btn-sm btn-back mr-2" title="Back" routerLink="/users/user-mangement"><img loading="lazy" src="{{assetsFolder}}/images/icon-left-arrow.svg"></button> Map Clients</h5>
+    </div>
+</div>
+
+<div class="row mt-1">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h2 class="add-title">Map Client's Agency and Location</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div *ngIf = "projectContext === 'munichre'" class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label>Client <sup class="text-danger">*</sup> </label>
+                            <select class="form-control" [(ngModel)]="selectedClient" (ngModelChange)="onClientChange($event)">
+                                <option value="">Select Client</option>
+                                <option *ngFor="let data of clients" [value]="data.UNIT_ID">{{data.UNIT_NAME}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div [ngClass] = "projectContext === 'munichre' ?  'col-sm-12 col-md-3 col-lg-3' : 'col-sm-12 col-md-4 col-lg-4'">
+                        <div class="form-group">
+                            <label>Season <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonChange($event)">
+                                <option value="">Select Season</option>
+                                <option *ngFor="let data of seasons" [value]="data.id">{{data.season_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div [ngClass] = "projectContext === 'munichre' ?  'col-sm-12 col-md-3 col-lg-3' : 'col-sm-12 col-md-4 col-lg-4'">
+                        <div class="form-group">
+                            <label>Year <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="selectedYear" (ngModelChange)="onYearChange($event)">
+                                <option value="">Select Year</option>
+                                <option *ngFor="let data of years" [value]="data.id">{{data.year}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2 pt-2">
+                        <button class="btn btn_apply text-white mt-4 w-100" (click)="onSearchClick()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mt-2">
+                    <div class="col-sm-12" *ngIf="!selectedClient || !selectedSeason || !selectedYear || !allLocation?.length && !locationLoading">
+                        <h5 class="text-center">Please select filters and search to modify locations</h5>
+                    </div>
+                    <div class="col-sm-12" *ngIf="!allLocation?.length && locationLoading">
+                        <h5 class="text-center">Please wait, locations are loading...</h5>
+                    </div>
+                    <div class="col-sm-12" *ngIf="allLocation?.length">
+                        <h2 class="add-title">Modify Location Assignment - <span class="text-danger" (click)="assignAllLocation()">Assign All
+                                Locations</span></h2>
+                        <div class="same_height" style="height: 470px;overflow-y: scroll;">
+                            <ul class="wtree">
+                                <li *ngFor="let location of allLocation">
+                                    <input type="checkbox" [(ngModel)]="location.checked" [indeterminate]="location.intermediate" (change)="onStateChange(location)"> <label
+                                            class="pl-2 pointer" (click)="location.collapse = !location.collapse"> <span>{{location.state_name}} <ng-container *ngIf="location?.districts?.length"> ({{location?.districts?.length}}) </ng-container> </span></label>
+                                    <ul class="wtree" *ngIf="location?.districts?.length" [(ngbCollapse)]="location.collapse">
+                                        <li *ngFor="let district of location.districts">
+                                            <span> <input type="checkbox" [(ngModel)]="district.checked" (change)="onDistrictChange(location)"> <label
+                                                class="pl-2 pointer">{{district.district_name}}</label> </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="w-100 text-right">
+                            <button class="btn btn-sm btn-primary mt-2" (click)="submit()" [disabled]="submiting">{{submiting ? 'Loading...': 'Submit'}}</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

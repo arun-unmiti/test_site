@@ -1,0 +1,229 @@
+:host .card-header {
+    padding: 1rem 1rem !important;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, .03);
+    border-bottom: 0px !important
+}
+
+.text-top {
+    top: 10px;
+    position: absolute;
+    right: 30px;
+
+}
+
+.text-grey.disabled-list {
+    color: #C0504D;
+    opacity: .6;
+    /* list-style-type: disc!important; */
+    padding-left: 0px;
+    pointer-events: none !important;
+    -webkit-user-select: none !important;
+    list-style-type: none;
+    counter-reset: item-counter;
+}
+
+.disabled-list li {
+    position: relative;
+    padding-left: 25px;
+}
+
+.disabled-list li:before {
+    counter-increment: item-counter;
+    content: counter(item-counter) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.card.error_box {
+    box-shadow: none !important;
+    border: 1px solid #d8d6d6;
+    margin-top: 14px;
+
+}
+
+:host .upload-box {
+    width: 100%;
+    min-height: 100px;
+    border: 2px dashed;
+    border-radius: 5px;
+    border-color: #0005;
+    position: relative;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+:host .upload-box:hover {
+    border-color: #000;
+}
+
+:host .upload-box .message-area {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #000000a3;
+    transition: all .3s ease-in-out;
+}
+
+:host .upload-box:hover .message-area {
+    color: #000;
+}
+
+:host .upload-box .message-area .h4,
+:host .upload-box .message-area small {
+    font-weight: bolder;
+}
+
+:host .upload-box .uploadfield {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.progress {
+    display: flex;
+    height: 10px;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #b5b5b5;
+    width: 100%;
+    border-radius: 50px;
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #ea5a5f;
+    transition: width .6s ease;
+}
+
+.loader-dots {
+    width: 50px;
+    aspect-ratio: 7;
+    --_g: no-repeat radial-gradient(circle closest-side, #e32027 90%, #0000);
+    background:
+        var(--_g) 0% 50%,
+        var(--_g) 50% 50%,
+        var(--_g) 100% 50%;
+    background-size: calc(100%/3) 100%;
+    animation: l7 1s infinite linear;
+}
+
+@keyframes l7 {
+    33% {
+        background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%
+    }
+
+    50% {
+        background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%
+    }
+
+    66% {
+        background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
+    }
+}
+
+.font-14px {
+    font-size: 14px;
+}
+
+.card.shadowNone {
+    box-shadow: none;
+}
+
+.title-upload {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 27px;
+    color: #272B2E;
+}
+
+.progressCard {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: 1px solid #dee2e6 !important;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    vertical-align: middle;
+    line-height: 19px;
+}
+
+.tbl_scroll {
+    height: 560px;
+    overflow-y: scroll;
+}
+
+:host ::ng-deep p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none !important;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead>tr>th {
+    text-align: left;
+    padding: 1rem 1rem !important;
+    border: 1px solid #e9ecef !important;
+    border-width: 1px 1px 1px 1px !important;
+    color: #495057;
+    width: 150px !important;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+}
+
+:host ::ng-deep.p-datatable .p-datatable-tbody>tr>td {
+    text-align: left;
+    padding: 1rem 1rem !important;
+    border: 1px solid #e9ecef !important;
+    border-width: 1px 1px 1px 1px !important;
+    color: #495057;
+    width: 150px !important;
+    /* background: #f8f9fa; */
+    transition: box-shadow 0.2s;
+}
+
+:host ::ng-deep.p-paginator .p-dropdown {
+    position: absolute;
+    bottom: 10px;
+}
+
+/* .custom-p-table ::ng-deep .p-paginator {
+    display: none;
+} */
+
+.custom-p-table ::ng-deep .p-dropdown-panel {
+    transform-origin: center bottom !important;
+    top: auto !important;
+    bottom: 38px;
+    /* Adjust this value to position correctly */
+}
+
+::ng-deep .p-paginator .p-dropdown-panel {
+    top: auto !important;
+    bottom: 100% !important;
+    transform-origin: center top !important;
+}

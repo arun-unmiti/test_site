@@ -1,0 +1,79 @@
+<ng-container *ngIf="loading">
+    <div class="text-center">
+        <div class="loader">
+            <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+        </div>
+    </div>
+</ng-container>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <h2 class="title mb-3">
+                            <button class="btn btn-sm btn-back mr-2" title="Back" routerLink="/">
+                                <img loading="lazy" src="{{assetsFolder}}/images/icon-left-arrow.svg">
+                            </button> Notification settings</h2>
+                        <hr>
+                    </div>
+                    <div *ngIf="projectContext === 'munichre' && !user.unit_id" class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                        <label><strong>Select Client</strong></label>
+                        <select class="form-control" [(ngModel)]="selectedClient" (ngModelChange)="onClientSelect($event)">
+                            <option value="">Select Client</option>
+                            <option *ngFor="let data of clientData" [value]="data.UNIT_ID">{{data.UNIT_NAME}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 mb-3" class="col-md-12 col-lg-12">
+                        <label><strong>Select State</strong></label>
+                        <p-multiSelect [options]="states" [(ngModel)]="selectedState"
+                        defaultLabel="State" optionLabel="state_name"
+                        (ngModelChange)="onStateChange($event)" title="Select States">
+                    </p-multiSelect>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                        <label><strong>Select District</strong></label>
+                        <p-multiSelect [options]="districtOptions" [group]="true"
+                        [(ngModel)]="selectedDistrict" defaultLabel="District"
+                        optionLabel="district_name" (ngModelChange)="onDistrictChange($event)"
+                        title="Select District">
+                        <ng-template let-group pTemplate="group">
+                            <div class="p-d-flex p-ai-center">
+                                <span>{{group.state_name}}</span>
+                            </div>
+                        </ng-template>
+                    </p-multiSelect>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                        <label><strong>Select Block</strong></label>
+                        <p-multiSelect [options]="tehsilOptions" [group]="true"
+                            [(ngModel)]="selectedTehsil" defaultLabel="Block" optionLabel="tehsil_name"
+                            title="Select Block" (ngModelChange)="onTehsilChange()">
+                            <ng-template let-group pTemplate="group">
+                                <div class="p-d-flex p-ai-center">
+                                    <span>{{group.district_name}}</span>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
+                        <label><strong>Select Users</strong></label>
+                        <p-multiSelect [options]="userList" [(ngModel)]="selectedUser"
+                        defaultLabel="User Name" optionLabel="name"
+                         title="Select Users">
+                    </p-multiSelect>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 mb-2"> </div>
+                    <div class="col-sm-12 col-lg-12 col-md-6 mb-12">
+                        <textarea rows="3" class=" form-control mt-4" placeholder="Text here..." cols="30" [(ngModel)]="comment"></textarea>
+                    </div>
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <button class="btn btn_apply text-white float-left mt-2 mb-2" (click)="submit()" [disabled]="loading">{{loading ? 'Loading...' : 'Push Notification'}}</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

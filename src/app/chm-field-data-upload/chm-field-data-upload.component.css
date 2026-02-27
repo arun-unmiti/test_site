@@ -1,0 +1,149 @@
+:host .card-header {
+    padding: 1rem 1rem !important;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 0px !important
+}
+.text-top{
+    top: 10px;
+    position: absolute;
+    right: 30px;
+
+}
+:host-context(.munichre) a {
+    color: #175788;
+    text-decoration: none;
+    background-color: transparent;
+}
+:host-context(.saksham) a {
+    color: #ef898d;
+    text-decoration: none;
+    background-color: transparent;
+}
+.text-grey.disabled-list{
+    color: #C0504D;
+    opacity: .6;
+   
+    padding-left: 18px;
+   pointer-events: none!important;
+   -webkit-user-select: none!important;
+   list-style-type: none;
+   counter-reset: item-counter;
+}
+.disabled-list li {
+    position: relative;
+    padding-left: 25px;
+  }
+
+  .disabled-list li:before {
+    counter-increment: item-counter;
+    content: counter(item-counter) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.card.error_box{
+    box-shadow: none!important;
+    border: 1px solid #d8d6d6;
+    margin-top: 14px;
+
+}
+:host .upload-box {
+    width: 100%;
+    min-height: 100px;
+    border: 2px dashed;
+    border-radius: 5px;
+    border-color: #0005;
+    position: relative;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+:host .upload-box:hover {
+    border-color: #000;
+}
+
+:host .upload-box .message-area {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #000000a3;
+    transition: all .3s ease-in-out;
+}
+
+:host .upload-box:hover .message-area {
+    color: #000;
+}
+
+:host .upload-box .message-area .h4, :host .upload-box .message-area small {
+    font-weight: bolder;
+}
+
+:host .upload-box .uploadfield {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid #dee2e6 !important;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  vertical-align: middle;
+  line-height: 19px;
+}
+.tbl_scroll {
+  height: 560px;
+  overflow-y: scroll;
+}
+:host ::ng-deep p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none!important;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th  {
+    text-align: left;
+    padding: 1rem 1rem!important;
+    border: 1px solid #e9ecef!important;
+    border-width: 1px 1px 1px 1px!important;
+    color: #495057;
+    width: 150px!important;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+}
+
+:host ::ng-deep.p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    padding: 1rem 1rem!important;
+    border: 1px solid #e9ecef!important;
+    border-width: 1px 1px 1px 1px!important;
+    color: #495057;
+    width: 150px!important;
+    /* background: #f8f9fa; */
+    transition: box-shadow 0.2s;
+}
+
+:host ::ng-deep.p-paginator .p-dropdown {
+    position: absolute;
+    bottom: 10px;
+}
+
+::ng-deep .p-paginator .p-dropdown-panel {
+    top: auto !important;
+    bottom: 100% !important;
+    transform-origin: center top !important;
+}

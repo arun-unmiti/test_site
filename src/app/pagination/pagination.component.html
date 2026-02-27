@@ -1,0 +1,31 @@
+<div class="pagination-container">
+<div class="d-flex justify-content-center" *ngIf="!loading">
+    <div class="p-2">Page {{currentpage}} of {{numberOfPages?.length || 1}}</div>
+    <div class="p-2" *ngIf="recordsPerPage">Records {{((currentpage-1) * recordsPerPage) + 1 }} to {{((currentpage-1) * recordsPerPage) + currentRocords}} of {{toalRecord}}</div>
+    <div class="p-2"><button class="btn btn-sm" (click)="onFirstClick()" [disabled]="isFirstButton"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button></div>
+    <div class="p-2"><button class="btn btn-sm" (click)="onPreviousClick()" [disabled]="isPreviousButton"><i class="fa fa-angle-left" aria-hidden="true"></i></button></div>
+    <div class="p-2">{{currentpage}}</div>
+    <div class="p-2"><button class="btn btn-sm" (click)="onNextClick()" [disabled]="isNextButton"><i class="fa fa-angle-right" aria-hidden="true"></i></button></div>
+    <div class="p-2"><button class="btn btn-sm" (click)="onLastClick()" [disabled]="isLastButton"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button></div>
+    <!-- <div class="p-2">
+        <div class="d-flex justify-content-center">
+            <div class="px-2"> Go to </div>
+            <div class="px-2">
+                <select class="rounded" [(ngModel)]="currentpage" (ngModelChange)="onPageChange()" >
+                <option *ngFor="let data of numberOfPages" [value]="data">{{data}}</option>
+                </select>
+            </div>
+        </div>
+    </div> -->
+    <div class="p-2 ml-auto">
+        <div class="d-flex justify-content-end">
+            <div>
+                <select class="rounded" [(ngModel)]="recordsPerPage" (ngModelChange)="onPerRecordChange()">
+                    <option *ngFor="let data of recordsPerPageList" [value]="data">{{data}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center" *ngIf="loading">Loading...</div>
+</div>

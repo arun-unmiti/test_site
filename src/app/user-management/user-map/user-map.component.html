@@ -1,0 +1,157 @@
+<div class="row mt-2">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h5 class="add-title">
+            <button class="btn btn-sm btn-back mr-2" title="Back" routerLink="/users/user-mangement"><img loading="lazy" src="{{assetsFolder}}/images/icon-left-arrow.svg"></button> Map User
+        </h5>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h3 class="add-title">Map User's Agency and Location</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div *ngIf="projectContext === 'munichre' && loggedUser.user_role == 1" class="col-md-6 col-xl-6 col-sm-12 mt-1">
+                        <label>Client</label>
+                        <select class="form-control" [(ngModel)]="selectedClients" (ngModelChange)="onClientSelect($event)" [disabled]="!clientSuggestions?.length">
+                            <option value="">select client</option>
+                            <option *ngFor="let client of clientSuggestions" [value]="client.UNIT_ID">{{client.UNIT_NAME}}</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-1" *ngIf="!loggedUser.agency_id" [ngClass]="projectContext === 'munichre' && loggedUser.user_role == 1 ? 'col-xl-6 col-md-6 col-sm-12' : 'col-xl-12 col-md-6 col-sm-12' ">
+                        <label>Agency</label>
+                        <select class="form-control" [(ngModel)]="agencyId" (ngModelChange)="onAgencyChange($event)" [disabled]="!agenciesSuggestion?.length">
+                            <option value="">select agency</option>
+                            <option *ngFor="let agency of agenciesSuggestion" [value]="agency.agency_id">{{agency.agency_name}}</option>
+                        </select>
+                    </div>
+                    <div class="mt-1 col-sm-12 col-md-5 col-lg-5">
+                        <label>Select Season</label>
+                        <select class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonChange($event)">
+                            <option value="">Select Season</option>
+                            <option *ngFor="let data of seasons" [value]="data.id">{{data.season_name}}</option>
+                        </select>
+                    </div>
+                    <div class="mt-1 col-sm-12 col-md-5 col-lg-5">
+                        <label>Select Year</label>
+                        <select class="form-control" [(ngModel)]="selectedYear" (ngModelChange)="onYearChange($event)">
+                            <option value="">Select Year</option>
+                            <option *ngFor="let data of years" [value]="data.id">{{data.year}}</option>
+                        </select>
+                    </div>
+                    <div class="mt-1 col-sm-12 col-md-2 col-lg-2 pt-2">
+                        <button class="btn btn_apply text-white mt-4 w-100" (click)="onSearchClick()">Search</button>
+                    </div>
+                    <ng-container *ngIf="loggedUser.user_role == 1">
+                        <div class="form-group col-12 locations mt-4" *ngIf="!selectedClients || (!agencyId)">
+                            <h6 class="text-info text-center">Select Client and Agency to continue mapping</h6>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="loggedUser.user_role > 1">
+                        <div class="form-group col-12 locations mt-4" *ngIf="(!agencyId)">
+                            <h6 class="text-info text-center">Select Agency to continue mapping</h6>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="userLoading">
+                        <div class="form-group col-12 locations mt-4">
+                            <h6 class="text-info text-center">Users are loading, please wait...</h6>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="noUser">
+                        <div class="form-group col-12 locations mt-4">
+                            <h6 class="text-danger text-center">No user found</h6>
+                        </div>
+                    </ng-container>
+
+                    <div class="col-sm-12 col-md-4 col-lg-4 mt-2">
+                        <ul class="list-group ml-0" style="height: 500px;overflow-y: scroll;" *ngIf="userSuggestion?.length">
+                            <li class="list-group-item title"><strong>Users</strong></li>
+                            <li class="list-group-item title"> 
+                                <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searched">
+                            </li>
+                            <li class="list-group-item" *ngFor="let data of userSuggestion | search:'displayName':searched">
+                                <label>
+                                    <input type="radio" [(ngModel)]="selectedUser" [value]="data.user_id" (change)="onUserChange($event)">{{data.displayName}}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-12 col-md-8 col-lg-8">
+                        <div class="form-group col-12 locations mt-4" *ngIf="!states?.length && loading">
+                            <h6 class="text-info text-center">Getting Locations... Please Wait...</h6>
+                        </div>
+                        <div class="row mt-4" *ngIf="(states?.length || selectedUser?.role_id == 6) && (userId && unitId)">
+                            <div class="col-12" *ngIf="selectedUser?.role_id != 6">
+                                <label>Modify Location Assignment - <a role="link" class="allLoc text-success" (click)="assignAllLocation()">Assign All Locations</a></label>
+                                <ul class="tree row">
+                                    <li class="col-lg-3 col-md-4 col-sm-6" *ngFor="let state of states">
+                                        <input type="checkbox" #inputState [checked]="state.checked"
+                                            (change)="onStateChanged(inputState.checked, state)" [indeterminate]="state.indeterminate">
+                                        <label (click)="state.collapse= !state.collapse">
+                                            {{state.state_name}}
+                                            <span class="total" *ngIf="state?.districts?.length">({{state?.districts?.length}})</span>
+                                        </label>
+                                        <ul *ngIf="state?.districts?.length" [(ngbCollapse)]="state.collapse">
+                                            <li *ngFor="let district of state.districts">
+                                                <input type="checkbox" #inputDistrict [checked]="district.checked"
+                                                    (change)="onDistrictChange(inputDistrict.checked, district)" [indeterminate]="district.indeterminate">
+                                                <label (click)="district.collapse= !district.collapse">
+                                                    {{district.district_name}}
+                                                    <span class="total" *ngIf="district?.tehsils?.length">({{district?.tehsils?.length}})</span>
+                                                </label>
+                                                <ul *ngIf="district?.tehsils?.length" [(ngbCollapse)]="district.collapse">
+                                                    <li *ngFor="let tehsil of district.tehsils">
+                                                        <input type="checkbox" #inputTehsil [checked]="tehsil.checked"
+                                                            (change)="onTehsilChange(inputTehsil.checked, tehsil)" [indeterminate]="tehsil.indeterminate">
+                                                        <label (click)="tehsil.collapse= !tehsil.collapse">
+                                                            {{tehsil.tehsil_name}}
+                                                            <span class="total" *ngIf="tehsil?.blocks?.length">({{tehsil?.blocks?.length}})</span>
+                                                        </label>
+                                                        <ul *ngIf="tehsil?.blocks?.length" [(ngbCollapse)]="tehsil.collapse">
+                                                            <li *ngFor="let block of tehsil.blocks">
+                                                                <input type="checkbox" #inputBlock [checked]="block.checked"
+                                                                    (change)="onBlockChange(inputBlock.checked, block)">
+                                                                <label>
+                                                                    {{block.block_name}}
+                                                                </label>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 text-right">
+                                <button class="btn btn-success mr-1" (click)="onSubmit()" [disabled]="loading">{{loading ? 'Loading...' : 'Map User'}}</button>
+                                <button class="btn btn-danger" (click)="openResetConfirmation(resetConfirmation)" [disabled]="loading">{{loading ? 'Loading...' : 'Reset'}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #resetConfirmation let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm Reset</h4>
+    </div>
+    <div class="modal-body">
+        <h4 class="text-danger font-weight-bold">Caution!</h4>
+        <p>If you proceed to reset the user location's assigned for the selected year and season combination, they will be cleared and he/she won't be able to access the data any longer.</p>
+        <p>This cannot be un-done!</p>
+        <p class="text-primary">Are you sure you want to go-ahead?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" [disabled]="resetting" (click)="modal.close('Close click')">No</button>
+        <button type="button" ngbAutofocus class="btn btn-primary" [disabled]="resetting" (click)="onReset(modal)">{{resetting ? 'Loading...' : 'Yes'}}</button>
+    </div>
+</ng-template>

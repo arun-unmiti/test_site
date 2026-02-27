@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="34px" viewBox="0 0 36 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Map view_Selected</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons-2" transform="translate(-311.000000, -634.000000)">
+            <g id="Icon/Map-view_Selected" transform="translate(311.000000, 634.000000)">
+                <path d="M30.8,0 L5.2,0 C2.328,0 0,2.328 0,5.2 L0,28.8 C0,31.672 2.328,34 5.2,34 L30.8,34 C33.672,34 36,31.672 36,28.8 L36,5.2 C36,2.328 33.672,0 30.8,0 Z" id="Path" fill="#327F93" fill-rule="nonzero"></path>
+                <path d="M22.57,15 L24.176,15 C25.076,15 25.865,15.602 26.104,16.47 L27.956,23.205 C28.396,24.802 27.457,26.453 25.859,26.893 C25.6,26.964 25.332,27 25.064,27 L10.936,27 C9.28,27 7.936,25.657 7.936,24 C7.936,23.731 7.972,23.464 8.044,23.205 L9.896,16.47 C10.135,15.602 10.924,15 11.824,15 L13.298,15" id="Path" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M18,22 C21.667,17.115 23.5,13.644 23.5,11.587 C23.5,8.502 21.038,6 18,6 C14.962,6 12.5,8.502 12.5,11.587 C12.5,13.644 14.333,17.115 18,22 Z" id="Path" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M18,12 C18.828,12 19.5,11.328 19.5,10.5 C19.5,9.672 18.828,9 18,9 C17.172,9 16.5,9.672 16.5,10.5 C16.5,11.328 17.172,12 18,12 Z" id="Path" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

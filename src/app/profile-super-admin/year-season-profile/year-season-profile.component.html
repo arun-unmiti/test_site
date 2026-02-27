@@ -1,0 +1,185 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link cursor" [class.active]="activeTab == 1" (click)="changeTab(1)">Dashbaord</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link cursor" [class.active]="activeTab == 2" (click)="changeTab(2)">Email</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="tab-content">
+            <div class="table-responsive tab-pane" [class.active]="activeTab == 1" *ngIf="activeTab == 1">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SNo</th>
+                            <th>Survey Type</th>
+                            <th>Year</th>
+                            <th>Season</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of dashboardData;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{surveyMap[data.survey]}}</td>
+                            <td>{{yearMap[data.year]}}</td>
+                            <td>{{seasonMap[data.season]}}</td>
+                            <td>{{data.fromData | date: 'dd-MM-yyyy'}}</td>
+                            <td>{{data.toData | date: 'dd-MM-yyyy'}}</td>
+                            <td><button class="btn btn-sm btn-info" (click)="openDashboardEditPopUp(data)"><i
+                                        class="fa fa-edit"></i></button></td>
+                        </tr>
+                        <!-- <tr *ngIf="!dashboardData?.length">
+                        <td colspan="5" class="text-center">No data avaliable</td>
+                    </tr> -->
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="table-responsive tab-pane" [class.active]="activeTab == 2" *ngIf="activeTab == 2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SNo</th>
+                            <th>Survey Type</th>
+                            <th>Year</th>
+                            <th>Season</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Crop Health Monitoring</td>
+                            <td>2021</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Crop Loss Survey</td>
+                            <td>2022</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Crop Cutting Experiments</td>
+                            <td>2023</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button></td>
+                        </tr>
+                        <!-- <tr *ngFor="let data of dashboardLogs">
+                        <td>{{data.sno}}</td>
+                        <td>{{data.survey_type}}</td>
+                        <td>{{data.date}}</td>
+                        <td>{{data.status}}</td>
+                        <td>{{data.comment}}</td>
+                    </tr>
+                    <tr *ngIf="!dashboardLogs?.length">
+                        <td colspan="5" class="text-center">No data avaliable</td>
+                    </tr> -->
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<ng-template #editModal let-modal>
+    <ng-container *ngIf="isDashboardpopupOpened">
+        <div class="modal-header">
+            <h4 class="modal-title">Edit Default Date</h4>
+        </div>
+        <div class="modal-body py-1">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <form class="editDashboardData" [formGroup]="dashboardForm" (ngSubmit)="updateDashboardDefaults()">
+                        <div class="form-group">
+                            <label for="dashboard-survey">Survey Type<sup class="text-danger">*</sup></label>
+                            <select class="form-control" id="dashboard-survey" name="dashboard-survey"
+                                formControlName="survey">
+                                <option value="">select Survey<sup class="text-danger">*</sup></option>
+                                <option *ngFor="let survey of surveys" [value]="survey.id">
+                                    {{survey.name}}
+                                </option>
+                            </select>
+                            <small class="text-danger" *ngIf="dashFormObj('survey')?.hasError('required')">
+                                Survey is required.
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="dashboard-year">Year<sup class="text-danger">*</sup></label>
+                            <select class="form-control" id="dashboard-year" name="dashboard-year" formControlName="year">
+                                <option value="">Select Year</option>
+                                <option *ngFor="let data of years" [value]="data.id">{{data.year}}
+                                </option>
+                            </select>
+                            <small class="text-danger" *ngIf="dashFormObj('year')?.hasError('required')">
+                                Year is required.
+                            </small>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="dashboard-season">Season<sup class="text-danger">*</sup></label>
+                            <select class="form-control" id="dashboard-season" name="dashboard-season"
+                                formControlName="season">
+                                <option value="">Select Season</option>
+                                <option *ngFor="let data of seasons" [value]="data.id">
+                                    {{data.season_name}}</option>
+                            </select>
+                            <small class="text-danger" *ngIf="dashFormObj('season')?.hasError('required')">
+                                Year is required.
+                            </small>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="dashboard-fromDate">From Date<sup class="text-danger">*</sup></label>
+                            <input type="date" class="form-control" id="dashboard-fromDate" name="dashboard-fromDate"
+                                formControlName="fromDate">
+                            <small class="text-danger" *ngIf="dashFormObj('fromDate')?.hasError('required')">
+                                From Date is required.
+                            </small>
+                            <small class="text-danger" *ngIf="dashFormObj('fromDate')?.hasError('dateRangeError')">
+                                From Date must be equal or before the To Date.
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="dashboard-toDate">To Date</label>
+                            <input type="date" class="form-control" id="dashboard-toDate" name="dashboard-toDate"
+                                formControlName="toDate">
+                                <small class="text-danger" *ngIf="dashFormObj('toDate')?.hasError('dateRangeError')">
+                                    To Date must be equal or after the From Date.
+                                </small>
+                        </div>
+                        <!-- [disabled]="dashboardForm.invalid" -->
+                        <div hidden><button type="submit" #dashboardSubmit></button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" ngbAutofocus class="btn btn-primary" (click)="dashboardSubmit.click()">Submit</button>
+            <button type="button" type="reset" class="btn btn-secondary" (click)="modal.close('Close click')">No</button>
+        </div>
+    </ng-container>
+</ng-template>

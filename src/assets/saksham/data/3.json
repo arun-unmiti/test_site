@@ -1,0 +1,86 @@
+[   
+    {
+		"districtId": 80,
+		"cropLoss": 12,
+		"cropCutting": 21,
+		"cropHealth": 10,
+		"households": 28
+	},
+    {
+		"districtId": 82,
+		"cropLoss": 12,
+		"cropCutting": 21,
+		"cropHealth": 10,
+		"households": 28
+	},
+    {
+        "districtId": 801,
+		"cropLoss": 3,
+		"cropCutting": 11,
+		"cropHealth": 4,
+		"households": 22
+    },
+    {
+        "districtId": 83,
+		"cropLoss": 12,
+		"cropCutting": 31,
+		"cropHealth": 31,
+		"households": 21
+    },
+    {
+        "districtId": 71,
+		"cropLoss": 6,
+		"cropCutting": 65,
+		"cropHealth": 23,
+		"households": 112
+    },
+    {
+        "districtId": 81,
+		"cropLoss": 21,
+		"cropCutting": 33,
+		"cropHealth": 13,
+		"households": 17
+    },
+    {
+        "districtId": 69,
+		"cropLoss": 12,
+		"cropCutting": 31,
+		"cropHealth": 1,
+		"households": 12
+    },
+    {
+        "districtId": 70,
+		"cropLoss": 0,
+		"cropCutting": 1,
+		"cropHealth": 5,
+		"households": 2
+    },
+    {
+        "districtId": 84,
+		"cropLoss": 14,
+		"cropCutting": 41,
+		"cropHealth": 12,
+		"households": 11
+    },
+    {
+        "districtId": 68,
+		"cropLoss": 21,
+		"cropCutting": 11,
+		"cropHealth": 4,
+		"households": 66
+    },
+    {
+        "districtId": 85,
+		"cropLoss": 11,
+		"cropCutting": 1,
+		"cropHealth": 56,
+		"households": 23
+    },
+    {
+        "districtId": 86,
+		"cropLoss": 11,
+		"cropCutting": 12,
+		"cropHealth": 11,
+		"households": 32
+    }
+]

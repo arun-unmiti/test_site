@@ -1,0 +1,229 @@
+<div class="card p-2">
+    <div class="card-header bg-white">
+        <h3 class="title">CCE Upload</h3>
+    </div>
+    <div class="card-body" *ngIf="!failedIntimations?.length">
+        <div class="row" *ngIf="!isLookupLoaded">
+            <div class="col-sm-12"> <app-skeleton-loader [show]="true" [count]="1" [height]="'75px'" [padding]="'1px'"
+                    [margin]="'1px'"></app-skeleton-loader></div>
+            <div class="col-sm-12 mt-4"> <app-skeleton-loader [show]="true" [count]="10" [height]="'25px'"
+                    [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader></div>
+            <div class="col-sm-12 mt-4"> <app-skeleton-loader [show]="true" [count]="10" [height]="'25px'"
+                    [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader></div>
+        </div>
+        <div class="row" *ngIf="isLookupLoaded">
+            <div class="col-sm-12">
+                <div class="upload-box">
+                    <div class="message-area">
+                        <div class="h4">
+                            Upload or Drag file here
+                        </div>
+                        <small *ngIf="fileName">{{fileName}} file is selected</small>
+                    </div>
+                    <input #fileEle type="file" name="upload-file" id="upload-file" class="uploadfield" accept=".csv"
+                        (click)="onFileEleClick(fileEle)" (change)="onFileChange($event)">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row align-items-center">
+                    <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+                        <a [href]="assetsFolder + '/data/cce_implementation_template.csv'" class="font-weight-bold">Download Template</a>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+                        <p-accordion class="mt-3">
+                            <p-accordionTab header="Note/Instruction to follow:">
+                                <ul class="text-grey disabled-list">
+                                    <li>Lorem ipsum dolor sit amet</li>
+                                    <li>Consectetur adipiscing elit</li>
+                                    <li>Sed do eiusmod tempor incididunt</li>
+                                    <li>Ut labore et dolore magna aliqua</li>
+                                    <li>Ut enim ad minim veniam</li>
+                                    <li>Quis nostrud exercitation ullamco</li>
+                                    
+                                </ul>
+                            </p-accordionTab>
+                        </p-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card p-2" *ngIf="fileData?.length">
+    <div class="card-header bg-white">
+        <h3 class="title">Valid Records</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <p-table #dt [value]="fileData" [columns]="fileHeaders" [scrollable]="true" [style]="{width:'100%'}"
+                        scrollHeight="400px" [showCurrentPageReport]="true" [paginator]="true" [rows]="10"
+                        [rowsPerPageOptions]="[5, 10, 25, 50]">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <ng-container *ngFor="let col of columns">
+                                    <th>{{col.header}}</th>
+                                </ng-container>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-row let-columns="columns">
+                            <tr>
+                                <ng-container *ngFor="let col of columns">
+                                    <ng-container [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchCase="'state'">
+                                            <td>{{stateMapping[row[col.field]]}}</td>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'district'">
+                                            <td>{{districtMapping[row[col.field]]}}</td>
+                                        </ng-container>
+
+
+                                        <ng-container *ngSwitchCase="'year'">
+                                            <td>{{yearMapping[row[col.field]]}}</td>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'season'">
+                                            <td>{{seasonMapping[row[col.field]]}}</td>
+                                        </ng-container>
+                                        <ng-container *ngSwitchDefault>
+                                            <td>{{row[col.field]}}</td>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+                <button class="btn btn_apply text-white mt-3" [disabled]="loading" (click)="onSubmit()">{{loading ?
+                    'Loading...' :'Submit'}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card p-2" *ngIf="invalidFileData?.length">
+    <div class="card-header bg-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="title">In-Valid Records</h3>
+            </div>
+            <div>
+                <button class="btn btn_apply text-white" (click)="downloadInvalids()">Download</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <p-table #dt [value]="invalidFileData" [columns]="fileHeaders" [scrollable]="true"
+                        [style]="{width:'100%'}" scrollHeight="450px" [showCurrentPageReport]="true"
+                        [showCurrentPageReport]="true" [paginator]="true" [rows]="10"
+                        [rowsPerPageOptions]="[5, 10, 25, 50]">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <ng-container *ngFor="let col of columns">
+                                    <th>{{col.header}}</th>
+                                </ng-container>
+                                <th>Remark</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-row let-columns="columns">
+                            <tr>
+                                <ng-container *ngFor="let col of columns">
+                                    <ng-container [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchCase="'state'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{stateMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'district'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{districtMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'taluka'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{blockMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'ri_circle'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{riCircleMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'gp'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{grampanchayatMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'village'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{villageMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'notified_unit'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{iuLevelMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'crop'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{cropMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'year'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{yearMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'season'">
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{seasonMapping[row[col.field]]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+
+                                        <ng-container *ngSwitchDefault>
+                                            <td class="bg-danger text-white"
+                                                *ngIf="row.errors[col.field]; else validCell">{{row[col.field]}}</td>
+                                            <ng-template #validCell>
+                                                <td>{{row[col.field]}}</td>
+                                            </ng-template>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <td> <ol>
+                                  <li class="text-danger" *ngFor="let text of row.remark">{{text}}.</li>  
+                                </ol>
+                            </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

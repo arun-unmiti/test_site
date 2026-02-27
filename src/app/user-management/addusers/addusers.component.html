@@ -1,0 +1,319 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+
+        <!-- <div class="d-flex justify-content-between mt-3">
+            <div class="title_one"><img loading="lazy" src="assets/images/icon-left-arrow.svg"
+                    class="mr-3 pointer" (click)="back()"><span *ngIf="farmerName">Farmer Name :
+                    {{farmerName}}</span></div>
+            <div class="title_one">Data ID: {{data_id}}</div>
+        </div> -->
+        <h5  class="add-title">
+            <button  title="Back" routerlink="/users/user-mangement" class="btn btn-sm btn-back mr-2" tabindex="0">
+            <img  loading="lazy" src="{{assetsFolder}}/images/icon-left-arrow.svg"></button> Create User </h5>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-8"></div>
+</div>
+
+
+
+
+<div class="pt-2">
+    <div class="card p-2">
+        <div class="card-header bg-white">
+            <h3 class="title text-center">Personal Details</h3>
+        </div>
+        <div class="card-body">
+            <form id="userForm" autocomplete="off" [formGroup]="userForm" (ngSubmit)="createUser()">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="first_name">First Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="first_name" name="first_name"
+                                id="first_name" required>
+                            <!-- <small *ngIf="props('first_name')?.touched && props('first_name')?.invalid"
+                                class="text-danger">First Name is requried.</small> -->
+                            <div *ngIf="submitted && f.first_name.errors" class="text-danger">
+                                <div *ngIf="f.first_name.errors.required">First name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="last_name">Last Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="last_name" name="last_name"
+                                id="last_name" required>
+                            <!-- <small *ngIf="props('last_name')?.touched && props('last_name')?.invalid"
+                                class="text-danger">Last Name is requried.</small> -->
+                            <div *ngIf="submitted && f.last_name.errors" class="text-danger">
+                                <div *ngIf="f.last_name.errors.required">Last name is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email">Email Address 
+                                <!-- <span class="text-danger">*</span> -->
+                            </label>
+                            <input type="email" class="form-control" formControlName="email" name="email" id="email" autocomplete="false">
+                            <!-- <small *ngIf="props('email')?.touched && props('email')?.invalid" class="text-danger">Email
+                                is requried.</small>
+                            <small *ngIf="props('email')?.touched && props('email')?.errors && props('email')?.invalid" class="text-danger">Email must be a valid email address</small> -->
+                            <div *ngIf="submitted && f.email.errors" class="text-danger">
+                                <div *ngIf="f.email.errors.required">Email is required</div>
+                                <div *ngIf="f.email.errors.email">Enter valid email format</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="username">Username<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="username" name="username"
+                                id="username">
+                            <small *ngIf="props('username')?.touched && props('username')?.invalid"
+                                class="text-danger">User Name is requried.</small>
+                            <div *ngIf="submitted && f.username.errors" class="text-danger">
+                                <div *ngIf="f.username.errors.required">Username is required</div>
+                                <div *ngIf="f.username.errors.pattern">Username length should be minimum 3 characters </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="phone">Mobile Number<span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" formControlName="phone" name="phone" id="phone" maxlength="10" required>
+                            <div *ngIf="submitted && f.phone.errors" class="text-danger">
+                                <p *ngIf="f.phone.errors.required">Mobile number is required</p>
+                                <p *ngIf="f.phone.errors.minlength">Mobile number must be 10 digits</p>
+                                <p *ngIf="f.phone.errors.pattern">Please enter valid mobile number</p>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="emp_id">Employee Id<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="emp_id" name="emp_id" id="emp_id" maxlength="100" required>
+                            <div *ngIf="submitted && f.emp_id.errors" class="text-danger">
+                                <p *ngIf="f.emp_id.errors.required">Employee Id is required</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Password<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" formControlName="password" name="password"
+                                id="password" autocomplete="new-password" required>
+                            <!-- <small *ngIf="props('password')?.touched && props('password')?.invalid"
+                                class="text-danger">Password is requried.</small>
+                                <small *ngIf="props('password')?.touched && props('password')?.errors && props('password')?.invalid" class="text-danger">Password length must be minimum of 6 character</small> -->
+                            <div *ngIf="submitted && f.password.errors" class="text-danger">
+                                <div *ngIf="f.password.errors.required">Password is required</div>
+                                <div *ngIf="f.password.errors.pattern">New Password must be atleast 8 digit with upper case , lower case and special symbol</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cpassword">Confirm Password<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" formControlName="cpassword" name="cpassword"
+                                id="cpassword" autocomplete="new-password" required>
+                            <!-- <small *ngIf="props('cpassword')?.touched && props('cpassword')?.invalid"
+                                class="text-danger">Confirm Password is requried.</small>
+                                <small *ngIf="props('cpassword')?.touched && props('cpassword')?.errors && props('cpassword')?.invalid" class="text-danger">Password length must be minimum of 6 character</small> -->
+                            <div *ngIf="submitted && f.cpassword.errors" class="text-danger">
+                                <div *ngIf="f.cpassword.errors.required">Confirm password is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="mt-30">Professional Details</h5>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="user_role">Select Role<span class="text-danger">*</span></label>
+                            <select class="form-control" formControlName="user_role" name="user_role" (ngModelChange)="onLevelChange($event)">
+                                <option value="">-- Select --</option>
+                                <option *ngFor="let data of roles" [value]="data.role_id">{{data.role_name}}</option>
+                            </select>
+                            <!-- <small *ngIf="props('user_role')?.touched && props('user_role')?.invalid" class="text-danger">Role
+                                is requried.</small> -->
+                            <div *ngIf="submitted && f.user_role.errors" class="text-danger">
+                                <div *ngIf="f.user_role.errors.required">User role is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="designation">Designation (Department)</label>
+                            <input type="text" class="form-control" formControlName="designation" name="designation"
+                                id="designation">
+                        </div>
+                    </div>
+
+                    <div class="col-4" *ngIf="projectContext === 'munichre' && userDetails?.user_role == 1 && ['3','4','5','6','7','8'].includes(f.user_role?.value)">
+                        <div class="form-group form-group-pass">
+                            <label for="">Client<span class="text-danger">*</span></label>
+                            <select class="form-control" name="user_role" formControlName="client" (ngModelChange)="onClientChange($event)" >
+                                <option value="">-- Select Client --</option>
+                                <option *ngFor="let client of clients" [value]="client.UNIT_ID">{{client.UNIT_NAME}}</option>
+                             </select>
+                        </div>
+                    </div>
+                    <div class="col-4" *ngIf="['7','8'].includes(userForm.get('user_role').value)  && !hideRoleType">
+                        <div class="form-group form-group-pass">
+                            <label for="">Add employee type <span class="text-danger">*</span></label>
+                            <select class="form-control form-control-sm" id="filter-country" formControlName="roleType"
+                                [ngClass]="{ 'is-invalid': submitted && f.roleType.errors }"
+                                (ngModelChange)="onTypeChange($event)">
+                                <option value="">Select Roll Type</option>
+                                <option value="1"> On-roll</option>
+                                <option value="2"> Off-roll</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4" *ngIf="['7','8'].includes(userForm.get('user_role').value) && !hideRoleType">
+                        <div class="form-group form-group-pass" *ngIf="userForm.get('roleType').value == 2">
+                            <label for="agency">Agency <span class="text-danger">*</span></label>
+                            <select class="form-control form-control-sm" id="filter-agency" formControlName="agency"
+                                [ngClass]="{ 'is-invalid': submitted && f.agency.errors }" (ngModelChange)="onAgencyChange($event)">
+                                <option value="" *ngIf="agencies.length">-- Select --</option>
+                                <option value="" *ngIf="!agencies.length">No agencies available</option>
+                                <option *ngFor="let agency of agencies" [value]="agency.agency_id">{{agency.agency_name}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.agency.errors" class="invalid-feedback">
+                                <div *ngIf="f.agency.errors.required" class="text-danger">Agency is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="['5','6','7','8'].includes(userForm.get('user_role').value)">
+                        <button type="button" (click)="open(content)" class="btn btn-info mt-30">{{isLoadingLocation ? 'Location are loading...' : 'Assign Location'}}</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success float-right mt-30" [disabled]="loading">{{loading?
+                    'Loading...': 'Add User'}}</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Allocate Location</h4>
+      <button type="button" class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12 mb-2">
+            <div class="p-fluid p-grid">
+                <label for="">Year <sup class="text-danger">*</sup></label>
+               <select class="form-control" [(ngModel)]="selectedYear" (ngModelChange)="onYearSelect($event)">
+                  <option value="">Select Year</option>
+                  <option *ngFor="let data of yearData" [value]="data.id">{{data.year}}</option>
+               </select>
+            </div>
+        </div>
+        <div class="col-sm-12 mb-2">
+            <div class="p-fluid p-grid">
+                <label for="">Season <sup class="text-danger">*</sup></label>
+                <select class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonSelect($event)">
+                   <option value="">Select Season</option>
+                   <option *ngFor="let data of seasonData" [value]="data.id">{{data.season_name}}</option>
+                </select>
+            </div>
+        </div>
+        <ng-container *ngIf="!isStateLoading">
+            <div class="col-sm-12 mb-2" *ngIf="['5', '6', '7', '8'].includes(userForm.get('user_role').value)">
+                <div class="p-fluid p-grid">
+                    <label>Select States <sup class="text-danger">*</sup></label>
+                    <p-multiSelect [baseZIndex]="500" defaultLabel="All States"
+                                                [options]="statesData" [(ngModel)]="selectedState" optionLabel="state_name" *ngIf="+userForm.get('user_role').value == 5" (ngModelChange)="onStateChange($event)" [disabled]="!selectedYear?.length || !selectedSeason?.length">
+                    </p-multiSelect>
+                    <select [(ngModel)]="singleState" class="form-control" *ngIf="[6,7,8].includes(+userForm.get('user_role').value)" (ngModelChange)="onSingleStateChange($event)" [disabled]="!selectedYear?.length || !selectedSeason?.length">
+                        <option value="">select state</option>
+                        <option *ngFor="let state of statesData" [value]="state.state_id">{{state.state_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 mb-2" *ngIf="['6', '7', '8'].includes(userForm.get('user_role').value)">
+                <div class="p-fluid p-grid">
+                    <label>Select Districts<sup class="text-danger">*</sup></label>
+                    <p-multiSelect [baseZIndex]="500" defaultLabel="All Districts" [showHeader]="true"
+                                            [group]="true" [options]="districtData" [(ngModel)]="selectedDist"
+                                            optionLabel="district_name"
+                                             *ngIf="['5', '6', '7'].includes(userForm.get('user_role').value)" (ngModelChange)="onDistrictChange($event)" [disabled]="!selectedYear?.length || !selectedSeason?.length">
+                                            <ng-template let-group pTemplate="group">
+                                                <div class="p-d-flex p-ai-center">
+                                                    <span>{{group.state_name}}</span>
+                                                </div>
+                                            </ng-template>
+                                        </p-multiSelect>
+                    <select [(ngModel)]="singleDist" class="form-control" *ngIf="['8'].includes(userForm.get('user_role').value)" (ngModelChange)="onSingleDistrictChange($event)" [disabled]="!selectedYear?.length || !selectedSeason?.length">
+                    <option value="">select district<sup class="text-danger">*</sup></option>
+                    <ng-container *ngFor="let item of districtData">
+                        <option *ngFor="let district of item.items" [value]="district.district_id">{{district.district_name}}</option>
+                    </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 mb-2" *ngIf="['8'].includes(userForm.get('user_role').value) && ['1','2','3','4', '5', '6', '7'].includes(userDetails?.user_role)">
+                <div class="p-fluid p-grid">
+                    <label>Select Tehsils</label>
+                    <p-multiSelect [baseZIndex]="500" defaultLabel="All Tehsils" [showHeader]="true"
+                                            [group]="true" [options]="tehsilsData" [(ngModel)]="selectedtehsil"
+                                            optionLabel="tehsil_name"
+                                            (ngModelChange)="onTehsilChange($event)" [disabled]="!selectedYear?.length || !selectedSeason?.length">
+                                            <ng-template let-group pTemplate="group">
+                                                <div class="p-d-flex p-ai-center">
+                                                    <span>{{group.district_name}}</span>
+                                                </div>
+                                            </ng-template>
+                                        </p-multiSelect>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="isStateLoading">
+            <div class="col-sm-12 mb-2">
+                <div class="pt-5 font-weight-bold">Locations are loading...</div>
+            </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+
+  <ng-template #confirmationContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Allocate Location</h4>
+        <button type="button" class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+    <div class="row">
+        <div class="col-12">
+            <h4>User is already register with this phone number</h4>
+            <p>Do you want to register new user, it may deactive older account</p>
+            <p class=" my-2 text-primary">Do you want to continue</p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="w-100 text-center">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('yes')">Yes</button>
+            <button type="button" class="btn btn-danger" (click)="modal.close('no')">No</button>
+        </div>
+    </div>
+</div>
+  </ng-template>

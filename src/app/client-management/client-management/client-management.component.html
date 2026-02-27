@@ -1,0 +1,147 @@
+<div class="row">
+   <ng-container *ngIf="loader">
+      <div class="text-center">
+        <div class="loader">
+          <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+        </div>
+      </div>
+    </ng-container>
+   <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="card">
+         <div class="card-body">
+            <div class="d-flex float-left">
+               <h5 class="add-title font-16px mt-1">Clients ({{clientList.length}})</h5>
+               <button *ngIf="projectContext === 'munichre'" class="btn btn-sm btn_apply mr-3 ml-3 text-white" routerLink="/client/add-client"><i
+                     class="fa fa-plus"></i> Add Client</button>
+            </div>
+            <div class="d-flex float-right mb-2">
+               <div class="input-group rounded">
+                  <!-- <input type="search" class="form-control rounded" [ngModelOptions]="{standalone: true}" [(ngModel)]="query" placeholder="Search Client" aria-label="Search"
+                    aria-describedby="search-addon" /> -->
+                    <input type="search" class="form-control rounded" pInputText type="text" (input)="dt1.filterGlobal(getEventValue($event), 'startsWith')" placeholder="Search client"
+                    aria-label="Search" aria-describedby="search-addon" />
+                  <span class="input-group-text border-0 ml-2" id="search-addon">
+                    <i class="fas fa-search"></i>
+                  </span>
+                  <span class="input-group-text border-0 ml-2" (click)="exportTable('clientList', 'Users')" style="cursor: pointer;">
+                    <i class="fas fa-download"></i>
+                  </span>
+                </div>
+            </div>
+            <div class="table-responsive">
+              
+               <p-table [value]="clientList" id="clientList" #dt1 [globalFilterFields]="['UNIT_NAME','statusResult']"  [rows]="10" [showCurrentPageReport]="true" 
+               [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+                  <ng-template pTemplate="header">
+                     <tr>
+                        <th width="75">S.No.</th>
+                        <th class="text-center">Logo</th>
+                        <th width="150">Client Name</th>
+                        <th class="truncate">Address</th>
+                        <th width="150">Contact No.</th>
+                        <th width="120">POC Name</th>
+                        <th>POC Email</th>
+                        <th width="100" class="text-center">Status</th>
+                        <th *ngIf="!downloading" width="90" class="text-center">Action</th>
+                     </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-client>
+                     <tr>
+                        <td>{{client.sno}}</td>
+                        <td class="text-center"> <img [src]="projectContext === 'munichre' ? client.safeLogoUrl : getImgUrl(client.company_logo)" (error)="getErrImgUrl($event)" height="40" [alt]="client.UNIT_NAME + ' logo'" *ngIf="projectContext !== 'munichre' || client.safeLogoUrl" /> </td>
+                        <td>{{client.UNIT_NAME}}</td>
+                        <td class="truncate">{{client.address}}</td>
+                        <td>{{client.phone}}</td>
+                        <td>{{client.poc_name}}</td>
+                        <td>{{client.poc_email}}</td>
+                           <td [ngStyle]="{'color':client.UNIT_STATUS == 2 ? 'orange' : client.UNIT_STATUS == 1 ? 'green' : 'red' }">{{client.statusResult}}</td>
+                        <td *ngIf="!downloading" class="text-center">
+                           <div ngbDropdown class="d-inline-block" style="position: absolute; margin-top: -12px;">
+                              <span class="ponter add-title" id="dropdownBasic1" ngbDropdownToggle> <img
+                                    src="{{assetsFolder}}/images/Options-vertical.svg"></span>
+                              <div ngbDropdownMenu class="dropdown_agency1" aria-labelledby="dropdownBasic1">
+                                 <a href="javascript:void(0)" (click)="open(content,client)">
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Edit_Blue.svg" height="18px"> Edit Client
+                                    </label>
+                                 </a>
+
+                                 <a href="javascript:void(0)" (click)="changeStatus(client, 1)" *ngIf='client.UNIT_STATUS != 1'>
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Edit_Blue.svg" height="18px"> 
+                                       Activate
+                                    </label>
+                                 </a>
+                                 <a href="javascript:void(0)" (click)="changeStatus(client, 0)" *ngIf='client.UNIT_STATUS != 0'>
+                                    <label ngbDropdownItem>
+                                       <img src="{{assetsFolder}}/images/Edit_Blue.svg" height="18px"> Inactivate
+                                    </label>
+                                 </a>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                  </ng-template>
+               </p-table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div>
+   <ng-template #content let-modal>
+      <div class="modal-header">
+         <h4 class="modal-title" id="modal-basic-title">Edit Client</h4>
+         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <form class="form-group">
+            <div class="row">
+               
+               <div class="col-md-6 form-group">
+                  <label>Client Name</label> <span class="text-danger">*</span>
+                  <input type="text" name="name" class="form-control" [(ngModel)]="selectedClient.name">
+               </div>
+               <div class="col-md-6 form-group">
+                  <label>Phone</label> <span class="text-danger">*</span>
+                  <input type="text" name="phone" class="form-control" [(ngModel)]="selectedClient.phone">
+               </div>
+               <div class="col-md-12 form-group">
+                  <label>Address</label> <span class="text-danger">*</span>
+                  <!-- <input type="text" name="address" class="form-control" [(ngModel)]="selectedClient.address"> -->
+                  <textarea id="address" [(ngModel)]="selectedClient.address" [ngModelOptions]="{standalone: true}" rows="1" cols="30"
+                  class="form-control" pInputTextarea></textarea>
+               </div>
+               <div class="col-md-12 form-group">
+                  <label>LOGO</label>
+                  <input type="file" name="clientLogo"  accept="image/jpeg" class="form-control" #profileField (change)="onClientProfileChange($event, profileField)">
+               </div>
+            
+               <div class="col-md-6 form-group">
+                  <label>POC Name</label> <span class="text-danger">*</span>
+                  <input type="text" name="pocname" class="form-control" [(ngModel)]="selectedClient.pocname">
+               </div>
+               <div class="col-md-6 form-group">
+                  <label>POC Email</label> <span class="text-danger">*</span>
+                  <input type="text" name="pocemail" class="form-control" [(ngModel)]="selectedClient.pocemail">
+               </div>
+               <!-- <div class="col-md-6 form-group">
+                  <label>POC Phone</label> <span class="text-danger">*</span>
+                  <input type="text" name="pocphone" class="form-control" [(ngModel)]="selectedClient.pocphone">
+               </div> -->
+            </div>
+            <div class="row mt-2">
+               <div class="col-md-12">
+                  <button type="button" class="btn btn-danger float-right"
+                     (click)="modal.close('Save click')">Close</button>
+                  <!-- <button type="submit" class="btn btn-success float-right mr-1"
+                      (click)="update(selectedUser)">Update</button> -->
+                  <button type="submit" class="btn btn-success float-right mr-1" (click)="update()">Update</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </ng-template>
+</div>

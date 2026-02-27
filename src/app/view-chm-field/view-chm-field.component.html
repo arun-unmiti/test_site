@@ -1,0 +1,196 @@
+<div class="row mb-4">
+    <div class="col-sm-12 col-md-12 co-lg-12">
+        <h4 class="title">View CHM Field Data</h4>
+    </div>
+</div>
+
+<div class="row">
+    <ng-container *ngIf="loading">
+        <div class="text-center">
+            <div class="loader">
+                <img class="img_rotate" src="{{assetsFolder}}/images/new_loader.gif">
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="lookupLoader">
+        <div class="col-12 bg-white rounded">
+            <div class="row align-items-end justify-content-start">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <app-skeleton-loader [show]="true" [count]="1" [height]="'50px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 bg-white rounded mt-4">
+            <div class="row align-items-end justify-content-start">
+                <div class="col-sm-12">
+                    <app-skeleton-loader [show]="true" [count]="10" [height]="'25px'" [padding]="'1px'" [margin]="'1px'"></app-skeleton-loader>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="col-12" *ngIf="!lookupLoader">
+        <div class="card p-2">
+            <div class="filter-card-title" (click)="isFilterCollapsed = !isFilterCollapsed" [class.close-toggle]="isFilterCollapsed">
+                <div>
+                    Apply Filters
+                </div>
+                <div class="toggle-img-area">
+                    <img src="{{assetsFolder}}/images/Nav_bar_close.svg" alt="toggle" class="toggle-img">
+                </div>
+            </div>
+            <div class="card-body" [ngbCollapse]="isFilterCollapsed">
+                <div class="row align-items-end justify-content-start">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Year <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="selectedYear" (ngModelChange)="onYearSelect($event)">
+                                <option value="">Select Year</option>
+                                <option *ngFor="let data of yearData" [value]="data.id">{{data.year}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Season <sup class="text-danger">*</sup></label>
+                            <select class="form-control" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonSelect($event)">
+                                <option value="">Select Season</option>
+                                <option *ngFor="let data of seasonData" [value]="data.id">{{data.season_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">State</label>
+                            <span class="p-float-label">
+                                <p-multiSelect [baseZIndex]="500" defaultLabel="All States"
+                                    [options]="statesData" [(ngModel)]="selectedState" optionLabel="state_name"
+                                    (ngModelChange)="onStateSelect($event)">
+                                </p-multiSelect>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">District</label>
+                            <p-multiSelect [baseZIndex]="500" defaultLabel="All Districts" [showHeader]="true"
+                                [group]="true" [options]="districtData" [(ngModel)]="selectedDist"
+                                optionLabel="district_name" (ngModelChange)="onDistSelect($event)"
+                                [disabled]="!districtData.length">
+                                <ng-template let-group pTemplate="group">
+                                    <div class="p-d-flex p-ai-center">
+                                        <span>{{group.state_name}}</span>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="p-fluid p-grid">
+                            <label for="">Block</label>
+                            <p-multiSelect [baseZIndex]="500" defaultLabel="All Blocks" [showHeader]="true"
+                                [group]="true" [options]="blockData" [(ngModel)]="selectedBlock"
+                                optionLabel="tehsil_name" (ngModelChange)="onTehsilSelect($event)"
+                                [disabled]="!blockData.length">
+                                <ng-template let-group pTemplate="group">
+                                    <div class="p-d-flex p-ai-center">
+                                        <span>{{group.district_name}}</span>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 col-lg-3 mt-2">
+                        <div class="tab-content top-10px">
+                            <label for="">Date Range</label>
+                            <input #dateRangePicker type="text" name="daterange" displayFormat="DD MMM YYYY" format="DD MMM YYYY"
+                                [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                                [showClearButton]="true" [showCancel]="true" [linkedCalendars]="false"
+                                ngxDaterangepickerMd [(ngModel)]="selectedFromDate"
+                                class="form-control daterange" [locale]="localeValue" [maxDate]="maxDate">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-2 col-lg-2 mt-2">
+                        <button class="btn btn_apply text-white top-10px" (click)="applyFilter()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12" *ngIf="!lookupLoader && rows?.length">
+        <div class="card">
+            <div class="download">
+                <button class="btn btn_apply text-white" (click)="downloadExcel()">Download</button>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let col of columns" nowrap>{{col.header}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of rows">
+                                <ng-container *ngFor="let col of columns">
+                                    <td>{{row[col.field]}}</td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <app-pagination *ngIf="projectContext === 'munichre' && rows.length" #pagination (pageTrigger)="onPageTrigger($event)"
+                            [currentpage]="currentpage" [recordsPerPage]="recordsPerPage"
+                            [currentRocords]="rows?.length" [toalRecord]="totalRecords"></app-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12" *ngIf="no_data.length > 0">
+        <div class="card">
+            <div class="card-body p-0 m-5 text-center">
+                {{ no_data }}
+            </div>
+        </div>
+    </div>
+</div>

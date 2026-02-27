@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="21px" viewBox="0 0 20 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon/Login_Header</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons-2" transform="translate(-359.000000, -1016.000000)" stroke="#272B2E" stroke-width="1.2">
+            <g id="Icon/Login_Header" transform="translate(359.960660, 1016.600000)">
+                <path d="M12.9393402,3.9 C12.9393402,6.05 11.1933402,7.8 9.03934019,7.8 C6.88534019,7.8 5.13934019,6.05 5.13934019,3.9 C5.13934019,1.75 6.88534019,-5.68434189e-14 9.03934019,-5.68434189e-14 C11.1933402,-5.68434189e-14 12.9393402,1.75 12.9393402,3.9 Z" id="Path"></path>
+                <path d="M17.5003402,15.95 L17.9503402,18.11 C18.1313402,18.98 17.4673402,19.8 16.5793402,19.8 L1.40034019,19.8 C0.535340195,19.8 -0.122659805,19.02 0.0193401949,18.17 L0.331340195,16.3 C1.03334019,12.09 4.67734019,9 8.94834019,9 C13.0863402,9 16.6563402,11.9 17.5003402,15.95 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

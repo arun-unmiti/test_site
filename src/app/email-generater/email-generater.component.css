@@ -1,0 +1,4 @@
+:host .email-container {
+    position: relative;
+    height: calc(100vh - 200px);
+}

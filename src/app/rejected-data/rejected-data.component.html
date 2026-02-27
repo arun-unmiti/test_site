@@ -1,0 +1,28 @@
+<ng-container *ngIf="loading">
+    <div class="text-center">
+        <div class="loader">
+            <img class="img_rotate" src="./assets/images/new_loader.gif">
+        </div>
+    </div>
+</ng-container>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 co-lg-12">
+        <h4 class="title">Rejected Data</h4></div>
+    <div class="col-sm-12 col-md-12 co-lg-12">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="i" *ngFor="let data of surveys; let i = index">
+                <a ngbNavLink>{{data.title}}</a>
+                <ng-template ngbNavContent>
+                    <app-survey-wise-data [surveyName]="data.title" [surveyId]="data.id" dataPurpose="get_rejected_surveydata" [canApprove]="true" [canReject]="false" [canPending]="true" [parentSurveyId]="data.parent_form"></app-survey-wise-data>
+                </ng-template>
+            </li>
+        </ul>
+
+        <div class="card1 mt-4">
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+
+
+    </div>
+</div>

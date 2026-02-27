@@ -1,0 +1,6 @@
+Season,Financial Year,Product Name,State,District,Block/Taluka,Location,Pincode,Crop,Area Insured (In Hec),Premium Unit,Sum Insured Unit,Risk Start Date,Risk End Date,,
+Kharif,2024,Testing Product name 1,CHHATTISGARH,Balod,Arjunda,Avari,491221,Maize,1,500,25000,2025-03-01,2025-05-31,,
+Kharif,2024,Testing Product name 2,CHHATTISGARH,Balod,Daundi,Ghotiya,491228,Maize,2,1000,20000,2025-03-01,2025-04-11,,
+Rabi,2024,Testing Product name 3,Gujarat,Ahmedabad,Dholka,Dholka,491221,Cotton,3,1500,15000,2025-03-01,2025-05-31,,
+Rabi,2024,Testing Product name 4,Gujarat,Gandhinagar,Kalol,Kalol,491221,Paddy,4,2000,25000,2025-01-01,2025-02-11,,
+Kharif,2024,Testing Product name 5,Maharashtra,Kolhapur,Panhala,Panhala,416236,Potato,5,2500,20000,2025-03-01,2025-05-31,,

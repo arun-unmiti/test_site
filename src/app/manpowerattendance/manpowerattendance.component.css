@@ -1,0 +1,259 @@
+.tab_top {
+  position: absolute;
+  right: 0px;
+  border-radius: 0px;
+  left: 0px;
+  top: -14px;
+  width: 100%;
+  /* -webkit-top: -67px !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important; */
+}
+.date_text {
+  color: #272b2e;
+  font-weight: 400;
+  font-size: 20px;
+}
+.checkbox-head {
+  width: 3rem;
+}
+:host .table.tbl_survey th, td{
+  padding: 23px!important;
+}
+:host .table.tbl_survey tr .tbl_title_text {
+    opacity: 0.8;
+    font-size: 18px;
+    color: #272B2E;
+    text-align: left;
+}
+
+:host #enumarator_radio_map{
+  width: 100%;
+  height: 500px;
+  position: relative;
+}
+:host #map-loader{
+  position: absolute;
+  padding: 15px 0px;
+  background-color: #fff;
+  z-index: 1001;
+  top: 45%;
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+}
+:host .font-16px {
+  font-size: 16px!important;
+}
+:host .table.tbl_survey tr:nth-of-type(1) th{
+  border-top: 0px!important
+}
+:host .table.tbl_survey tr:nth-of-type(1) td{
+  border-top: 0px!important
+}
+:host .text-orange {
+  color: #ffa500!important;
+}
+:host .text-green {
+  color: #008000!important;
+}
+
+:host .text-dark-gray {
+  color: #175788!important;
+}
+.dropdown_agency.dropdown-menu.show {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  top: 10px !important;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background: #ffffff;
+  box-shadow: 0 0 8px 1px rgb(0 0 0 / 16%);
+  background-clip: padding-box;
+  border: 0px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+.dropdown_agency.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 10%;
+  margin-left: -5px;
+  border-width: 9px;
+  border-style: solid;
+  visibility: visible;
+  border-color: transparent transparent #fff transparent;
+}
+.ponter {
+  cursor: pointer;
+}
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-family: Open Sans;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #175788;
+}
+.card_map {
+  background: #d8d8d82e;
+  border-radius: 6px;
+}
+.table-bordered td,
+.table-bordered th {
+  border: 0px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  vertical-align: middle;
+  line-height: 19px;
+  text-align: center;
+}
+.tbl_scroll {
+  height: 500px;
+  overflow-y: scroll;
+  border: 1px solid rgb(23 87 136 / 20%);
+  border-top: none;
+}
+.view_text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: #03a3bf;
+}
+.text-select {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+  color: #424345;
+}
+.chart_title {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 27px;
+  color: #272b2e;
+}
+.date_input {
+  width: 70px;
+  border: 0px;
+  background: transparent;
+}
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: rgb(234 221 221 / 8%);
+}
+/* .tbl_selected tr:nth-child(1){
+    background-color: rgba(148, 46, 126, 0.1);
+} */
+/* .tbl_selected tr:nth-child(2){
+    background-color: rgba(148, 46, 126, 0.1);
+} */
+
+.float-right.w-50.input-group {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+::ng-deep.p-datatable .p-datatable-header {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #e9ecef;
+  border-width: 1px 0 1px 0;
+  padding: 1.2rem 1rem;
+  font-weight: 600;
+}
+::ng-deep.p-datatable-thead{
+  position: sticky;
+  top: 0px;
+}
+::ng-deep.p-datatable .p-datatable-thead > tr > th  {
+  text-align: left;
+  padding: 1.2rem 1rem;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  font-weight: 600;
+  color: #495057;
+  background: #f8f9fa;
+  transition: box-shadow 0.2s;
+}
+
+::ng-deep.ranges>ul>li>button.active {
+  background-color: #e32027 !important;
+  color: #f8f9fa;
+}
+
+::ng-deep .md-drppicker{
+  background-color: #FFFFFF !important;
+}
+
+::ng-deep .md-drppicker td.start-date{
+  color: #fff;
+  background-color: #e32027 !important;
+}
+::ng-deep .md-drppicker td.end-date{
+  color: #fff;
+  background-color: #e32027;
+}
+
+.date_drop{
+  width: 210px;
+}
+
+::ng-deep.p-float-label .p-inputwrapper-filled~label, .p-float-label .p-inputwrapper-focus~label, .p-float-label input.p-filled~label, .p-float-label input:focus~label, .p-float-label textarea.p-filled~label, .p-float-label textarea:focus~label{
+  top: 1px!important;
+    left: 15px!important;
+    font-size: 12px!important;
+    background: transparent !important;
+    width: auto;
+} 
+
+.form-control.daterange {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + .75rem + 8px) !important;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+::ng-deep.md-drppicker.double {
+  width: 634px!important;
+  margin-left: -22px!important;
+  margin-top: 0px!important;
+}
+
+::ng-deep .md-drppicker .clear-button .clear-icon svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  pointer-events: none;
+  top: .125em;
+  position: relative;
+  display: none;
+}
